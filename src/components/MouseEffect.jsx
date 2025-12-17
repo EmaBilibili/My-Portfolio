@@ -34,7 +34,7 @@ const MouseEffect = () => {
                 this.speedY = Math.random() * 3 - 1.5;
                 this.life = 1;
                 this.decay = Math.random() * 0.01 + 0.005;
-                this.color = color || (Math.random() > 0.5 ? '#00f0ff' : '#00ff9f');
+                this.color = color || (Math.random() > 0.5 ? '#ffffff' : '#a0a0a0');
             }
 
             update() {
@@ -67,14 +67,9 @@ const MouseEffect = () => {
                 this.life = 1;
                 this.type = type;
 
-                // Gaming: Purple/Pink, Cybersecurity: Cyan/Green
-                if (type === 'gaming') {
-                    this.color1 = '#8b2aff'; // Brighter Purple
-                    this.color2 = '#ff4da6'; // Brighter Pink
-                } else {
-                    this.color1 = '#00ffff'; // Brighter Cyan
-                    this.color2 = '#00ff9f'; // Neon Green
-                }
+                // Grayscale for all interactions
+                this.color1 = '#ffffff'; // White
+                this.color2 = '#808080'; // Gray
             }
 
             update() {
@@ -117,7 +112,7 @@ const MouseEffect = () => {
                 this.size = Math.random() * 2 + 0.5; // Smaller size for depth (0.5px - 2.5px)
                 this.speedX = (Math.random() - 0.5) * 0.2; // Slower speed
                 this.speedY = (Math.random() - 0.5) * 0.2;
-                this.color = Math.random() > 0.5 ? '#00f0ff' : '#00ff9f';
+                this.color = Math.random() > 0.5 ? '#ffffff' : '#a0a0a0';
                 this.baseOpacity = Math.random() * 0.05 + 0.02; // Very transparent (0.02 - 0.07)
             }
 
@@ -189,32 +184,13 @@ const MouseEffect = () => {
         // Click handler with context detection
         const handleClick = (e) => {
             const target = e.target;
-            let rippleType = 'gaming'; // default
-
-            // Detect context based on element attributes or content
-            const element = target.closest('[data-category]') || target;
-            const category = element.getAttribute('data-category');
-
-            if (category === 'cybersecurity' || category === 'security') {
-                rippleType = 'cybersecurity';
-            } else if (category === 'gaming' || category === 'game') {
-                rippleType = 'gaming';
-            } else {
-                // Check text content for keywords
-                const text = element.textContent?.toLowerCase() || '';
-                if (text.includes('security') || text.includes('cyber') || text.includes('hack') ||
-                    text.includes('penetration') || text.includes('kali')) {
-                    rippleType = 'cybersecurity';
-                } else if (text.includes('game') || text.includes('unity') || text.includes('jam')) {
-                    rippleType = 'gaming';
-                }
-            }
+            let rippleType = 'gaming'; // default - logic preserved but color unified
 
             // Create ripple
             ripplesRef.current.push(new Ripple(e.clientX, e.clientY, rippleType));
 
             // Create particle burst
-            const burstColor = rippleType === 'gaming' ? '#7000ff' : '#00f0ff';
+            const burstColor = '#ffffff';
             for (let i = 0; i < 15; i++) {
                 particlesRef.current.push(new Particle(e.clientX, e.clientY, burstColor));
             }
@@ -254,7 +230,7 @@ const MouseEffect = () => {
                 ctx.save();
                 ctx.globalAlpha = point.life * 0.3; // Lower opacity
                 const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, 25); // Smaller trail
-                gradient.addColorStop(0, '#00f0ff');
+                gradient.addColorStop(0, '#ffffff'); // White trail
                 gradient.addColorStop(1, 'transparent');
                 ctx.fillStyle = gradient;
                 ctx.beginPath();
@@ -270,8 +246,8 @@ const MouseEffect = () => {
             if (x && y) {
                 ctx.save();
                 const gradient = ctx.createRadialGradient(x, y, 0, x, y, 100); // Smaller radius
-                gradient.addColorStop(0, 'rgba(0, 240, 255, 0.15)'); // Lower opacity
-                gradient.addColorStop(0.5, 'rgba(112, 0, 255, 0.05)');
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.15)'); // White glow
+                gradient.addColorStop(0.5, 'rgba(128, 128, 128, 0.05)'); // Gray fade
                 gradient.addColorStop(1, 'transparent');
                 ctx.fillStyle = gradient;
                 ctx.beginPath();

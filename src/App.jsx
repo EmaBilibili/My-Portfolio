@@ -6,12 +6,16 @@ import Projects from './components/Projects';
 import Education from './components/Education';
 import Contact from './components/Contact';
 import MouseEffect from './components/MouseEffect';
+import DualWorldOverlay from './components/DualWorldOverlay';
+import SplitStyleOverlay from './components/SplitStyleOverlay';
 import CyberGrid from './components/CyberGrid';
 
 function App() {
   return (
     <div className="bg-black min-h-screen text-white selection:bg-purple-500 selection:text-white relative overflow-hidden">
       {/* Interactive Background Effects */}
+      <SplitStyleOverlay />
+      <DualWorldOverlay />
       <CyberGrid />
       <MouseEffect />
 

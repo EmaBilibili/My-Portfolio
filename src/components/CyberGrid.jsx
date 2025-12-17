@@ -48,7 +48,7 @@ const CyberGrid = () => {
 
                         ctx.save();
                         ctx.globalAlpha = opacity * 0.5;
-                        ctx.strokeStyle = '#00f0ff';
+                        ctx.strokeStyle = '#ffffff';
                         ctx.lineWidth = 1;
 
                         // Draw cross at grid point
@@ -64,7 +64,7 @@ const CyberGrid = () => {
                             ctx.beginPath();
                             ctx.moveTo(x, y);
                             ctx.lineTo(x + gridSize, y);
-                            ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * 0.3})`;
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.3})`;
                             ctx.stroke();
                         }
 
