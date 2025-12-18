@@ -19,9 +19,55 @@ const Hero = () => {
                     transition={{ duration: 0.5 }}
                     className="max-w-7xl mx-auto"
                 >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-12 items-center">
+                    {/* MOBILE LAYOUT (< 768px) - Compact Single Column */}
+                    <div className="md:hidden flex flex-col items-center text-center space-y-6">
+                        {/* Badge */}
+                        <div className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm shadow-[0_0_15px_var(--color-primary)]">
+                            <span className="text-primary font-mono tracking-widest text-sm uppercase flex items-center gap-2">
+                                <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                                System Online
+                            </span>
+                        </div>
+
+                        {/* Full Name */}
+                        <h1 className="text-4xl font-heading font-bold tracking-tight">
+                            <span className="text-white">EMANUEL</span>{' '}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">BINIMELIS</span>
+                        </h1>
+
+                        {/* Combined Role */}
+                        <h2 className="text-xl font-heading font-light">
+                            <span className="text-primary">Game Developer</span>
+                            <span className="text-white mx-2">&</span>
+                            <span className="text-accent">Cybersecurity</span>
+                        </h2>
+
+                        {/* Description */}
+                        <p className="text-gray-400 text-base leading-relaxed font-light max-w-md">
+                            Fusionando la creatividad del <span className="text-white">desarrollo de videojuegos</span> con la disciplina de la <span className="text-white">ciberseguridad</span>. Construyendo mundos, protegiendo sistemas.
+                        </p>
+
+                        {/* Buttons Stack */}
+                        <div className="flex flex-col gap-3 w-full max-w-xs">
+                            <a
+                                href="#contact"
+                                className="bg-primary text-black px-8 py-3.5 rounded-none font-bold font-mono tracking-wide flex items-center justify-center gap-2 hover:bg-white transition-all shadow-[0_0_20px_rgba(0,255,159,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] tech-border border-0"
+                            >
+                                CONTACTAR
+                            </a>
+                            <a
+                                href="#projects"
+                                className="px-8 py-3.5 rounded-none border border-white/20 text-white font-mono hover:bg-white/5 transition-all flex items-center justify-center gap-2"
+                            >
+                                VER PROYECTOS <ArrowRight className="w-4 h-4" />
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* DESKTOP LAYOUT (≥ 768px) - Dual World Split */}
+                    <div className="hidden md:grid md:grid-cols-2 gap-12 items-center">
                         {/* LEFT COLUMN (Gamer) - Aligned Right to center */}
-                        <div className="text-center md:text-right flex flex-col items-center md:items-end">
+                        <div className="text-right flex flex-col items-end">
                             <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm shadow-[0_0_15px_var(--color-primary)]">
                                 <span className="text-primary font-mono tracking-widest text-sm uppercase flex items-center gap-2">
                                     <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
@@ -29,15 +75,15 @@ const Hero = () => {
                                 </span>
                             </div>
 
-                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold tracking-tight text-white mb-2">
+                            <h1 className="text-7xl lg:text-8xl font-heading font-bold tracking-tight text-white mb-2">
                                 EMANUEL
                             </h1>
 
-                            <h3 className="text-2xl md:text-3xl text-primary font-heading font-light">
+                            <h3 className="text-3xl text-primary font-heading font-light">
                                 Game Developer
                             </h3>
 
-                            <div className="mt-8 flex justify-center md:justify-end">
+                            <div className="mt-8 flex justify-end">
                                 <a
                                     href="#contact"
                                     className="bg-primary text-black px-8 py-3.5 rounded-none font-bold font-mono tracking-wide flex items-center gap-2 hover:bg-white transition-all shadow-[0_0_20px_rgba(0,255,159,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] tech-border border-0"
@@ -48,23 +94,23 @@ const Hero = () => {
                         </div>
 
                         {/* RIGHT COLUMN (Hacker) - Aligned Left to center */}
-                        <div className="text-center md:text-left flex flex-col items-center md:items-start">
+                        <div className="text-left flex flex-col items-start">
                             <h2
-                                className="text-gray-400 font-mono mb-4 animate-glitch glitch-text text-xl md:text-xl pt-2"
+                                className="text-gray-400 font-mono mb-4 animate-glitch glitch-text text-xl pt-2"
                                 data-text="Hello World, I'm"
                             >
                                 Hello World, I'm
                             </h2>
 
-                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent mb-2">
+                            <h1 className="text-7xl lg:text-8xl font-heading font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent mb-2">
                                 BINIMELIS
                             </h1>
 
-                            <h3 className="text-2xl md:text-3xl text-accent font-heading font-light flex items-center gap-2">
+                            <h3 className="text-3xl text-accent font-heading font-light flex items-center gap-2">
                                 <span className="text-white text-lg">&</span> Cybersecurity
                             </h3>
 
-                            <div className="mt-8 flex justify-center md:justify-start">
+                            <div className="mt-8 flex justify-start">
                                 <a
                                     href="#projects"
                                     className="px-8 py-3.5 rounded-none border border-white/20 text-white font-mono hover:bg-white/5 transition-all flex items-center gap-2"
@@ -75,7 +121,8 @@ const Hero = () => {
                         </div>
                     </div>
 
-                    <p className="max-w-2xl mx-auto text-gray-400 mt-16 text-center text-lg leading-relaxed font-light">
+                    {/* Desktop Description (below split) */}
+                    <p className="hidden md:block max-w-2xl mx-auto text-gray-400 mt-16 text-center text-lg leading-relaxed font-light">
                         Fusionando la creatividad del <span className="text-white">desarrollo de videojuegos</span> con la disciplina de la <span className="text-white">ciberseguridad</span>. Construyendo mundos, protegiendo sistemas.
                     </p>
 
