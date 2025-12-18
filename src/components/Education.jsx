@@ -10,7 +10,7 @@ const Education = () => {
                 <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
                     {/* LEFT COLUMN - GAMING */}
                     <div className="flex flex-col gap-8">
-                        <div className="text-right">
+                        <div className="text-left md:text-right">
                             <h2 className="text-4xl font-bold font-heading text-white mb-2">Educación</h2>
                         </div>
 
@@ -18,9 +18,9 @@ const Education = () => {
                             <motion.div
                                 key={index}
                                 whileHover={{ x: 10 }}
-                                className="glass p-8 rounded-2xl border-l-4 border-l-primary text-right"
+                                className="glass p-8 rounded-2xl border-l-4 border-l-primary text-left md:text-right"
                             >
-                                <div className="flex justify-end mb-4">
+                                <div className="flex justify-start md:justify-end mb-4">
                                     <GraduationCap className="w-10 h-10 text-primary" />
                                 </div>
                                 <h3 className="text-2xl font-bold text-white mb-2">{edu.title}</h3>

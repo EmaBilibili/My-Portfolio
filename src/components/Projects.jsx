@@ -15,7 +15,7 @@ const Projects = () => {
                 <div className="grid md:grid-cols-2 gap-12">
                     {/* LEFT COLUMN - GAMING */}
                     <div className="flex flex-col gap-12">
-                        <div className="text-right">
+                        <div className="text-left md:text-right">
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-primary/20 text-primary text-sm mb-4 font-mono">
                                 <Terminal className="w-4 h-4" />
                                 <span>SYSTEM.GAMING</span>
