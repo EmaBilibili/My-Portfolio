@@ -33,7 +33,7 @@ const Projects = () => {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.1 }}
-                                    className="group relative tech-border bg-surface/50 backdrop-blur-sm hover:translate-x-2 transition-all duration-300 border-l-2 border-l-primary/50"
+                                    className="group relative tech-border bg-surface/50 backdrop-blur-sm transition-all duration-300 border-l-2 border-l-primary/50"
                                 >
                                     <div className="relative h-48 overflow-hidden border-b border-white/5">
                                         <div className="absolute inset-0 bg-primary/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -64,10 +64,10 @@ const Projects = () => {
                                         </div>
 
                                         <div className="flex items-center gap-4 mt-auto">
-                                            <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="flex-1 bg-white text-black py-2.5 font-bold text-sm hover:bg-primary hover:text-black transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_var(--color-primary)]">
+                                            <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="relative z-20 flex-1 bg-white text-black py-2.5 font-bold text-sm hover:bg-primary hover:text-black transition-all flex items-center justify-center gap-2 hover:shadow-[0_0_15px_var(--color-primary)]">
                                                 <Play className="w-4 h-4" /> <span className="uppercase tracking-wide">Demo</span>
                                             </a>
-                                            <a href={project.repoLink} target="_blank" rel="noopener noreferrer" className="flex-1 border border-white/20 text-white py-2.5 font-bold text-sm hover:bg-white hover:text-black transition-all flex items-center justify-center gap-2">
+                                            <a href={project.repoLink} target="_blank" rel="noopener noreferrer" className="relative z-20 flex-1 border border-white/20 text-white py-2.5 font-bold text-sm hover:bg-white hover:text-black transition-all flex items-center justify-center gap-2">
                                                 <Github className="w-4 h-4" /> <span className="uppercase tracking-wide">Code</span>
                                             </a>
                                         </div>
@@ -97,7 +97,7 @@ const Projects = () => {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.1 }}
-                                    className="group relative tech-border bg-surface/50 backdrop-blur-sm hover:translate-x-2 transition-all duration-300 border-l-2 border-l-accent/50"
+                                    className="group relative tech-border bg-surface/50 backdrop-blur-sm transition-all duration-300 border-l-2 border-l-accent/50"
                                 >
                                     <div className="relative h-48 overflow-hidden border-b border-white/5">
                                         <div className="absolute inset-0 bg-accent/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -128,10 +128,10 @@ const Projects = () => {
                                         </div>
 
                                         <div className="flex items-center gap-4 mt-auto">
-                                            <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="flex-1 border border-white/20 text-white py-2.5 font-bold text-sm hover:bg-accent hover:text-black transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_var(--color-accent)]">
+                                            <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="relative z-20 flex-1 border border-white/20 text-white py-2.5 font-bold text-sm hover:bg-accent hover:text-black transition-all flex items-center justify-center gap-2 hover:shadow-[0_0_15px_var(--color-accent)]">
                                                 <Play className="w-4 h-4" /> <span className="uppercase tracking-wide">View</span>
                                             </a>
-                                            <a href={project.repoLink} target="_blank" rel="noopener noreferrer" className="flex-1 border border-white/20 text-white py-2.5 font-bold text-sm hover:bg-accent hover:text-black transition-all flex items-center justify-center gap-2">
+                                            <a href={project.repoLink} target="_blank" rel="noopener noreferrer" className="relative z-20 flex-1 border border-white/20 text-white py-2.5 font-bold text-sm hover:bg-accent hover:text-black transition-all flex items-center justify-center gap-2">
                                                 <Github className="w-4 h-4" /> <span className="uppercase tracking-wide">Code</span>
                                             </a>
                                         </div>
