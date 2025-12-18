@@ -9,7 +9,7 @@ const SplitStyleOverlay = () => {
             }}
         >
             {/* Optional: subtle green tint overlay for "Hacker" feel */}
-            <div className="absolute inset-0 bg-green-500/5 mix-blend-overlay"></div>
+            <div className="absolute inset-0 bg-green-500/5 mix-blend-overlay pointer-events-none"></div>
         </div>
     );
 };
