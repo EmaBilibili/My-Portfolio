@@ -238,3 +238,7 @@
     cursor: none !important;
   }
 }
+
+@utility will-change-transform {
+  will-change: transform;
+}
