@@ -83,8 +83,9 @@ const Hero = () => {
             </div>
 
             {/* Decorative Glows */}
-            <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-[128px] animate-pulse" />
-            <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary/10 rounded-full blur-[128px] animate-pulse delay-1000" />
+            {/* Decorative Glows - Optimized for performance (Radial Gradient instead of CSS Blur) */}
+            <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[radial-gradient(circle,rgba(0,240,255,0.15)_0%,transparent_70%)] animate-pulse will-change-transform" />
+            <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[radial-gradient(circle,rgba(112,0,255,0.15)_0%,transparent_70%)] animate-pulse delay-1000 will-change-transform" />
 
             {/* Tech Decoration */}
             <div className="absolute top-10 left-10 w-20 h-20 border-t-2 border-l-2 border-primary/20 opacity-50 hidden md:block" />
