@@ -1,7 +1,54 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Send, Linkedin, Twitter } from 'lucide-react';
+import { Mail, MapPin, Send, Linkedin, Twitter, CheckCircle2, AlertCircle } from 'lucide-react';
+
+import contactData from '../data/contact.json';
 
 const Contact = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+    const [status, setStatus] = useState('idle'); // idle, submitting, success, error
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!contactData.formspreeId) {
+            alert("Por favor configura tu Formspree ID en src/data/contact.json");
+            return;
+        }
+
+        setStatus('submitting');
+
+        try {
+            const response = await fetch(`https://formspree.io/f/${contactData.formspreeId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                setStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+            } else {
+                setStatus('error');
+            }
+        } catch (error) {
+            setStatus('error');
+        }
+    };
+
     return (
         <section id="contact" className="py-20 bg-surface relative">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
@@ -28,7 +75,7 @@ const Contact = () => {
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-500">Email</p>
-                                    <p className="font-medium">bilibilisfactorydev@gmail.com</p>
+                                    <p className="font-medium">{contactData.email}</p>
                                 </div>
                             </div>
 
@@ -38,7 +85,7 @@ const Contact = () => {
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-500">Ubicación</p>
-                                    <p className="font-medium">Mendoza, Argentina</p>
+                                    <p className="font-medium">{contactData.location}</p>
                                 </div>
                             </div>
                         </div>
@@ -53,42 +100,85 @@ const Contact = () => {
                         </div>
                     </motion.div>
 
-                    <motion.form
+                    <motion.div
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="glass p-8 rounded-2xl space-y-6"
+                        className="glass p-8 rounded-2xl relative overflow-hidden"
                     >
-                        <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2">Nombre</label>
-                            <input
-                                type="text"
-                                className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
-                                placeholder="Tu nombre"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
-                            <input
-                                type="email"
-                                className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
-                                placeholder="tu@email.com"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2">Mensaje</label>
-                            <textarea
-                                rows="4"
-                                className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
-                                placeholder="Cuéntame sobre tu proyecto..."
-                            ></textarea>
-                        </div>
+                        {status === 'success' ? (
+                            <div className="flex flex-col items-center justify-center text-center py-12 space-y-4">
+                                <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center text-green-500 mb-4">
+                                    <CheckCircle2 className="w-10 h-10" />
+                                </div>
+                                <h3 className="text-3xl font-bold text-white">¡Mensaje Enviado!</h3>
+                                <p className="text-gray-400">
+                                    Gracias por contactarme. Te responderé lo antes posible.
+                                </p>
+                                <button
+                                    onClick={() => setStatus('idle')}
+                                    className="mt-6 text-primary hover:text-white font-medium transition-colors"
+                                >
+                                    Enviar otro mensaje
+                                </button>
+                            </div>
+                        ) : (
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-400 mb-2">Nombre</label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        required
+                                        className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
+                                        placeholder="Tu nombre"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        required
+                                        className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
+                                        placeholder="tu@email.com"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-400 mb-2">Mensaje</label>
+                                    <textarea
+                                        name="message"
+                                        rows="4"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        required
+                                        className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
+                                        placeholder="Cuéntame sobre tu proyecto..."
+                                    ></textarea>
+                                </div>
 
-                        <button className="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
-                            Enviar Mensaje
-                            <Send className="w-4 h-4" />
-                        </button>
-                    </motion.form>
+                                {status === 'error' && (
+                                    <div className="flex items-center gap-2 text-red-500 text-sm bg-red-500/10 p-3 rounded-lg">
+                                        <AlertCircle className="w-4 h-4" />
+                                        <span>Hubo un error al enviar. Por favor intenta nuevamente.</span>
+                                    </div>
+                                )}
+
+                                <button
+                                    type="submit"
+                                    disabled={status === 'submitting'}
+                                    className="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {status === 'submitting' ? 'Enviando...' : 'Enviar Mensaje'}
+                                    {!status === 'submitting' && <Send className="w-4 h-4" />}
+                                </button>
+                            </form>
+                        )}
+                    </motion.div>
                 </div>
             </div>
         </section>
