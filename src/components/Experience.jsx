@@ -1,44 +1,10 @@
 import { motion } from 'framer-motion';
 import { Briefcase, ShieldCheck } from 'lucide-react';
 
+import experienceData from '../data/experience.json';
+
 const Experience = () => {
-    const experiences = [
-        {
-            role: "Game Developer - Kenopsia",
-            company: "University Thesis Project",
-            period: "2023 - 2024",
-            desc: "Co-desarrollo de un juego survival horror inspirado en Backrooms y Outlast usando Unity & C#.",
-            category: "Gaming"
-        },
-        {
-            role: "Security Analyst Intern",
-            company: "Cybersecurity Lab",
-            period: "2024 - Presente",
-            desc: "Análisis de tráfico de red y detección de intrusiones. Uso de herramientas SIEM y pentesting.",
-            category: "Security"
-        },
-        {
-            role: "Lead Programmer",
-            company: "Indie Team Project",
-            period: "2022 - 2023",
-            desc: "Lideré un equipo de 10 personas durante 6 meses. Responsable de IA, UI/UX, mecánicas y herramientas.",
-            category: "Gaming"
-        },
-        {
-            role: "Freelance Game Programmer",
-            company: "Freelance",
-            period: "2022 - Presente",
-            desc: "Desarrollo de diversos proyectos en Unity & C#, colaborando con equipos multidisciplinarios.",
-            category: "Gaming"
-        },
-        {
-            role: "Software Dev Intern",
-            company: "Full Salud - RSTArgentina",
-            period: "Ago 2023 - Presente",
-            desc: "Desarrollo de software de alta precisión para el sector médico y gestión de inventario tecnológico.",
-            category: "Development"
-        }
-    ];
+    const experiences = experienceData;
 
     return (
         <section id="experience" className="py-20 bg-surface relative overflow-hidden">

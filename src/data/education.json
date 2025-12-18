@@ -1,0 +1,18 @@
+[
+    {
+        "type": "degree",
+        "title": "Video Game Development Technician",
+        "institution": "Mendoza University",
+        "period": "Graduated Feb 2025",
+        "desc": "Formación técnica integral en desarrollo de videojuegos, diseño y programación.",
+        "domain": "gaming"
+    },
+    {
+        "type": "certification",
+        "title": "Master Builder",
+        "institution": "High school Sagrada Familia",
+        "period": "Graduated Feb 2021",
+        "desc": "Título técnico en construcción (Technical School).",
+        "domain": "security"
+    }
+]

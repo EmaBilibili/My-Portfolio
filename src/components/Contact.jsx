@@ -7,7 +7,7 @@ const Contact = () => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
 
             <div className="container mx-auto px-6 relative z-10">
-                <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
+                <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}

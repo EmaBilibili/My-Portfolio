@@ -12,59 +12,73 @@ const Hero = () => {
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-10 pointer-events-none" />
 
 
-            <div className="container mx-auto px-6 relative z-10 text-center">
+            <div className="container mx-auto px-6 relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="max-w-4xl mx-auto"
+                    className="max-w-7xl mx-auto"
                 >
-                    <div className="inline-block mb-6 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm shadow-[0_0_15px_var(--color-primary)]">
-                        <span className="text-primary font-mono tracking-widest text-sm uppercase flex items-center gap-2">
-                            <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                            System Online
-                        </span>
+                    <div className="grid grid-cols-2 gap-4 md:gap-12 items-center">
+                        {/* LEFT COLUMN (Gamer) - Aligned Right to center */}
+                        <div className="text-right flex flex-col items-end">
+                            <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm shadow-[0_0_15px_var(--color-primary)]">
+                                <span className="text-primary font-mono tracking-widest text-sm uppercase flex items-center gap-2">
+                                    <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                                    System Online
+                                </span>
+                            </div>
+
+                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold tracking-tight text-white mb-2">
+                                EMANUEL
+                            </h1>
+
+                            <h3 className="text-2xl md:text-3xl text-primary font-heading font-light">
+                                Game Developer
+                            </h3>
+
+                            <div className="mt-8 flex justify-end">
+                                <a
+                                    href="#contact"
+                                    className="bg-primary text-black px-8 py-3.5 rounded-none font-bold font-mono tracking-wide flex items-center gap-2 hover:bg-white transition-all shadow-[0_0_20px_rgba(0,255,159,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] tech-border border-0"
+                                >
+                                    CONTACTAR
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* RIGHT COLUMN (Hacker) - Aligned Left to center */}
+                        <div className="text-left flex flex-col items-start">
+                            <h2
+                                className="text-gray-400 font-mono mb-4 animate-glitch glitch-text text-xl md:text-xl pt-2"
+                                data-text="Hello World, I'm"
+                            >
+                                Hello World, I'm
+                            </h2>
+
+                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent mb-2">
+                                BINIMELIS
+                            </h1>
+
+                            <h3 className="text-2xl md:text-3xl text-accent font-heading font-light flex items-center gap-2">
+                                <span className="text-white text-lg">&</span> Cybersecurity
+                            </h3>
+
+                            <div className="mt-8 flex justify-start">
+                                <a
+                                    href="#projects"
+                                    className="px-8 py-3.5 rounded-none border border-white/20 text-white font-mono hover:bg-white/5 transition-all flex items-center gap-2"
+                                >
+                                    VER PROYECTOS <ArrowRight className="w-4 h-4" />
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
-                    <h2
-                        className="text-primary font-mono mb-4 animate-glitch glitch-text text-xl md:text-2xl"
-                        data-text="Hello World, I'm"
-                    >
-                        Hello World, I'm
-                    </h2>
-
-                    <h1
-                        className="text-6xl md:text-8xl font-heading font-bold mb-6 glitch-text tracking-tight"
-                        data-text="EMANUEL BINIMELIS"
-                    >
-                        EMANUEL <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent">BINIMELIS</span>
-                    </h1>
-
-                    <h3
-                        className="text-2xl md:text-4xl text-gray-300 font-heading font-light mb-8 glitch-text"
-                        data-text="Game Developer & Cybersecurity Enthusiast"
-                    >
-                        Game Developer <span className="text-primary">&</span> <span className="text-accent font-semibold">Cybersecurity Enthusiast</span>
-                    </h3>
-
-                    <p className="max-w-2xl mx-auto text-gray-400 mb-10 text-lg leading-relaxed font-light">
+                    <p className="max-w-2xl mx-auto text-gray-400 mt-16 text-center text-lg leading-relaxed font-light">
                         Fusionando la creatividad del <span className="text-white">desarrollo de videojuegos</span> con la disciplina de la <span className="text-white">ciberseguridad</span>. Construyendo mundos, protegiendo sistemas.
                     </p>
 
-                    <div className="flex flex-col md:flex-row gap-6 justify-center items-center mb-32">
-                        <a
-                            href="#contact"
-                            className="bg-primary text-black px-8 py-3.5 rounded-none font-bold font-mono tracking-wide flex items-center gap-2 hover:bg-white transition-all shadow-[0_0_20px_rgba(0,255,159,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] tech-border border-0"
-                        >
-                            CONTACTAR
-                        </a>
-                        <a
-                            href="#projects"
-                            className="px-8 py-3.5 rounded-none border border-white/20 text-white font-mono hover:bg-white/5 transition-all flex items-center gap-2"
-                        >
-                            VER PROYECTOS <ArrowRight className="w-4 h-4" />
-                        </a>
-                    </div>
                 </motion.div>
             </div>
 
