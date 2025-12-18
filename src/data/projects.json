@@ -2,7 +2,7 @@
     {
         "title": "Kenopsia",
         "category": "Survival Horror",
-        "image": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&q=80&w=800",
+        "image": "/assets/kenopsia.png",
         "tech": [
             "Unity",
             "C#",
@@ -11,8 +11,8 @@
         ],
         "description": "Juego de survival horror inspirado en Backrooms y Outlast. Proyecto de tesis universitaria.",
         "domain": "gaming",
-        "demoLink": "#",
-        "repoLink": "#"
+        "demoLink": "https://emabilibili.itch.io/kenopsia",
+        "repoLink": "https://github.com/EmaBilibili/TesisKenopsia"
     },
     {
         "title": "Skuishy Souls",

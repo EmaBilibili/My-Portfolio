@@ -67,6 +67,9 @@ const Projects = () => {
                                             <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="flex-1 bg-white text-black py-2.5 font-bold text-sm hover:bg-primary hover:text-black transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_var(--color-primary)]">
                                                 <Play className="w-4 h-4" /> <span className="uppercase tracking-wide">Demo</span>
                                             </a>
+                                            <a href={project.repoLink} target="_blank" rel="noopener noreferrer" className="flex-1 border border-white/20 text-white py-2.5 font-bold text-sm hover:bg-white hover:text-black transition-all flex items-center justify-center gap-2">
+                                                <Github className="w-4 h-4" /> <span className="uppercase tracking-wide">Code</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -127,6 +130,9 @@ const Projects = () => {
                                         <div className="flex items-center gap-4 mt-auto">
                                             <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="flex-1 border border-white/20 text-white py-2.5 font-bold text-sm hover:bg-accent hover:text-black transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_var(--color-accent)]">
                                                 <Play className="w-4 h-4" /> <span className="uppercase tracking-wide">View</span>
+                                            </a>
+                                            <a href={project.repoLink} target="_blank" rel="noopener noreferrer" className="flex-1 border border-white/20 text-white py-2.5 font-bold text-sm hover:bg-accent hover:text-black transition-all flex items-center justify-center gap-2">
+                                                <Github className="w-4 h-4" /> <span className="uppercase tracking-wide">Code</span>
                                             </a>
                                         </div>
                                     </div>
