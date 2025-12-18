@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Send, Linkedin, Twitter, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Mail, MapPin, Send, Linkedin, Github, Gamepad2, CheckCircle2, AlertCircle } from 'lucide-react';
 
 import contactData from '../data/contact.json';
 
@@ -91,11 +91,14 @@ const Contact = () => {
                         </div>
 
                         <div className="flex gap-4 mt-10">
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
+                            <a href="https://www.linkedin.com/in/emanuelbinimelis" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
                                 <Linkedin className="w-5 h-5" />
                             </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
-                                <Twitter className="w-5 h-5" />
+                            <a href="https://github.com/EmaBilibili" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
+                                <Github className="w-5 h-5" />
+                            </a>
+                            <a href="https://emabilibili.itch.io/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
+                                <Gamepad2 className="w-5 h-5" />
                             </a>
                         </div>
                     </motion.div>
