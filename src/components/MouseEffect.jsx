@@ -329,7 +329,7 @@ const MouseEffect = () => {
 
     return (
         <>
-            <div id="tech-cursor" className="tech-cursor"></div>
+            <div id="tech-cursor" className="tech-cursor hidden md:block"></div>
             <div className="scanlines"></div>
             <canvas
                 ref={canvasRef}
