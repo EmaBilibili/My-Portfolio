@@ -68,16 +68,30 @@ const DualWorldOverlay = () => {
             }
 
             draw(ctx) {
-                const isGhost = this.x < canvas.width / 2;
+                const centerX = canvas.width / 2;
+                const transitionZone = 100; // Width of transition area (pixels)
+                const distanceFromCenter = this.x - centerX;
+
+                // Calculate transition progress (0 = pure ghost, 1 = pure bug)
+                const transitionProgress = Math.max(0, Math.min(1, (distanceFromCenter + transitionZone / 2) / transitionZone));
 
                 ctx.save();
                 ctx.translate(this.x, this.y);
 
-                if (isGhost) {
-                    this.drawGhost(ctx);
-                } else {
-                    this.drawBug(ctx);
-                }
+                // Draw Ghost (fades out as we approach/cross center)
+                ctx.save();
+                ctx.globalAlpha = 1 - transitionProgress;
+                this.drawGhost(ctx);
+                ctx.restore();
+
+                // Draw Bug (fades in as we cross center)
+                ctx.save();
+                ctx.globalAlpha = transitionProgress;
+                // Add slight scale effect during transition for visual interest
+                const scaleFactor = 0.95 + transitionProgress * 0.05;
+                ctx.scale(scaleFactor, scaleFactor);
+                this.drawBug(ctx);
+                ctx.restore();
 
                 ctx.restore();
             }
