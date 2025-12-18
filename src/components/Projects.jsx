@@ -36,7 +36,7 @@ const Projects = () => {
                                     className="group relative tech-border bg-surface/50 backdrop-blur-sm hover:translate-x-2 transition-all duration-300 border-l-2 border-l-primary/50"
                                 >
                                     <div className="relative h-48 overflow-hidden border-b border-white/5">
-                                        <div className="absolute inset-0 bg-primary/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                        <div className="absolute inset-0 bg-primary/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                                         <img
                                             src={project.image}
                                             alt={project.title}
@@ -100,7 +100,7 @@ const Projects = () => {
                                     className="group relative tech-border bg-surface/50 backdrop-blur-sm hover:translate-x-2 transition-all duration-300 border-l-2 border-l-accent/50"
                                 >
                                     <div className="relative h-48 overflow-hidden border-b border-white/5">
-                                        <div className="absolute inset-0 bg-accent/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                        <div className="absolute inset-0 bg-accent/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                                         <img
                                             src={project.image}
                                             alt={project.title}
