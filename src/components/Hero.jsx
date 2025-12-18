@@ -19,9 +19,9 @@ const Hero = () => {
                     transition={{ duration: 0.5 }}
                     className="max-w-7xl mx-auto"
                 >
-                    <div className="grid grid-cols-2 gap-4 md:gap-12 items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-12 items-center">
                         {/* LEFT COLUMN (Gamer) - Aligned Right to center */}
-                        <div className="text-right flex flex-col items-end">
+                        <div className="text-center md:text-right flex flex-col items-center md:items-end">
                             <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm shadow-[0_0_15px_var(--color-primary)]">
                                 <span className="text-primary font-mono tracking-widest text-sm uppercase flex items-center gap-2">
                                     <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
@@ -37,7 +37,7 @@ const Hero = () => {
                                 Game Developer
                             </h3>
 
-                            <div className="mt-8 flex justify-end">
+                            <div className="mt-8 flex justify-center md:justify-end">
                                 <a
                                     href="#contact"
                                     className="bg-primary text-black px-8 py-3.5 rounded-none font-bold font-mono tracking-wide flex items-center gap-2 hover:bg-white transition-all shadow-[0_0_20px_rgba(0,255,159,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] tech-border border-0"
@@ -48,7 +48,7 @@ const Hero = () => {
                         </div>
 
                         {/* RIGHT COLUMN (Hacker) - Aligned Left to center */}
-                        <div className="text-left flex flex-col items-start">
+                        <div className="text-center md:text-left flex flex-col items-center md:items-start">
                             <h2
                                 className="text-gray-400 font-mono mb-4 animate-glitch glitch-text text-xl md:text-xl pt-2"
                                 data-text="Hello World, I'm"
@@ -64,7 +64,7 @@ const Hero = () => {
                                 <span className="text-white text-lg">&</span> Cybersecurity
                             </h3>
 
-                            <div className="mt-8 flex justify-start">
+                            <div className="mt-8 flex justify-center md:justify-start">
                                 <a
                                     href="#projects"
                                     className="px-8 py-3.5 rounded-none border border-white/20 text-white font-mono hover:bg-white/5 transition-all flex items-center gap-2"
