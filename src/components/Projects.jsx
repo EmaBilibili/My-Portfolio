@@ -40,7 +40,7 @@ const Projects = () => {
                                         <img
                                             src={project.image}
                                             alt={project.title}
-                                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                                            className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000 ease-out"
                                         />
                                         <div className="absolute top-4 right-4 z-20 bg-black/80 backdrop-blur-md px-3 py-1 text-xs font-mono font-bold text-primary border border-primary/30">
                                             {project.category}
@@ -101,7 +101,7 @@ const Projects = () => {
                                         <img
                                             src={project.image}
                                             alt={project.title}
-                                            className="w-full h-full object-cover grayscale transition-all duration-700"
+                                            className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000 ease-out"
                                         />
                                         <div className="absolute top-4 right-4 z-20 bg-black/80 backdrop-blur-md px-3 py-1 text-xs font-mono font-bold text-accent border border-accent/30">
                                             {project.category}
