@@ -260,7 +260,7 @@ const DualWorldOverlay = () => {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed inset-0 pointer-events-none z-[15]" // Higher z-index to float ABOVE content
+            className="fixed inset-0 pointer-events-none z-[15] hidden md:block"
         />
     );
 };
