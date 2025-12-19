@@ -7,7 +7,7 @@ const Experience = () => {
     const experiences = experienceData;
 
     return (
-        <section id="experience" className="py-20 bg-surface relative overflow-hidden">
+        <section id="experience" className="py-20 bg-transparent relative overflow-hidden">
             {/* Background Elements */}
             <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/5 -skew-x-12 blur-3xl pointer-events-none" />
 

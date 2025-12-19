@@ -3,7 +3,7 @@ import { ArrowRight, Download } from 'lucide-react';
 
 const Hero = () => {
     return (
-        <section id="home" className="min-h-screen flex items-start justify-center relative overflow-hidden bg-background pt-32">
+        <section id="home" className="min-h-screen flex items-start justify-center relative overflow-hidden bg-transparent pt-32">
             {/* Background Elements */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
             <div className="absolute top-0 left-0 w-full h-full bg-hero-pattern opacity-10" />

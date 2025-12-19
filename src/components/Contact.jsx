@@ -50,7 +50,7 @@ const Contact = () => {
     };
 
     return (
-        <section id="contact" className="py-20 bg-surface relative">
+        <section id="contact" className="py-20 bg-transparent relative">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
 
             <div className="container mx-auto px-6 relative z-10">
