@@ -13,6 +13,7 @@ const TurretDefense = () => {
         lastShot: 0,
         cooldown: 2000, // 2 seconds between shots
         currentTarget: null,
+        lockOnStart: 0, // NEW: Timestamp when current target was acquired
         laserActive: false,
         laserEndTime: 0
     });
@@ -56,7 +57,11 @@ const TurretDefense = () => {
                 }
             }
 
-            turret.currentTarget = closestBug;
+            // Target Switching & Lock-on Logic
+            if (closestBug !== turret.currentTarget) {
+                turret.currentTarget = closestBug;
+                turret.lockOnStart = now; // Reset lock-on timer for new target
+            }
 
             // Calculate target angle
             if (closestBug) {
@@ -73,7 +78,10 @@ const TurretDefense = () => {
             turret.angle += angleDiff * 0.08; // Smooth tracking
 
             // Shooting logic
-            if (closestBug && now - turret.lastShot > turret.cooldown) {
+            // MUST be locked on for > 2000ms AND cooldown ready
+            if (closestBug &&
+                (now - turret.lockOnStart > 2000) &&
+                (now - turret.lastShot > turret.cooldown)) {
                 // Fire!
                 turret.laserActive = true;
                 turret.laserEndTime = now + 200; // Laser visible for 200ms
