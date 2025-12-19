@@ -7,7 +7,7 @@ const TurretDefense = () => {
     const [killCount, setKillCount] = useState(0);
     const turretRef = useRef({
         x: 0,
-        y: 60, // Below navbar
+        y: 100, // Below navbar, more visible
         angle: Math.PI / 2, // Pointing down initially
         targetAngle: Math.PI / 2,
         lastShot: 0,
@@ -207,7 +207,7 @@ const TurretDefense = () => {
             {/* Turret Canvas */}
             <canvas
                 ref={canvasRef}
-                className="fixed inset-0 pointer-events-none z-[6]"
+                className="fixed inset-0 pointer-events-none z-[55]"
             />
         </>
     );
