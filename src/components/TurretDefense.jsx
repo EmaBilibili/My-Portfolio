@@ -207,7 +207,7 @@ const TurretDefense = () => {
             {/* Turret Canvas */}
             <canvas
                 ref={canvasRef}
-                className="fixed inset-0 pointer-events-none z-[55]"
+                className="fixed inset-0 pointer-events-none z-[9]"
             />
         </>
     );
