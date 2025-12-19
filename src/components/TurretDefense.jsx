@@ -198,10 +198,10 @@ const TurretDefense = () => {
 
     return (
         <>
-            {/* Kill Counter UI */}
-            <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[60] flex items-center gap-2 bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full border border-red-500/30">
-                <Bug className="w-5 h-5 text-red-500" />
-                <span className="text-red-500 font-mono font-bold text-lg">{killCount}</span>
+            {/* Kill Counter UI - positioned to the right of turret */}
+            <div className="fixed top-20 left-1/2 ml-16 z-[60] flex items-center gap-2 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded-full border border-red-500/30">
+                <Bug className="w-4 h-4 text-red-500" />
+                <span className="text-red-500 font-mono font-bold">{killCount}</span>
             </div>
 
             {/* Turret Canvas */}

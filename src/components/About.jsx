@@ -19,12 +19,12 @@ const About = () => {
                     transition={{ duration: 0.6 }}
                     className="max-w-4xl mx-auto"
                 >
-                    <h2 className="text-4xl font-bold mb-12 text-center">
+                    <h2 className="text-4xl font-bold mb-12 text-center heading-readable">
                         Sobre <span className="text-gradient">Mí</span>
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-                        <div className="space-y-6 text-gray-400 leading-relaxed">
+                        <div className="space-y-6 text-gray-400 leading-relaxed text-readable">
                             <p>
                                 Soy un desarrollador de videojuegos apasionado con sede en Mendoza, Argentina. Tengo experiencia tanto en diseño de juegos 2D como 3D, con un fuerte enfoque en la programación de IA para NPCs y el desarrollo de mecánicas de juego sólidas.
                             </p>
