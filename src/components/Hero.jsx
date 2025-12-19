@@ -57,7 +57,7 @@ const Hero = () => {
                             </a>
                             <a
                                 href="#projects"
-                                className="px-8 py-3.5 rounded-none border border-white/20 text-white font-mono hover:bg-white/5 transition-all flex items-center justify-center gap-2"
+                                className="px-8 py-3.5 rounded-none border border-white/20 text-white font-mono hover:bg-white/10 transition-all flex items-center justify-center gap-2 bg-black/80 backdrop-blur-sm"
                             >
                                 VER PROYECTOS <ArrowRight className="w-4 h-4" />
                             </a>

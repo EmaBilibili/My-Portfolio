@@ -60,15 +60,15 @@ const Contact = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-4xl font-bold mb-6">
+                        <h2 className="text-4xl font-bold mb-6 heading-readable">
                             ¿Tienes un proyecto <br />
                             <span className="text-gradient">en mente?</span>
                         </h2>
-                        <p className="text-gray-400 mb-8 text-lg">
+                        <p className="text-gray-400 mb-8 text-lg bg-black/60 backdrop-blur-sm p-4 rounded-xl">
                             Estoy siempre abierto a discutir nuevos proyectos, ideas creativas o oportunidades para ser parte de tus visiones.
                         </p>
 
-                        <div className="space-y-6">
+                        <div className="space-y-6 bg-black/60 backdrop-blur-sm p-4 rounded-xl">
                             <div className="flex items-center gap-4 text-gray-300">
                                 <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-primary">
                                     <Mail className="w-5 h-5" />
