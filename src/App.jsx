@@ -7,17 +7,19 @@ import Education from './components/Education';
 import Contact from './components/Contact';
 import MouseEffect from './components/MouseEffect';
 import DualWorldOverlay from './components/DualWorldOverlay';
-import SplitStyleOverlay from './components/SplitStyleOverlay';
 import CyberGrid from './components/CyberGrid';
+import TurretDefense from './components/TurretDefense';
 
 function App() {
   return (
     <div className="bg-black min-h-screen text-white selection:bg-purple-500 selection:text-white relative overflow-hidden">
       {/* Interactive Background Effects */}
-      <SplitStyleOverlay />
       <DualWorldOverlay />
       <CyberGrid />
       <MouseEffect />
+
+      {/* Turret Defense System */}
+      <TurretDefense />
 
       {/* Content */}
       <div className="relative z-10">
@@ -34,3 +36,4 @@ function App() {
 }
 
 export default App;
+
