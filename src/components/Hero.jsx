@@ -43,7 +43,7 @@ const Hero = () => {
                         </h2>
 
                         {/* Description */}
-                        <p className="text-gray-400 text-sm sm:text-base max-w-md text-center leading-relaxed font-light bg-black/60 backdrop-blur-sm px-4 py-3 rounded-lg">
+                        <p className="text-gray-400 text-sm sm:text-base max-w-md text-center leading-relaxed font-light bg-black/90 backdrop-blur-md px-4 py-4 rounded-xl border border-white/5 shadow-lg">
                             Fusionando la creatividad del <span className="text-white">desarrollo de videojuegos</span> con la disciplina de la <span className="text-white">ciberseguridad</span>. Construyendo mundos, protegiendo sistemas.
                         </p>
 
