@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7000ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="20" fill="#0a0a1a" />
+  <path d="M20 50 C20 35 35 25 50 25 C65 25 80 35 80 50 C80 65 70 75 50 75 C30 75 20 65 20 50 Z" fill="url(#grad)" opacity="0.2"/>
+  <path d="M30 50 A5 5 0 0 1 35 45 M30 50 A5 5 0 0 1 25 55" stroke="url(#grad)" stroke-width="5" stroke-linecap="round"/>
+  <!-- Gamepad shape simplified -->
+  <path d="M25 45 H35 V55 H25 Z" fill="url(#grad)" /> 
+  <circle cx="70" cy="45" r="4" fill="#00f0ff" />
+  <circle cx="60" cy="55" r="4" fill="#7000ff" />
+  <path d="M30 35 L70 35" stroke="url(#grad)" stroke-width="2" opacity="0.5"/>
+</svg>
