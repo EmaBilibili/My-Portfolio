@@ -43,7 +43,7 @@ const Hero = () => {
                         </h2>
 
                         {/* Description */}
-                        <p className="text-gray-400 text-sm sm:text-base max-w-md text-center text-readable leading-relaxed font-light">
+                        <p className="text-gray-400 text-sm sm:text-base max-w-md text-center leading-relaxed font-light bg-black/60 backdrop-blur-sm px-4 py-3 rounded-lg">
                             Fusionando la creatividad del <span className="text-white">desarrollo de videojuegos</span> con la disciplina de la <span className="text-white">ciberseguridad</span>. Construyendo mundos, protegiendo sistemas.
                         </p>
 
@@ -102,7 +102,7 @@ const Hero = () => {
                                 Hello World, I'm
                             </h2>
 
-                            <h1 className="text-7xl lg:text-8xl font-heading font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent mb-2 heading-readable">
+                            <h1 className="text-7xl lg:text-8xl font-heading font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent mb-2">
                                 BINIMELIS
                             </h1>
 

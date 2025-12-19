@@ -24,7 +24,7 @@ const About = () => {
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-                        <div className="space-y-6 text-gray-400 leading-relaxed text-readable">
+                        <div className="space-y-6 text-gray-400 leading-relaxed bg-black/60 backdrop-blur-sm p-6 rounded-xl">
                             <p>
                                 Soy un desarrollador de videojuegos apasionado con sede en Mendoza, Argentina. Tengo experiencia tanto en diseño de juegos 2D como 3D, con un fuerte enfoque en la programación de IA para NPCs y el desarrollo de mecánicas de juego sólidas.
                             </p>
