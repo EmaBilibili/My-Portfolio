@@ -149,25 +149,38 @@ const TurretDefense = () => {
             ctx.save();
             ctx.translate(turret.x, turret.y);
 
-            // Base circle
-            ctx.fillStyle = '#1a1a2e';
+            // Outer glow ring
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = '#00f0ff';
             ctx.strokeStyle = '#00f0ff';
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 3;
             ctx.beginPath();
-            ctx.arc(0, 0, 15, 0, Math.PI * 2);
+            ctx.arc(0, 0, 25, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Base circle
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#0a0a1a';
+            ctx.strokeStyle = '#00f0ff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(0, 0, 20, 0, Math.PI * 2);
             ctx.fill();
             ctx.stroke();
 
             // Barrel (rotates)
             ctx.rotate(turret.angle);
             ctx.fillStyle = '#00f0ff';
-            ctx.fillRect(0, -3, 25, 6);
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = '#00f0ff';
+            ctx.fillRect(0, -5, 35, 10);
 
             // Barrel tip glow
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = '#00f0ff';
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = '#ffffff';
+            ctx.fillStyle = '#ffffff';
             ctx.beginPath();
-            ctx.arc(25, 0, 4, 0, Math.PI * 2);
+            ctx.arc(35, 0, 6, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.restore();

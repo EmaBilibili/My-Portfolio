@@ -171,10 +171,11 @@ const DualWorldOverlay = () => {
             }
 
             drawBug(ctx) {
-                // Glitchy Bug/Virus Style
-                ctx.strokeStyle = '#ff0000';
-                ctx.lineWidth = 2;
-                ctx.shadowBlur = 8;
+                // Glitchy Bug/Virus Style - BRIGHT & VISIBLE
+                ctx.strokeStyle = '#ff3333';
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+                ctx.lineWidth = 3;
+                ctx.shadowBlur = 20;
                 ctx.shadowColor = '#ff0000';
 
                 // Glitch effect
@@ -182,15 +183,18 @@ const DualWorldOverlay = () => {
                 const glitchY = (Math.random() - 0.5) * 4;
 
                 ctx.beginPath();
-                ctx.moveTo(-10 + glitchX, -10 + glitchY);
-                ctx.lineTo(10 - glitchX, -8 + glitchY);
-                ctx.lineTo(12 + glitchX, 5 - glitchY);
-                ctx.lineTo(0 + glitchX, 12 + glitchY);
-                ctx.lineTo(-12 - glitchX, 5 - glitchY);
+                ctx.moveTo(-12 + glitchX, -12 + glitchY);
+                ctx.lineTo(12 - glitchX, -10 + glitchY);
+                ctx.lineTo(14 + glitchX, 6 - glitchY);
+                ctx.lineTo(0 + glitchX, 14 + glitchY);
+                ctx.lineTo(-14 - glitchX, 6 - glitchY);
                 ctx.closePath();
+                ctx.fill();
                 ctx.stroke();
 
-                // Legs
+                // Legs - brighter
+                ctx.strokeStyle = '#ff6666';
+                ctx.lineWidth = 2;
                 const drawLeg = (sx, sy, ex, ey) => {
                     ctx.beginPath();
                     ctx.moveTo(sx, sy);
@@ -199,19 +203,20 @@ const DualWorldOverlay = () => {
                     ctx.stroke();
                 };
 
-                drawLeg(-10, -5, -25, -15);
-                drawLeg(-12, 0, -28, 0);
-                drawLeg(-10, 5, -25, 15);
-                drawLeg(10, -5, 25, -15);
-                drawLeg(12, 0, 28, 0);
-                drawLeg(10, 5, 25, 15);
+                drawLeg(-12, -6, -30, -18);
+                drawLeg(-14, 0, -32, 0);
+                drawLeg(-12, 6, -30, 18);
+                drawLeg(12, -6, 30, -18);
+                drawLeg(14, 0, 32, 0);
+                drawLeg(12, 6, 30, 18);
 
-                // Binary floaters
+                // Binary floaters - brighter
                 ctx.fillStyle = '#ff0000';
-                ctx.font = '8px monospace';
-                if (Math.random() > 0.7) ctx.fillText('1', 15, -15);
-                if (Math.random() > 0.7) ctx.fillText('0', -20, 10);
-                if (Math.random() > 0.7) ctx.fillText('ERR', -10, -20);
+                ctx.font = 'bold 10px monospace';
+                ctx.shadowBlur = 10;
+                if (Math.random() > 0.5) ctx.fillText('1', 18, -18);
+                if (Math.random() > 0.5) ctx.fillText('0', -24, 12);
+                if (Math.random() > 0.5) ctx.fillText('ERR', -12, -24);
             }
         }
 
