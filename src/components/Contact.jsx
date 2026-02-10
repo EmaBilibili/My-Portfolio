@@ -44,7 +44,7 @@ const Contact = () => {
             } else {
                 setStatus('error');
             }
-        } catch (error) {
+        } catch {
             setStatus('error');
         }
     };
@@ -177,7 +177,7 @@ const Contact = () => {
                                     className="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {status === 'submitting' ? 'Enviando...' : 'Enviar Mensaje'}
-                                    {!status === 'submitting' && <Send className="w-4 h-4" />}
+                                    {status !== 'submitting' && <Send className="w-4 h-4" />}
                                 </button>
                             </form>
                         )}

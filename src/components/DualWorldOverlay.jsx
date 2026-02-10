@@ -1,8 +1,5 @@
 import { useEffect, useRef } from 'react';
-
-// Export entities ref for turret to access
-export const entitiesRef = { current: [] };
-export const particlesRef = { current: [] };
+import { entitiesRef, particlesRef } from './gameState';
 
 const DualWorldOverlay = () => {
     const canvasRef = useRef(null);

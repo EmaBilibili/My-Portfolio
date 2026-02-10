@@ -183,7 +183,6 @@ const MouseEffect = () => {
 
         // Click handler with context detection
         const handleClick = (e) => {
-            const target = e.target;
             let rippleType = 'gaming'; // default - logic preserved but color unified
 
             // Create ripple
