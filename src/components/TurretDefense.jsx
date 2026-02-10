@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Bug } from 'lucide-react';
-import { entitiesRef, particlesRef } from './DualWorldOverlay';
+import { entitiesRef, particlesRef } from './gameState';
 
 const TurretDefense = () => {
     const canvasRef = useRef(null);
