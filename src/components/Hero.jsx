@@ -13,6 +13,9 @@ const Hero = () => {
 
 
             <div className="container mx-auto px-6 relative z-10">
+                {/* Hidden H1 for SEO */}
+                <h1 className="sr-only">Emanuel Binimelis - Game Developer & Cybersecurity Specialist</h1>
+
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -30,10 +33,10 @@ const Hero = () => {
                         </div>
 
                         {/* Full Name */}
-                        <h1 className="text-4xl font-heading font-bold tracking-tight">
+                        <div className="text-4xl font-heading font-bold tracking-tight">
                             <span className="text-white">EMANUEL</span>{' '}
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">BINIMELIS</span>
-                        </h1>
+                        </div>
 
                         {/* Combined Role */}
                         <h2 className="text-xl font-heading font-light">
@@ -75,9 +78,9 @@ const Hero = () => {
                                 </span>
                             </div>
 
-                            <h1 className="text-7xl lg:text-8xl font-heading font-bold tracking-tight text-white mb-2">
+                            <div className="text-7xl lg:text-8xl font-heading font-bold tracking-tight text-white mb-2">
                                 EMANUEL
-                            </h1>
+                            </div>
 
                             <h3 className="text-3xl text-primary font-heading font-light">
                                 Game Developer
@@ -102,9 +105,9 @@ const Hero = () => {
                                 Hello World, I'm
                             </h2>
 
-                            <h1 className="text-7xl lg:text-8xl font-heading font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent mb-2">
+                            <div className="text-7xl lg:text-8xl font-heading font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent mb-2">
                                 BINIMELIS
-                            </h1>
+                            </div>
 
                             <h3 className="text-3xl text-accent font-heading font-light flex items-center gap-2">
                                 <span className="text-white text-lg">&</span> Cybersecurity
