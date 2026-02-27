@@ -14,7 +14,7 @@ const Education = () => {
                             <h2 className="text-4xl font-bold font-heading text-white mb-2">Educación</h2>
                         </div>
 
-                        {educationData.filter(e => e.domain === 'gaming').map((edu, index) => (
+                        {educationData.filter(e => e.domain === 'degree').map((edu, index) => (
                             <motion.div
                                 key={index}
                                 whileHover={{ x: 10 }}
@@ -41,7 +41,7 @@ const Education = () => {
                             </h2>
                         </div>
 
-                        {educationData.filter(e => e.domain === 'security').map((edu, index) => (
+                        {educationData.filter(e => e.domain === 'certification').map((edu, index) => (
                             <motion.div
                                 key={index}
                                 whileHover={{ x: -10 }}

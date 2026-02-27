@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Send, Linkedin, Github, Gamepad2, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Mail, MapPin, Send, Linkedin, Github, CheckCircle2, AlertCircle } from 'lucide-react';
 
 import contactData from '../data/contact.json';
 
@@ -96,9 +96,6 @@ const Contact = () => {
                             </a>
                             <a href="https://github.com/EmaBilibili" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
                                 <Github className="w-5 h-5" />
-                            </a>
-                            <a href="https://emabilibili.itch.io/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
-                                <Gamepad2 className="w-5 h-5" />
                             </a>
                         </div>
                     </motion.div>

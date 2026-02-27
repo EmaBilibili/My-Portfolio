@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Gamepad2 } from 'lucide-react';
+import { Menu, X, Code2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
@@ -29,7 +29,7 @@ const Navbar = () => {
         >
             <div className="container mx-auto px-6 flex justify-between items-center">
                 <a href="#" className="text-2xl font-bold font-heading text-white flex items-center gap-2 group">
-                    <Gamepad2 className="text-primary group-hover:rotate-12 transition-transform duration-300" />
+                    <Code2 className="text-primary group-hover:rotate-12 transition-transform duration-300" />
                     <span className="text-gradient">
                         EB.Dev
                     </span>
