@@ -14,7 +14,7 @@ const Hero = () => {
 
             <div className="container mx-auto px-6 relative z-10">
                 {/* Hidden H1 for SEO */}
-                <h1 className="sr-only">Emanuel Binimelis - Game Developer & Cybersecurity Specialist</h1>
+                <h1 className="sr-only">Emanuel Binimelis - Full Stack Web Developer</h1>
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -40,14 +40,14 @@ const Hero = () => {
 
                         {/* Combined Role */}
                         <h2 className="text-xl font-heading font-light">
-                            <span className="text-primary">Game Developer</span>
+                            <span className="text-primary">Full Stack Dev</span>
                             <span className="text-white mx-2">&</span>
-                            <span className="text-accent">Cybersecurity</span>
+                            <span className="text-accent">Web Design</span>
                         </h2>
 
                         {/* Description */}
                         <p className="text-gray-400 text-sm sm:text-base max-w-md text-center leading-relaxed font-light bg-black/90 backdrop-blur-md px-4 py-4 rounded-xl border border-white/5 shadow-lg">
-                            Fusionando la creatividad del <span className="text-white">desarrollo de videojuegos</span> con la disciplina de la <span className="text-white">ciberseguridad</span>. Construyendo mundos, protegiendo sistemas.
+                            Construyendo <span className="text-white">experiencias web modernas</span> con foco en rendimiento, diseño y <span className="text-white">código limpio</span>. Del frontend al backend.
                         </p>
 
                         {/* Buttons Stack */}
@@ -83,7 +83,7 @@ const Hero = () => {
                             </div>
 
                             <h3 className="text-3xl text-primary font-heading font-light">
-                                Game Developer
+                                Full Stack Dev
                             </h3>
 
                             <div className="mt-8 flex justify-end">
@@ -110,7 +110,7 @@ const Hero = () => {
                             </div>
 
                             <h3 className="text-3xl text-accent font-heading font-light flex items-center gap-2">
-                                <span className="text-white text-lg">&</span> Cybersecurity
+                                <span className="text-white text-lg">&</span> Web Design
                             </h3>
 
                             <div className="mt-8 flex justify-start">
@@ -126,7 +126,7 @@ const Hero = () => {
 
                     {/* Desktop Description (below split) */}
                     <p className="hidden md:block max-w-2xl mx-auto text-gray-400 mt-16 text-center text-lg leading-relaxed font-light">
-                        Fusionando la creatividad del <span className="text-white">desarrollo de videojuegos</span> con la disciplina de la <span className="text-white">ciberseguridad</span>. Construyendo mundos, protegiendo sistemas.
+                        Construyendo <span className="text-white">experiencias web modernas</span> con foco en rendimiento, diseño y <span className="text-white">código limpio</span>. Del frontend al backend.
                     </p>
 
                 </motion.div>

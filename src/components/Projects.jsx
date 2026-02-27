@@ -77,20 +77,20 @@ const Projects = () => {
                         </div>
                     </div>
 
-                    {/* RIGHT COLUMN - SECURITY */}
+                    {/* RIGHT COLUMN - WEB */}
                     <div className="flex flex-col gap-12">
                         <div className="text-left">
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-accent/20 text-accent text-sm mb-4 font-mono">
                                 <Terminal className="w-4 h-4" />
-                                <span>SYSTEM.SECURITY</span>
+                                <span>SYSTEM.WEBDEV</span>
                             </div>
                             <h2 className="text-4xl md:text-5xl font-bold font-heading text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">
-                                Destacados
+                                Web Projects
                             </h2>
                         </div>
 
                         <div className="space-y-12">
-                            {projects.filter(p => p.domain === 'security').map((project, index) => (
+                            {projects.filter(p => p.domain === 'web').map((project, index) => (
                                 <motion.div
                                     key={index}
                                     initial={{ opacity: 0, x: 50 }}

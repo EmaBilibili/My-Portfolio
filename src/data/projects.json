@@ -29,45 +29,47 @@
         "repoLink": "#"
     },
     {
-        "title": "Penetration Testing Lab",
-        "category": "Cybersecurity",
-        "image": "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=800",
+        "title": "Portfolio Personal",
+        "category": "Web App",
+        "image": "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&q=80&w=800",
         "tech": [
-            "Kali Linux",
-            "Metasploit",
-            "Burp Suite",
-            "Wireshark"
+            "React",
+            "Tailwind",
+            "Vite",
+            "Framer Motion"
         ],
-        "description": "Entorno de laboratorio para prácticas de pentesting y análisis de vulnerabilidades en redes simuladas.",
-        "domain": "security",
+        "description": "Portfolio personal desarrollado con React y Tailwind CSS. Incluye efectos interactivos, animaciones y diseño responsivo.",
+        "domain": "web",
         "demoLink": "#",
-        "repoLink": "#"
+        "repoLink": "https://github.com/EmaBilibili/My-Portfolio"
     },
     {
-        "title": "Secure Chat Application",
-        "category": "Cybersecurity & Dev",
-        "image": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=800",
+        "title": "Full Salud - Software Médico",
+        "category": "Software de Gestión",
+        "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800",
         "tech": [
             "Node.js",
-            "Encryption",
-            "WebSockets"
+            "React",
+            "SQL",
+            "REST API"
         ],
-        "description": "Aplicación de mensajería con encriptación de extremo a extremo implementada desde cero.",
-        "domain": "security",
+        "description": "Software de alta precisión para el sector médico y gestión de inventario tecnológico desarrollado en RSTArgentina.",
+        "domain": "web",
         "demoLink": "#",
         "repoLink": "#"
     },
     {
-        "title": "Network Security Scanner",
-        "category": "Cybersecurity Tool",
-        "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800",
+        "title": "Dashboard Administrativo",
+        "category": "Web App",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
         "tech": [
-            "Python",
-            "Nmap",
-            "Security"
+            "React",
+            "TypeScript",
+            "Chart.js",
+            "Tailwind"
         ],
-        "description": "Herramienta automatizada para escaneo y análisis de seguridad en redes corporativas.",
-        "domain": "security",
+        "description": "Panel de administración con gráficos interactivos, gestión de usuarios y reportes en tiempo real.",
+        "domain": "web",
         "demoLink": "#",
         "repoLink": "#"
     },

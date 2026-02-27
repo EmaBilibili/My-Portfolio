@@ -49,6 +49,9 @@ const DualWorldOverlay = () => {
             }
         }
 
+        // Code snippets that float around the screen
+        const codeSnippets = ['<div>', '</div>', 'const', 'async', 'return', '=>', '{}', '[]', 'React', '.map()', 'useState', 'fetch()', '</>'];
+
         class Entity {
             constructor() {
                 // Spawn from random edge
@@ -82,15 +85,18 @@ const DualWorldOverlay = () => {
                         break;
                 }
 
-                this.size = 20;
                 this.wobbleOffset = Math.random() * Math.PI * 2;
                 this.wobbleTimer = 0;
 
-                // Random vibrant colors
-                this.color = ['#ff0000', '#ffb8ae', '#00f0ff', '#ffb847', '#ff00ff', '#00ff9f'][Math.floor(Math.random() * 6)];
+                // Random vibrant colors (web-dev palette: cyan, purple, green)
+                this.color = ['#00f0ff', '#7000ff', '#00ff9f', '#ffffff', '#a78bfa'][Math.floor(Math.random() * 5)];
+
+                // Code snippet to display
+                this.snippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+                this.opacity = Math.random() * 0.4 + 0.2;
 
                 // Entity state
-                this.isGhost = true;
+                this.isCodeSnippet = true;
                 this.isBug = false;
                 this.isDead = false;
 
@@ -105,10 +111,10 @@ const DualWorldOverlay = () => {
                 this.x += this.vx + Math.sin(this.wobbleTimer + this.wobbleOffset) * 0.3;
                 this.y += this.vy + Math.cos(this.wobbleTimer + this.wobbleOffset) * 0.3;
 
-                // Check for random transformation (ghost -> bug)
-                if (this.isGhost && !this.isBug) {
+                // Check for random transformation (code -> bug)
+                if (this.isCodeSnippet && !this.isBug) {
                     if (Date.now() - this.spawnTime > this.transformTimer) {
-                        this.isGhost = false;
+                        this.isCodeSnippet = false;
                         this.isBug = true;
                     }
                 }
@@ -123,8 +129,8 @@ const DualWorldOverlay = () => {
                 ctx.save();
                 ctx.translate(this.x, this.y);
 
-                if (this.isGhost && !this.isBug) {
-                    this.drawGhost(ctx);
+                if (this.isCodeSnippet && !this.isBug) {
+                    this.drawCodeTag(ctx);
                 } else {
                     this.drawBug(ctx);
                 }
@@ -132,88 +138,49 @@ const DualWorldOverlay = () => {
                 ctx.restore();
             }
 
-            drawGhost(ctx) {
-                // Pac-Man Ghost Style
+            drawCodeTag(ctx) {
+                // Floating code snippet style
+                ctx.globalAlpha = this.opacity;
+                ctx.font = 'bold 12px "JetBrains Mono", monospace';
                 ctx.fillStyle = this.color;
-                ctx.strokeStyle = this.color;
-
-                // Body (Semicircle top)
-                ctx.beginPath();
-                ctx.arc(0, 0, this.size, Math.PI, 0);
-                ctx.lineTo(this.size, this.size);
-
-                // Wavy bottom
-                const waveSize = this.size / 3;
-                for (let i = 1; i <= 3; i++) {
-                    ctx.arc(this.size - (waveSize * (2 * i - 1)), this.size, waveSize, 0, Math.PI, false);
-                }
-                ctx.lineTo(-this.size, 0);
-                ctx.fill();
-
-                // Eyes
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(-this.size / 2.5, -this.size / 4, this.size / 3, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(this.size / 2.5, -this.size / 4, this.size / 3, 0, Math.PI * 2);
-                ctx.fill();
-
-                // Pupils
-                ctx.fillStyle = '#000000';
-                ctx.beginPath();
-                ctx.arc(-this.size / 2.5 + 2, -this.size / 4, this.size / 6, 0, Math.PI * 2);
-                ctx.arc(this.size / 2.5 + 2, -this.size / 4, this.size / 6, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = this.color;
+                ctx.fillText(this.snippet, 0, 0);
             }
 
             drawBug(ctx) {
-                // Glitchy Bug/Virus Style - BRIGHT & VISIBLE
+                // Code error / bug style - red squiggly warning
                 ctx.strokeStyle = '#ff3333';
-                ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
-                ctx.lineWidth = 3;
-                ctx.shadowBlur = 20;
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
+                ctx.lineWidth = 2;
+                ctx.shadowBlur = 15;
                 ctx.shadowColor = '#ff0000';
 
-                // Glitch effect
-                const glitchX = (Math.random() - 0.5) * 4;
-                const glitchY = (Math.random() - 0.5) * 4;
+                // Warning triangle shape
+                const glitchX = (Math.random() - 0.5) * 3;
+                const glitchY = (Math.random() - 0.5) * 3;
 
                 ctx.beginPath();
-                ctx.moveTo(-12 + glitchX, -12 + glitchY);
-                ctx.lineTo(12 - glitchX, -10 + glitchY);
-                ctx.lineTo(14 + glitchX, 6 - glitchY);
-                ctx.lineTo(0 + glitchX, 14 + glitchY);
-                ctx.lineTo(-14 - glitchX, 6 - glitchY);
+                ctx.moveTo(0 + glitchX, -14 + glitchY);
+                ctx.lineTo(14 - glitchX, 10 + glitchY);
+                ctx.lineTo(-14 - glitchX, 10 + glitchY);
                 ctx.closePath();
                 ctx.fill();
                 ctx.stroke();
 
-                // Legs - brighter
-                ctx.strokeStyle = '#ff6666';
-                ctx.lineWidth = 2;
-                const drawLeg = (sx, sy, ex, ey) => {
-                    ctx.beginPath();
-                    ctx.moveTo(sx, sy);
-                    ctx.lineTo((sx + ex) / 2 + (Math.random() - 0.5) * 10, (sy + ey) / 2 + (Math.random() - 0.5) * 10);
-                    ctx.lineTo(ex, ey);
-                    ctx.stroke();
-                };
-
-                drawLeg(-12, -6, -30, -18);
-                drawLeg(-14, 0, -32, 0);
-                drawLeg(-12, 6, -30, 18);
-                drawLeg(12, -6, 30, -18);
-                drawLeg(14, 0, 32, 0);
-                drawLeg(12, 6, 30, 18);
-
-                // Binary floaters - brighter
-                ctx.fillStyle = '#ff0000';
+                // Exclamation mark
+                ctx.fillStyle = '#ff6666';
                 ctx.font = 'bold 10px monospace';
-                ctx.shadowBlur = 10;
-                if (Math.random() > 0.5) ctx.fillText('1', 18, -18);
-                if (Math.random() > 0.5) ctx.fillText('0', -24, 12);
-                if (Math.random() > 0.5) ctx.fillText('ERR', -12, -24);
+                ctx.shadowBlur = 5;
+                ctx.fillText('!', -3, 8);
+
+                // Error text floaters
+                ctx.fillStyle = '#ff4444';
+                ctx.font = 'bold 9px monospace';
+                ctx.shadowBlur = 8;
+                if (Math.random() > 0.5) ctx.fillText('ERR', 16, -16);
+                if (Math.random() > 0.5) ctx.fillText('null', -22, 14);
+                if (Math.random() > 0.5) ctx.fillText('undefined', -20, -22);
             }
         }
 

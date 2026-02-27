@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Briefcase, ShieldCheck } from 'lucide-react';
+import { Briefcase } from 'lucide-react';
 
 import experienceData from '../data/experience.json';
 
@@ -45,10 +45,7 @@ const Experience = () => {
                                         <div className="absolute inset-0 rounded-xl border border-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                                         <div className="flex items-center gap-3 mb-2">
-                                            {exp.category?.includes('Security') ?
-                                                <ShieldCheck className="w-5 h-5 text-accent" /> :
-                                                <Briefcase className="w-5 h-5 text-primary group-hover:text-accent transition-colors" />
-                                            }
+                                            <Briefcase className="w-5 h-5 text-primary group-hover:text-accent transition-colors" />
                                             <span className="text-sm text-gray-400 font-mono tracking-wider">{exp.period}</span>
                                         </div>
                                         <h3 className="text-xl font-bold text-white mb-1 font-heading">{exp.role}</h3>

@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
-import { Code2, Brain, Rocket, Users } from 'lucide-react';
+import { Code2, Layout, Server, Users } from 'lucide-react';
 
 const About = () => {
     const skills = [
-        { icon: <Code2 />, title: "Core Tech", desc: "Unity, C#, Python, Git" },
-        { icon: <Brain />, title: "IA & NPCs", desc: "Behavior Systems, NavMesh" },
-        { icon: <Rocket />, title: "Gameplay", desc: "Mecánicas, Prototipado" },
+        { icon: <Code2 />, title: "Core Tech", desc: "React, TypeScript, Node.js, Git" },
+        { icon: <Layout />, title: "Frontend", desc: "HTML/CSS, Tailwind, Next.js" },
+        { icon: <Server />, title: "Backend", desc: "Node.js, Express, REST APIs" },
         { icon: <Users />, title: "Soft Skills", desc: "Liderazgo, Optimización" },
     ];
 
@@ -26,10 +26,10 @@ const About = () => {
                     <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
                         <div className="space-y-6 text-gray-400 leading-relaxed bg-black/60 backdrop-blur-sm p-6 rounded-xl">
                             <p>
-                                Soy un desarrollador de videojuegos apasionado con sede en Mendoza, Argentina. Tengo experiencia tanto en diseño de juegos 2D como 3D, con un fuerte enfoque en la programación de IA para NPCs y el desarrollo de mecánicas de juego sólidas.
+                                Soy un desarrollador web con sede en Mendoza, Argentina. Me especializo en construir aplicaciones web modernas, tanto en el frontend como en el backend, con especial atención al rendimiento, la accesibilidad y el diseño.
                             </p>
                             <p>
-                                Me destaco en la creación de herramientas personalizadas para mejorar los flujos de trabajo del equipo y tengo experiencia liderando equipos de desarrollo. Mi objetivo es crear experiencias de juego inmersivas y de alta calidad.
+                                Me destaco creando interfaces de usuario intuitivas y APIs robustas. Tengo experiencia liderando equipos de desarrollo y colaborando en proyectos multidisciplinarios. Mi objetivo es entregar soluciones web de alta calidad y bien estructuradas.
                             </p>
                         </div>
 

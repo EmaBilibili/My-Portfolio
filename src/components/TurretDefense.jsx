@@ -4,7 +4,7 @@ import { entitiesRef, particlesRef } from './gameState';
 
 const TurretDefense = () => {
     const canvasRef = useRef(null);
-    const [killCount, setKillCount] = useState(0);
+    const [bugsFixed, setBugsFixed] = useState(0);
     const turretRef = useRef({
         x: 0,
         y: 100, // Below navbar, more visible
@@ -120,7 +120,7 @@ const TurretDefense = () => {
                 }
 
                 // Increment kill count
-                setKillCount(prev => prev + 1);
+                setBugsFixed(prev => prev + 1);
             }
 
             // Check if laser should still be visible
@@ -206,10 +206,10 @@ const TurretDefense = () => {
 
     return (
         <>
-            {/* Kill Counter UI - positioned top-left to not block content */}
+            {/* Bug Counter UI - positioned top-left to not block content */}
             <div className="fixed top-20 left-4 z-[60] flex items-center gap-2 bg-black/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-red-500/30">
                 <Bug className="w-4 h-4 text-red-500" />
-                <span className="text-red-500 font-mono font-bold">{killCount}</span>
+                <span className="text-red-500 font-mono font-bold text-xs">{bugsFixed} bugs fixed</span>
             </div>
 
             {/* Turret Canvas */}
