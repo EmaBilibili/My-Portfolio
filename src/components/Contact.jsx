@@ -60,7 +60,7 @@ const Contact = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-4xl font-bold mb-6 heading-readable">
+                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 heading-readable leading-relaxed break-words">
                             ¿Tienes un proyecto <br />
                             <span className="text-gradient">en mente?</span>
                         </h2>

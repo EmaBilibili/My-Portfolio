@@ -14,7 +14,7 @@ const Education = () => {
                     {/* LEFT — Formal Education */}
                     <div className="flex flex-col gap-8">
                         <div>
-                            <h2 className="text-4xl font-bold font-heading text-white mb-2">Educación</h2>
+                            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-heading text-white mb-4 leading-relaxed break-words">Educación</h2>
                         </div>
 
                         {degrees.map((edu, index) => (
@@ -37,7 +37,7 @@ const Education = () => {
                     {/* RIGHT — Certifications */}
                     <div className="flex flex-col gap-8">
                         <div>
-                            <h2 className="text-4xl font-bold font-heading text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent mb-2">
+                            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-heading text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent mb-4 leading-relaxed break-words">
                                 Certificaciones
                             </h2>
                         </div>

@@ -43,7 +43,7 @@ const About = () => {
                     transition={{ duration: 0.6 }}
                     className="max-w-4xl mx-auto"
                 >
-                    <h2 className="text-4xl font-bold mb-12 text-center heading-readable">
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-12 text-center heading-readable leading-relaxed break-words">
                         Sobre <span className="text-gradient">Mí</span>
                     </h2>
 

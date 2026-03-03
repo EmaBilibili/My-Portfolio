@@ -86,7 +86,7 @@ const Projects = () => {
                                 <Gamepad2 className="w-4 h-4" />
                                 <span>GAME PROJECTS</span>
                             </div>
-                            <h2 className="text-4xl md:text-5xl font-bold font-heading text-white">
+                            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-heading text-white leading-relaxed break-words">
                                 Proyectos
                             </h2>
                         </div>
@@ -105,7 +105,7 @@ const Projects = () => {
                                 <Code2 className="w-4 h-4" />
                                 <span>WEB PROJECTS</span>
                             </div>
-                            <h2 className="text-4xl md:text-5xl font-bold font-heading text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">
+                            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-heading text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent leading-relaxed break-words">
                                 Destacados
                             </h2>
                         </div>
