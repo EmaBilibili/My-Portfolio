@@ -7,7 +7,6 @@ import Education from './components/Education';
 import Contact from './components/Contact';
 import MouseEffect from './components/MouseEffect';
 import FloatingPixels from './components/FloatingPixels';
-import GameHUD from './components/GameHUD';
 import TurretDefense from './components/TurretDefense';
 
 function App() {
@@ -17,9 +16,6 @@ function App() {
       <FloatingPixels />
       <TurretDefense />
       <MouseEffect />
-
-      {/* Arcade HUD */}
-      <GameHUD />
 
       {/* Content */}
       <div className="relative z-10">
