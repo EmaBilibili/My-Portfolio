@@ -8,9 +8,9 @@
   --color-accent: #6366f1;
   --color-danger: #f43f5e;
 
-  --font-heading: 'Outfit', sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Press Start 2P', monospace;
+  --font-mono: 'Press Start 2P', monospace;
+  --font-sans: 'Press Start 2P', monospace;
   --font-pixel: 'Press Start 2P', monospace;
 }
 
@@ -78,7 +78,7 @@
   }
 
   .heading-readable {
-    text-shadow: 0 0 30px rgba(0, 0, 0, 1), 0 0 60px rgba(0, 0, 0, 0.8), 0 4px 8px rgba(0, 0, 0, 0.9);
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.9));
   }
 
   /* Pixel-art style border */

@@ -21,7 +21,7 @@ const Experience = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-5xl font-bold mb-16 text-center font-heading heading-readable"
+                    className="text-2xl md:text-3xl font-bold mb-16 text-center font-heading heading-readable leading-relaxed"
                 >
                     Experiencia <span className="text-gradient">Profesional</span>
                 </motion.h2>
