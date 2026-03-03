@@ -130,18 +130,21 @@ const TurretDefense = () => {
         const ctx = canvas.getContext('2d');
         let animId;
 
-        const resize = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            // Adjust turret position dynamically based on screen width
-            if (window.innerWidth < 500) {
-                // For small mobile widths (e.g. below 442px), move it further right or adjust spacing
-                // "EB.Dev" in px-6 container -> we shift it far right, just before the hamburger menu
-                turretPosRef.current = { x: window.innerWidth - 80, y: 36 };
+        const updatePosition = () => {
+            const logo = document.getElementById('navbar-logo');
+            if (logo) {
+                const rect = logo.getBoundingClientRect();
+                // Place turret 40 pixels to the right of the logo, vertically centered with the logo
+                turretPosRef.current = { x: rect.right + 40, y: rect.top + rect.height / 2 };
             } else {
                 turretPosRef.current = { x: 210, y: 40 };
             }
+        };
+
+        const resize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            updatePosition();
         };
         resize();
         window.addEventListener('resize', resize);
@@ -166,6 +169,15 @@ const TurretDefense = () => {
             const now = Date.now();
             frameRef.current++;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (frameRef.current % 60 === 0) {
+                // Update position periodically in case of layout shifts without resize events
+                const logo = document.getElementById('navbar-logo');
+                if (logo) {
+                    const rect = logo.getBoundingClientRect();
+                    turretPosRef.current = { x: rect.right + 40, y: rect.top + rect.height / 2 };
+                }
+            }
 
             // Spawn
             if (now - lastSpawnRef.current > SPAWN_INTERVAL) {

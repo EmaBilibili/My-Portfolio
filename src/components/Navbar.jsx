@@ -24,12 +24,11 @@ const Navbar = () => {
 
     return (
         <nav
-            className={`fixed w-full z-50 transition-all duration-300 ${
-                scrolled ? 'bg-background/90 backdrop-blur-md py-4 border-b border-white/5' : 'bg-transparent py-6'
-            }`}
+            className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-background/90 backdrop-blur-md py-4 border-b border-white/5' : 'bg-transparent py-6'
+                }`}
         >
             <div className="container mx-auto px-6 flex justify-between items-center">
-                <a href="#" className="text-2xl font-bold font-heading text-white flex items-center gap-2 group">
+                <a href="#" id="navbar-logo" className="text-xl md:text-2xl font-bold font-heading text-white flex items-center gap-2 group">
                     <Gamepad2 className="text-primary group-hover:rotate-12 transition-transform duration-300" />
                     <span className="text-gradient">EB.Dev</span>
                 </a>
