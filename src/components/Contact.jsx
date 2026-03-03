@@ -90,14 +90,7 @@ const Contact = () => {
                             </div>
                         </div>
 
-                        <div className="flex gap-4 mt-10">
-                            <a href="https://www.linkedin.com/in/emanuelbinimelis" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
-                                <Linkedin className="w-5 h-5" />
-                            </a>
-                            <a href="https://github.com/EmaBilibili" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300">
-                                <Github className="w-5 h-5" />
-                            </a>
-                        </div>
+
                     </motion.div>
 
                     <motion.div
@@ -181,6 +174,21 @@ const Contact = () => {
                         )}
                     </motion.div>
                 </div>
+
+                {/* Redes Sociales al final */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="flex justify-center gap-6 mt-20 pt-10 border-t border-white/5"
+                >
+                    <a href="https://www.linkedin.com/in/emanuelbinimelis" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300 hover:-translate-y-1">
+                        <Linkedin className="w-6 h-6" />
+                    </a>
+                    <a href="https://github.com/EmaBilibili" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300 hover:-translate-y-1">
+                        <Github className="w-6 h-6" />
+                    </a>
+                </motion.div>
             </div>
         </section>
     );
