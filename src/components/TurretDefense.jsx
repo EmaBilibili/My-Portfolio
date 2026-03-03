@@ -314,9 +314,6 @@ const TurretDefense = () => {
             });
 
             // ── TURRET ──
-            const TX = turretPosRef.current.x;
-            const TY = turretPosRef.current.y;
-
             ctx.save();
             ctx.globalAlpha = 0.9;
 
