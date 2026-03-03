@@ -11,6 +11,7 @@ Este archivo proporciona un resumen eficiente en tokens para asistir a la IA.
 - Modo fallback: Si MongoDB no está corriendo, el backend usa datos mock y sigue funcionando (`server/index.js`).
 
 ## Estructura de Carpetas 
+- `/.claude/skills`: Contiene 31 skills instaladas de `awesome-claude-skills` listas para usar por Claude Code (ej. herramientas de UI/UX como `artifacts-builder`, `theme-factory`, `canvas-design`).
 - `/src/components`: Secciones principales de la UI (`Navbar`, `Hero`, `About`, `Experience`, `Projects`, `Education`, `Contact`).
 - **Efectos e Interactividad:** La UI incluye elementos visuales avanzados y de juego como `DualWorldOverlay`, `CyberGrid`, `MouseEffect` y un minijuego/efecto `TurretDefense` integrados en el background de `App.jsx`.
 - `/server`: Carpeta del backend (API puerto 5000). Incluye `/routes` y `/models`.
@@ -22,3 +23,4 @@ Este archivo proporciona un resumen eficiente en tokens para asistir a la IA.
 ## Notas Clave
 - El sitio es un portfolio personal interactivo con temática cyber/gaming.
 - Utiliza **Tailwind CSS v4** y motion animations con **Framer Motion**.
+- El proyecto tiene soporte avanzado para **Claude Code** mediante skills locales, permitiendo generación de UI/UX (`artifacts-builder`), branding y otras tareas de despliegue automatizado.

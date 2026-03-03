@@ -31,7 +31,7 @@ const MouseEffect = () => {
                 this.speedY = Math.random() * 3 - 1.5;
                 this.life = 1;
                 this.decay = Math.random() * 0.01 + 0.005;
-                this.color = color || (Math.random() > 0.5 ? '#7c3aed' : '#ec4899');
+                this.color = color || (Math.random() > 0.5 ? '#10b981' : '#34d399');
             }
 
             update() {
@@ -61,8 +61,8 @@ const MouseEffect = () => {
                 this.radius = 0;
                 this.maxRadius = 250;
                 this.life = 1;
-                this.color1 = '#7c3aed';
-                this.color2 = '#ec4899';
+                this.color1 = '#10b981';
+                this.color2 = '#34d399';
             }
 
             update() {
@@ -106,7 +106,7 @@ const MouseEffect = () => {
 
         const handleClick = (e) => {
             ripplesRef.current.push(new Ripple(e.clientX, e.clientY));
-            const burstColor = Math.random() > 0.5 ? '#7c3aed' : '#ec4899';
+            const burstColor = Math.random() > 0.5 ? '#10b981' : '#34d399';
             for (let i = 0; i < 12; i++) {
                 particlesRef.current.push(new Particle(e.clientX, e.clientY, burstColor));
             }
@@ -129,8 +129,8 @@ const MouseEffect = () => {
                 ctx.save();
                 ctx.globalAlpha = point.life * 0.25;
                 const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, 20);
-                gradient.addColorStop(0, '#7c3aed');
-                gradient.addColorStop(0.5, '#ec4899');
+                gradient.addColorStop(0, '#10b981');
+                gradient.addColorStop(0.5, '#34d399');
                 gradient.addColorStop(1, 'transparent');
                 ctx.fillStyle = gradient;
                 ctx.beginPath();
@@ -146,8 +146,8 @@ const MouseEffect = () => {
             if (x && y) {
                 ctx.save();
                 const gradient = ctx.createRadialGradient(x, y, 0, x, y, 90);
-                gradient.addColorStop(0, 'rgba(124, 58, 237, 0.12)');
-                gradient.addColorStop(0.5, 'rgba(236, 72, 153, 0.05)');
+                gradient.addColorStop(0, 'rgba(16, 185, 129, 0.12)');
+                gradient.addColorStop(0.5, 'rgba(52, 211, 153, 0.05)');
                 gradient.addColorStop(1, 'transparent');
                 ctx.fillStyle = gradient;
                 ctx.beginPath();

@@ -8,12 +8,14 @@ import Contact from './components/Contact';
 import MouseEffect from './components/MouseEffect';
 import FloatingPixels from './components/FloatingPixels';
 import GameHUD from './components/GameHUD';
+import TurretDefense from './components/TurretDefense';
 
 function App() {
   return (
-    <div className="bg-background min-h-screen text-white selection:bg-purple-500 selection:text-white relative overflow-hidden">
+    <div className="bg-background min-h-screen text-white selection:bg-emerald-500 selection:text-white relative overflow-hidden">
       {/* Background Effects */}
       <FloatingPixels />
+      <TurretDefense />
       <MouseEffect />
 
       {/* Arcade HUD */}

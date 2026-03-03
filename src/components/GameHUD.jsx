@@ -20,7 +20,7 @@ const GameHUD = () => {
                     x: Math.random() * 120 - 20,
                     y: Math.random() * 60,
                     size: Math.random() * 8 + 6,
-                    color: ['#7c3aed', '#ec4899', '#fbbf24'][Math.floor(Math.random() * 3)],
+                    color: ['#10b981', '#34d399', '#6366f1'][Math.floor(Math.random() * 3)],
                     captured: false,
                 }
             ]);
@@ -67,7 +67,7 @@ const GameHUD = () => {
         <div className="fixed top-20 right-4 z-[60] select-none pointer-events-none">
             {/* HUD Panel */}
             <div className="bg-black/70 backdrop-blur-md border border-primary/30 rounded-lg px-4 py-3 w-36 font-mono pointer-events-auto"
-                style={{ boxShadow: '0 0 15px rgba(124,58,237,0.2), inset 0 0 15px rgba(124,58,237,0.05)' }}>
+                style={{ boxShadow: '0 0 15px rgba(16,185,129,0.2), inset 0 0 15px rgba(16,185,129,0.05)' }}>
 
                 {/* Score */}
                 <div className="mb-2">

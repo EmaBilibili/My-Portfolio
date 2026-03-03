@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const COLORS = ['#7c3aed', '#ec4899', '#fbbf24', '#a78bfa', '#f9a8d4'];
+const COLORS = ['#10b981', '#34d399', '#6366f1', '#6ee7b7', '#818cf8'];
 const PIXEL_COUNT = 60;
 const DOT_GRID_SPACING = 40;
 const MOUSE_RADIUS = 150;
