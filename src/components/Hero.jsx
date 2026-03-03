@@ -1,155 +1,115 @@
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Gamepad2, Code2, Sparkles, Star } from 'lucide-react';
+
+const floatingIcons = [
+    { icon: Gamepad2, color: '#7c3aed', top: '15%', left: '8%', delay: 0 },
+    { icon: Code2, color: '#ec4899', top: '25%', right: '10%', delay: 0.4 },
+    { icon: Sparkles, color: '#fbbf24', bottom: '30%', left: '6%', delay: 0.8 },
+    { icon: Star, color: '#a78bfa', bottom: '20%', right: '8%', delay: 1.2 },
+];
 
 const Hero = () => {
     return (
-        <section id="home" className="min-h-screen flex items-start justify-center relative overflow-hidden bg-transparent pt-32">
-            {/* Background Elements */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
-            <div className="absolute top-0 left-0 w-full h-full bg-hero-pattern opacity-10" />
+        <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-24">
+            {/* Radial glow */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_40%,rgba(124,58,237,0.12)_0%,transparent_70%)] pointer-events-none" />
 
-            {/* Matrix rain-like or tech overlay could go here, for now a simple grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-10 pointer-events-none" />
-
+            {/* Floating icons — desktop only */}
+            {floatingIcons.map(({ icon: Icon, color, delay, ...pos }, i) => (
+                <motion.div
+                    key={i}
+                    className="absolute hidden lg:flex items-center justify-center w-12 h-12 rounded-xl"
+                    style={{
+                        ...pos,
+                        background: `${color}18`,
+                        border: `1px solid ${color}30`,
+                        boxShadow: `0 0 20px ${color}20`,
+                    }}
+                    animate={{ y: [0, -12, 0] }}
+                    transition={{ repeat: Infinity, duration: 3.5, delay, ease: 'easeInOut' }}
+                >
+                    <Icon style={{ color, width: 22, height: 22 }} />
+                </motion.div>
+            ))}
 
             <div className="container mx-auto px-6 relative z-10">
-                {/* Hidden H1 for SEO */}
-                <h1 className="sr-only">Emanuel Binimelis - Game Developer & Cybersecurity Specialist</h1>
+                {/* SEO heading */}
+                <h1 className="sr-only">Emanuel Binimelis - Game Developer & Web Developer, AI-Powered</h1>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="max-w-7xl mx-auto"
+                    transition={{ duration: 0.6 }}
+                    className="max-w-3xl mx-auto text-center flex flex-col items-center gap-6"
                 >
-                    {/* MOBILE LAYOUT (< 768px) - Compact Single Column */}
-                    <div className="md:hidden flex flex-col items-center text-center space-y-6">
-                        {/* Badge */}
-                        <div className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm shadow-[0_0_15px_var(--color-primary)]">
-                            <span className="text-primary font-mono tracking-widest text-sm uppercase flex items-center gap-2">
-                                <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                                System Online
-                            </span>
+                    {/* Available badge */}
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/8 backdrop-blur-sm">
+                        <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                        <span className="text-primary font-mono tracking-widest text-xs uppercase">
+                            ✦ Available for Projects
+                        </span>
+                    </div>
+
+                    {/* Name */}
+                    <div className="space-y-1">
+                        <div className="text-5xl sm:text-7xl lg:text-8xl font-heading font-bold tracking-tight leading-none">
+                            <span className="text-gradient">EMANUEL</span>
                         </div>
-
-                        {/* Full Name */}
-                        <div className="text-4xl font-heading font-bold tracking-tight">
-                            <span className="text-white">EMANUEL</span>{' '}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">BINIMELIS</span>
-                        </div>
-
-                        {/* Combined Role */}
-                        <h2 className="text-xl font-heading font-light">
-                            <span className="text-primary">Game Developer</span>
-                            <span className="text-white mx-2">&</span>
-                            <span className="text-accent">Cybersecurity</span>
-                        </h2>
-
-                        {/* Description */}
-                        <p className="text-gray-400 text-sm sm:text-base max-w-md text-center leading-relaxed font-light bg-black/90 backdrop-blur-md px-4 py-4 rounded-xl border border-white/5 shadow-lg">
-                            Fusionando la creatividad del <span className="text-white">desarrollo de videojuegos</span> con la disciplina de la <span className="text-white">ciberseguridad</span>. Construyendo mundos, protegiendo sistemas.
-                        </p>
-
-                        {/* Buttons Stack */}
-                        <div className="flex flex-col gap-3 w-full max-w-xs">
-                            <a
-                                href="#contact"
-                                className="bg-primary text-black px-8 py-3.5 rounded-none font-bold font-mono tracking-wide flex items-center justify-center gap-2 hover:bg-white transition-all shadow-[0_0_20px_rgba(0,255,159,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] tech-border border-0"
-                            >
-                                CONTACTAR
-                            </a>
-                            <a
-                                href="#projects"
-                                className="px-8 py-3.5 rounded-none border border-white/20 text-white font-mono hover:bg-white/10 transition-all flex items-center justify-center gap-2 bg-black/80 backdrop-blur-sm"
-                            >
-                                VER PROYECTOS <ArrowRight className="w-4 h-4" />
-                            </a>
+                        <div className="text-5xl sm:text-7xl lg:text-8xl font-heading font-bold tracking-tight leading-none text-white">
+                            BINIMELIS
                         </div>
                     </div>
 
-                    {/* DESKTOP LAYOUT (≥ 768px) - Dual World Split */}
-                    <div className="hidden md:grid md:grid-cols-2 gap-12 items-center">
-                        {/* LEFT COLUMN (Gamer) - Aligned Right to center */}
-                        <div className="text-right flex flex-col items-end">
-                            <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm shadow-[0_0_15px_var(--color-primary)]">
-                                <span className="text-primary font-mono tracking-widest text-sm uppercase flex items-center gap-2">
-                                    <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                                    System Online
-                                </span>
-                            </div>
+                    {/* Subtitle */}
+                    <h2 className="text-xl sm:text-2xl font-heading font-light text-gray-300 tracking-wide">
+                        <span className="text-primary">Game Developer</span>
+                        <span className="text-white/40 mx-3">&</span>
+                        <span className="text-secondary">Web Developer</span>
+                    </h2>
 
-                            <div className="text-7xl lg:text-8xl font-heading font-bold tracking-tight text-white mb-2">
-                                EMANUEL
-                            </div>
-
-                            <h3 className="text-3xl text-primary font-heading font-light">
-                                Game Developer
-                            </h3>
-
-                            <div className="mt-8 flex justify-end">
-                                <a
-                                    href="#contact"
-                                    className="bg-primary text-black px-8 py-3.5 rounded-none font-bold font-mono tracking-wide flex items-center gap-2 hover:bg-white transition-all shadow-[0_0_20px_rgba(0,255,159,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] tech-border border-0"
-                                >
-                                    CONTACTAR
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* RIGHT COLUMN (Hacker) - Aligned Left to center */}
-                        <div className="text-left flex flex-col items-start">
-                            <h2
-                                className="text-gray-400 font-mono mb-4 animate-glitch glitch-text text-xl pt-2"
-                                data-text="Hello World, I'm"
-                            >
-                                Hello World, I'm
-                            </h2>
-
-                            <div className="text-7xl lg:text-8xl font-heading font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent mb-2">
-                                BINIMELIS
-                            </div>
-
-                            <h3 className="text-3xl text-accent font-heading font-light flex items-center gap-2">
-                                <span className="text-white text-lg">&</span> Cybersecurity
-                            </h3>
-
-                            <div className="mt-8 flex justify-start">
-                                <a
-                                    href="#projects"
-                                    className="px-8 py-3.5 rounded-none border border-white/20 text-white font-mono hover:bg-white/5 transition-all flex items-center gap-2"
-                                >
-                                    VER PROYECTOS <ArrowRight className="w-4 h-4" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Desktop Description (below split) */}
-                    <p className="hidden md:block max-w-2xl mx-auto text-gray-400 mt-16 text-center text-lg leading-relaxed font-light">
-                        Fusionando la creatividad del <span className="text-white">desarrollo de videojuegos</span> con la disciplina de la <span className="text-white">ciberseguridad</span>. Construyendo mundos, protegiendo sistemas.
+                    {/* Tag */}
+                    <p className="font-mono text-sm text-gray-500 tracking-wider">
+                        AI-Powered Development · Unity · React · Node.js
                     </p>
 
+                    {/* Description */}
+                    <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl">
+                        Creando mundos interactivos con <span className="text-white font-medium">Unity y C#</span>,
+                        construyendo aplicaciones web con <span className="text-white font-medium">React y Node.js</span>,
+                        y potenciando todo con <span className="text-accent font-medium">herramientas de IA</span>.
+                    </p>
+
+                    {/* CTA buttons */}
+                    <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm sm:max-w-none sm:justify-center">
+                        <a
+                            href="#projects"
+                            className="flex items-center justify-center gap-2 px-8 py-3.5 font-bold font-mono tracking-wide text-white transition-all duration-300 rounded-lg"
+                            style={{
+                                background: 'linear-gradient(135deg, #7c3aed, #ec4899)',
+                                boxShadow: '0 0 25px rgba(124,58,237,0.4)',
+                            }}
+                        >
+                            VER PROYECTOS <ArrowRight className="w-4 h-4" />
+                        </a>
+                        <a
+                            href="#contact"
+                            className="flex items-center justify-center gap-2 px-8 py-3.5 font-bold font-mono tracking-wide border border-primary/40 text-primary hover:bg-primary/10 transition-all duration-300 rounded-lg"
+                        >
+                            CONTACTAR
+                        </a>
+                    </div>
                 </motion.div>
             </div>
 
-            {/* Decorative Glows */}
-            {/* Decorative Glows - Optimized for performance (Radial Gradient instead of CSS Blur) */}
-            <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[radial-gradient(circle,rgba(0,240,255,0.15)_0%,transparent_70%)] animate-pulse will-change-transform" />
-            <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[radial-gradient(circle,rgba(112,0,255,0.15)_0%,transparent_70%)] animate-pulse delay-1000 will-change-transform" />
-
-            {/* Tech Decoration */}
-            <div className="absolute top-10 left-10 w-20 h-20 border-t-2 border-l-2 border-primary/20 opacity-50 hidden md:block" />
-            <div className="absolute bottom-10 right-10 w-20 h-20 border-b-2 border-r-2 border-primary/20 opacity-50 hidden md:block" />
-
-            {/* Scroll Indicator */}
+            {/* Scroll indicator */}
             <motion.div
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 text-primary/50"
+                className="absolute bottom-8 left-1/2 -translate-x-1/2"
                 animate={{ y: [0, 10, 0] }}
                 transition={{ repeat: Infinity, duration: 2 }}
             >
-                <div className="flex flex-col items-center gap-2 font-mono text-xs tracking-[0.2em] uppercase opacity-70">
+                <div className="flex flex-col items-center gap-2 font-mono text-xs tracking-[0.2em] uppercase text-primary/40">
                     Scroll
-                    <div className="w-px h-12 bg-gradient-to-b from-primary to-transparent" />
+                    <div className="w-px h-10 bg-gradient-to-b from-primary/50 to-transparent" />
                 </div>
             </motion.div>
         </section>

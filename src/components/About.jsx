@@ -1,12 +1,36 @@
 import { motion } from 'framer-motion';
-import { Code2, Brain, Rocket, Users } from 'lucide-react';
+import { Gamepad2, Code2, Sparkles, Users } from 'lucide-react';
 
 const About = () => {
     const skills = [
-        { icon: <Code2 />, title: "Core Tech", desc: "Unity, C#, Python, Git" },
-        { icon: <Brain />, title: "IA & NPCs", desc: "Behavior Systems, NavMesh" },
-        { icon: <Rocket />, title: "Gameplay", desc: "Mecánicas, Prototipado" },
-        { icon: <Users />, title: "Soft Skills", desc: "Liderazgo, Optimización" },
+        {
+            icon: <Gamepad2 />,
+            title: "Game Dev",
+            desc: "Unity, C#, Godot, Blender",
+            color: 'text-primary',
+            glow: 'rgba(124,58,237,0.2)',
+        },
+        {
+            icon: <Code2 />,
+            title: "Web Dev",
+            desc: "React, Node.js, TypeScript, MongoDB",
+            color: 'text-secondary',
+            glow: 'rgba(236,72,153,0.2)',
+        },
+        {
+            icon: <Sparkles />,
+            title: "AI Tools",
+            desc: "Copilot, Claude, Cursor, Prompting",
+            color: 'text-accent',
+            glow: 'rgba(251,191,36,0.2)',
+        },
+        {
+            icon: <Users />,
+            title: "Soft Skills",
+            desc: "Liderazgo, Prototipado, Optimización",
+            color: 'text-primary',
+            glow: 'rgba(124,58,237,0.2)',
+        },
     ];
 
     return (
@@ -24,18 +48,22 @@ const About = () => {
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-                        <div className="space-y-6 text-gray-400 leading-relaxed bg-black/60 backdrop-blur-sm p-6 rounded-xl">
+                        <div className="space-y-6 text-gray-400 leading-relaxed bg-black/40 backdrop-blur-sm p-6 rounded-xl border border-white/5">
                             <p>
-                                Soy un desarrollador de videojuegos apasionado con sede en Mendoza, Argentina. Tengo experiencia tanto en diseño de juegos 2D como 3D, con un fuerte enfoque en la programación de IA para NPCs y el desarrollo de mecánicas de juego sólidas.
+                                Desarrollador de videojuegos y aplicaciones web con sede en Mendoza, Argentina.
+                                Combino la creatividad del <span className="text-white font-medium">desarrollo de juegos</span> con
+                                la potencia del <span className="text-white font-medium">desarrollo web moderno</span>.
                             </p>
                             <p>
-                                Me destaco en la creación de herramientas personalizadas para mejorar los flujos de trabajo del equipo y tengo experiencia liderando equipos de desarrollo. Mi objetivo es crear experiencias de juego inmersivas y de alta calidad.
+                                Utilizo <span className="text-accent font-medium">herramientas de IA</span> como GitHub Copilot y Claude
+                                para acelerar el desarrollo y mejorar la calidad del código. Mi objetivo:
+                                crear experiencias digitales inmersivas y de alto impacto.
                             </p>
                         </div>
 
                         <div className="relative group">
-                            <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
-                            <div className="relative bg-black border border-white/10 rounded-2xl p-6 aspect-video flex items-center justify-center overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
+                            <div className="relative bg-black/60 border border-white/10 rounded-2xl p-6 aspect-video flex items-center justify-center overflow-hidden">
                                 <div className="text-center">
                                     <span className="text-6xl font-bold text-white block mb-2">3+</span>
                                     <span className="text-gray-400 uppercase tracking-widest text-sm">Años de Experiencia</span>
@@ -52,13 +80,14 @@ const About = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className="glass p-6 rounded-xl text-center hover:bg-white/10 transition-colors group"
+                                className="glass p-6 rounded-xl text-center hover:bg-white/5 transition-all group"
+                                style={{ '--glow': skill.glow }}
                             >
-                                <div className="text-primary mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
+                                <div className={`${skill.color} mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300`}>
                                     {skill.icon}
                                 </div>
-                                <h3 className="text-white font-bold mb-2">{skill.title}</h3>
-                                <p className="text-sm text-gray-500">{skill.desc}</p>
+                                <h3 className="text-white font-bold mb-2 text-sm">{skill.title}</h3>
+                                <p className="text-xs text-gray-500">{skill.desc}</p>
                             </motion.div>
                         ))}
                     </div>

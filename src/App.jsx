@@ -6,20 +6,18 @@ import Projects from './components/Projects';
 import Education from './components/Education';
 import Contact from './components/Contact';
 import MouseEffect from './components/MouseEffect';
-import DualWorldOverlay from './components/DualWorldOverlay';
-import CyberGrid from './components/CyberGrid';
-import TurretDefense from './components/TurretDefense';
+import FloatingPixels from './components/FloatingPixels';
+import GameHUD from './components/GameHUD';
 
 function App() {
   return (
-    <div className="bg-black min-h-screen text-white selection:bg-purple-500 selection:text-white relative overflow-hidden">
-      {/* Interactive Background Effects */}
-      <DualWorldOverlay />
-      <CyberGrid />
+    <div className="bg-background min-h-screen text-white selection:bg-purple-500 selection:text-white relative overflow-hidden">
+      {/* Background Effects */}
+      <FloatingPixels />
       <MouseEffect />
 
-      {/* Turret Defense System */}
-      <TurretDefense />
+      {/* Arcade HUD */}
+      <GameHUD />
 
       {/* Content */}
       <div className="relative z-10">
@@ -36,4 +34,3 @@ function App() {
 }
 
 export default App;
-

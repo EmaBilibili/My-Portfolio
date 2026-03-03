@@ -1,3 +1,3 @@
-// Shared state between DualWorldOverlay and TurretDefense
-export const entitiesRef = { current: [] };
+// Shared game state
+export const pixelsRef = { current: [] };
 export const particlesRef = { current: [] };
