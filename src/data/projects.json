@@ -3,7 +3,12 @@
         "title": "Kenopsia",
         "category": "Survival Horror",
         "image": "/assets/kenopsia.png",
-        "tech": ["Unity", "C#", "AI", "Horror"],
+        "tech": [
+            "Unity",
+            "C#",
+            "AI",
+            "Horror"
+        ],
         "description": "Juego de survival horror inspirado en Backrooms y Outlast. Proyecto de tesis universitaria con IA para NPCs y sistemas de tensión ambiental.",
         "domain": "gaming",
         "demoLink": "https://emabilibili.itch.io/kenopsia",
@@ -13,7 +18,11 @@
         "title": "Skuishy Souls",
         "category": "Game Jam Winner",
         "image": "https://images.unsplash.com/photo-1551103782-8ab07afd45c1?auto=format&fit=crop&q=80&w=800",
-        "tech": ["Unity", "2D", "Game Jam"],
+        "tech": [
+            "Unity",
+            "2D",
+            "Game Jam"
+        ],
         "description": "Ganador del 1er puesto en VideoGamesClub Mendoza GAMEJAM. Premio al Mejor Juego por su mecánica innovadora y arte pixel.",
         "domain": "gaming",
         "demoLink": "#",
@@ -23,30 +32,86 @@
         "title": "Game Jam 2022",
         "category": "Arcade Game",
         "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800",
-        "tech": ["Unity", "C#", "Prototyping"],
+        "tech": [
+            "Unity",
+            "C#",
+            "Prototyping"
+        ],
         "description": "2do puesto en VideoGamesClub Mendoza GAMEJAM. Mención honorífica por innovación en mecánicas y diseño de niveles.",
         "domain": "gaming",
         "demoLink": "#",
         "repoLink": "#"
     },
     {
+        "title": "Parrilla Las Hermanas",
+        "category": "Restaurant App",
+        "image": "/assets/projects/parrilla.png",
+        "tech": [
+            "React",
+            "Vite",
+            "Tailwind",
+            "Responsive"
+        ],
+        "description": "Menú digital y aplicación web para un restaurante parrilla. Interfaz exquisita y optimizada enfocada en la experiencia de usuario y visualización de platos.",
+        "domain": "web",
+        "demoLink": "https://parrilla-las-hermanas.vercel.app/",
+        "repoLink": "https://github.com/EmaBilibili/Parrilla-LasHermanas"
+    },
+    {
+        "title": "CoachOS",
+        "category": "Fitness Platform",
+        "image": "/assets/projects/coachos.png",
+        "tech": [
+            "React",
+            "Dashboard",
+            "Auth"
+        ],
+        "description": "Plataforma SaaS todo en uno para Entrenadores Personales. Permite la gestión de planes, progreso de clientes, rutinas y estadísticas deportivas de alto rendimiento.",
+        "domain": "web",
+        "demoLink": "https://coach-os-five.vercel.app/",
+        "repoLink": "https://github.com/EmaBilibili/CoachOS"
+    },
+    {
+        "title": "EasyVet",
+        "category": "Veterinary System",
+        "image": "/assets/projects/easyvet.png",
+        "tech": [
+            "React",
+            "Appwrite",
+            "System Design"
+        ],
+        "description": "Sistema de gestión clínica para centros veterinarios. Control de historiales médicos, turnos presenciales y administración de mascotas centralizada.",
+        "domain": "web",
+        "demoLink": "https://easyvet.pages.dev/",
+        "repoLink": "https://github.com/EmaBilibili/easyvet-app-bilibilisfactory"
+    },
+    {
+        "title": "CómputoYa",
+        "category": "Professional Tool",
+        "image": "/assets/projects/computoya.png",
+        "tech": [
+            "React",
+            "Finance",
+            "SaaS"
+        ],
+        "description": "Herramienta financiera y gestión de presupuestos en tiempo real para profesionales de oficios y construcción. Sincronización con base de materiales y factor de inflación.",
+        "domain": "web",
+        "demoLink": "https://computoya.pages.dev/",
+        "repoLink": "https://github.com/EmaBilibili/ComputoYa"
+    },
+    {
         "title": "Portfolio Web",
         "category": "Web App",
         "image": "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&q=80&w=800",
-        "tech": ["React", "Vite", "Tailwind", "Framer Motion"],
+        "tech": [
+            "React",
+            "Vite",
+            "Tailwind",
+            "Framer Motion"
+        ],
         "description": "Portfolio personal con animaciones canvas, efectos interactivos y diseño responsivo. Construido con React + Vite y herramientas de IA.",
         "domain": "web",
         "demoLink": "#",
         "repoLink": "https://github.com/EmaBilibili/My-Portfolio"
-    },
-    {
-        "title": "Medical Inventory System",
-        "category": "Enterprise App",
-        "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&q=80&w=800",
-        "tech": ["React", "Node.js", "MongoDB"],
-        "description": "Sistema de gestión de inventario tecnológico para el sector médico. Desarrollado en Full Salud - RSTArgentina con precisión clínica.",
-        "domain": "web",
-        "demoLink": "#",
-        "repoLink": "#"
     }
 ]
