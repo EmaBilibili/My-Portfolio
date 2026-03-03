@@ -1,23 +1,127 @@
 import { useEffect, useRef } from 'react';
 
-const BUG_EMOJIS = ['🐛', '🐞', '🦗', '🦟'];
+const SCALE = 3;
 const SPAWN_INTERVAL = 2800;
-const FIRE_INTERVAL = 1000;
+const FIRE_INTERVAL = 900;
 const BULLET_SPEED = 7;
 const BUG_SPEED_MIN = 0.4;
 const BUG_SPEED_MAX = 1.2;
-const HIT_RADIUS = 18;
+const HIT_RADIUS = 16;
 const MAX_BUGS = 10;
+
+// Fixed turret position — right of "EB.Dev" logo in navbar
+const TX = 155;
+const TY = 34;
+
+// Space Invader sprite — 11×8, 2 animation frames
+const INVADER_FRAMES = [
+    [
+        [0,0,1,0,0,0,0,0,1,0,0],
+        [0,0,0,1,0,0,0,1,0,0,0],
+        [0,0,1,1,1,1,1,1,1,0,0],
+        [0,1,1,0,1,1,1,0,1,1,0],
+        [1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,1,1,1,1,1,1,1,0,1],
+        [1,0,1,0,0,0,0,0,1,0,1],
+        [0,0,0,1,1,0,1,1,0,0,0],
+    ],
+    [
+        [0,0,0,1,1,0,1,1,0,0,0],
+        [0,0,0,1,0,0,0,1,0,0,0],
+        [0,0,1,1,1,1,1,1,1,0,0],
+        [0,1,1,0,1,1,1,0,1,1,0],
+        [1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,1,1,1,1,1,1,1,0,1],
+        [1,0,1,0,0,0,0,0,1,0,1],
+        [0,0,1,0,0,0,0,0,1,0,0],
+    ],
+];
+
+// Ghost sprite — 8×8
+const GHOST_SPRITE = [
+    [0,0,1,1,1,1,0,0],
+    [0,1,1,1,1,1,1,0],
+    [1,1,0,1,1,0,1,1],
+    [1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1],
+    [1,0,1,0,0,1,0,1],
+    [0,0,0,0,0,0,0,0],
+];
+
+// Turret base — 10×6
+const TURRET_BASE = [
+    [0,0,0,1,1,1,1,0,0,0],
+    [0,0,1,1,1,1,1,1,0,0],
+    [0,1,1,1,1,1,1,1,1,0],
+    [1,1,1,1,1,1,1,1,1,1],
+    [1,1,0,0,0,0,0,0,1,1],
+    [1,1,1,1,1,1,1,1,1,1],
+];
+
+// Pixel digits for "404" — 3×5 each
+const DIGIT_4 = [
+    [1,0,1],
+    [1,0,1],
+    [1,1,1],
+    [0,0,1],
+    [0,0,1],
+];
+const DIGIT_0 = [
+    [1,1,1],
+    [1,0,1],
+    [1,0,1],
+    [1,0,1],
+    [1,1,1],
+];
+
+function drawSprite(ctx, sprite, cx, cy, color, scale = SCALE) {
+    const rows = sprite.length;
+    const cols = sprite[0].length;
+    const ox = cx - (cols * scale) / 2;
+    const oy = cy - (rows * scale) / 2;
+    ctx.fillStyle = color;
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+            if (sprite[r][c]) {
+                ctx.fillRect(ox + c * scale, oy + r * scale, scale, scale);
+            }
+        }
+    }
+}
+
+function draw404(ctx, cx, cy, color) {
+    const scale = 2;
+    const digitW = 3 * scale;
+    const gap = 2;
+    const totalW = digitW * 3 + gap * 2;
+    const startX = Math.round(cx - totalW / 2);
+    const startY = Math.round(cy - (5 * scale) / 2);
+    ctx.fillStyle = color;
+    [DIGIT_4, DIGIT_0, DIGIT_4].forEach((digit, di) => {
+        const ox = startX + di * (digitW + gap);
+        for (let r = 0; r < 5; r++) {
+            for (let c = 0; c < 3; c++) {
+                if (digit[r][c]) {
+                    ctx.fillRect(ox + c * scale, startY + r * scale, scale, scale);
+                }
+            }
+        }
+    });
+}
+
+const BUG_TYPES = ['INVADER', 'GHOST', 'ERROR'];
 
 const TurretDefense = () => {
     const canvasRef = useRef(null);
     const bugsRef = useRef([]);
     const bulletsRef = useRef([]);
     const explosionsRef = useRef([]);
-    const turretAngleRef = useRef(-Math.PI / 2);
+    const turretAngleRef = useRef(Math.PI / 4); // start pointing down-right
     const lastFireRef = useRef(0);
     const lastSpawnRef = useRef(0);
     const bugIdRef = useRef(0);
+    const frameRef = useRef(0);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -35,20 +139,23 @@ const TurretDefense = () => {
 
         const spawnBug = () => {
             if (bugsRef.current.length >= MAX_BUGS) return;
+            const type = BUG_TYPES[Math.floor(Math.random() * BUG_TYPES.length)];
+            const minX = canvas.width * 0.2;
             bugsRef.current.push({
                 id: bugIdRef.current++,
-                x: Math.random() * (canvas.width - 80) + 40,
+                x: Math.random() * (canvas.width - minX - 40) + minX,
                 y: -20,
                 speed: Math.random() * (BUG_SPEED_MAX - BUG_SPEED_MIN) + BUG_SPEED_MIN,
-                emoji: BUG_EMOJIS[Math.floor(Math.random() * BUG_EMOJIS.length)],
-                fontSize: Math.floor(Math.random() * 6) + 12,
+                type,
                 wobble: Math.random() * Math.PI * 2,
                 wobbleAmp: Math.random() * 0.8 + 0.2,
+                animFrame: 0,
             });
         };
 
         const animate = () => {
             const now = Date.now();
+            frameRef.current++;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Spawn
@@ -57,23 +164,21 @@ const TurretDefense = () => {
                 lastSpawnRef.current = now;
             }
 
-            const tx = canvas.width / 2;
-            const ty = canvas.height - 50;
-
             // Update bugs
             bugsRef.current = bugsRef.current.filter(bug => {
                 bug.y += bug.speed;
                 bug.wobble += 0.02;
                 bug.x += Math.sin(bug.wobble) * bug.wobbleAmp;
+                if (frameRef.current % 30 === 0) bug.animFrame = 1 - bug.animFrame;
                 return bug.y < canvas.height + 30;
             });
 
-            // Find nearest bug
+            // Find nearest bug to turret
             let target = null;
             let minDist = Infinity;
             bugsRef.current.forEach(bug => {
-                const dx = bug.x - tx;
-                const dy = bug.y - ty;
+                const dx = bug.x - TX;
+                const dy = bug.y - TY;
                 const dist = Math.sqrt(dx * dx + dy * dy);
                 if (dist < minDist) {
                     minDist = dist;
@@ -81,22 +186,23 @@ const TurretDefense = () => {
                 }
             });
 
-            // Rotate turret
+            // Rotate turret toward target
             if (target) {
-                const targetAngle = Math.atan2(target.y - ty, target.x - tx);
+                const targetAngle = Math.atan2(target.y - TY, target.x - TX);
                 let diff = targetAngle - turretAngleRef.current;
                 while (diff > Math.PI) diff -= Math.PI * 2;
                 while (diff < -Math.PI) diff += Math.PI * 2;
-                turretAngleRef.current += diff * 0.12;
+                turretAngleRef.current += diff * 0.10;
 
                 // Fire
                 if (now - lastFireRef.current > FIRE_INTERVAL) {
                     const angle = turretAngleRef.current;
                     bulletsRef.current.push({
-                        x: tx + Math.cos(angle) * 28,
-                        y: ty + Math.sin(angle) * 28,
+                        x: TX + Math.cos(angle) * 20,
+                        y: TY + Math.sin(angle) * 20,
                         vx: Math.cos(angle) * BULLET_SPEED,
                         vy: Math.sin(angle) * BULLET_SPEED,
+                        angle,
                     });
                     lastFireRef.current = now;
                 }
@@ -114,13 +220,18 @@ const TurretDefense = () => {
                     const dy = bullet.y - bug.y;
                     if (Math.sqrt(dx * dx + dy * dy) < HIT_RADIUS) {
                         hit = true;
-                        explosionsRef.current.push({
-                            x: bug.x,
-                            y: bug.y,
-                            radius: 0,
-                            maxRadius: 35,
-                            life: 1,
-                        });
+                        const particles = [];
+                        for (let i = 0; i < 12; i++) {
+                            const a = (i / 12) * Math.PI * 2;
+                            const speed = Math.random() * 2 + 1;
+                            particles.push({
+                                x: bug.x,
+                                y: bug.y,
+                                vx: Math.cos(a) * speed,
+                                vy: Math.sin(a) * speed,
+                            });
+                        }
+                        explosionsRef.current.push({ x: bug.x, y: bug.y, particles, life: 1 });
                         return false;
                     }
                     return true;
@@ -135,8 +246,8 @@ const TurretDefense = () => {
 
             // Update explosions
             explosionsRef.current = explosionsRef.current.filter(exp => {
-                exp.radius += 2;
-                exp.life = 1 - exp.radius / exp.maxRadius;
+                exp.life -= 0.05;
+                exp.particles.forEach(p => { p.x += p.vx; p.y += p.vy; });
                 return exp.life > 0;
             });
 
@@ -145,84 +256,75 @@ const TurretDefense = () => {
             // Bugs
             bugsRef.current.forEach(bug => {
                 ctx.save();
-                ctx.globalAlpha = 0.75;
-                ctx.font = `${bug.fontSize}px serif`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(bug.emoji, bug.x, bug.y);
+                ctx.globalAlpha = 0.85;
+                if (bug.type === 'INVADER') {
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = '#ef4444';
+                    drawSprite(ctx, INVADER_FRAMES[bug.animFrame], bug.x, bug.y, '#ef4444');
+                } else if (bug.type === 'GHOST') {
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = '#6366f1';
+                    drawSprite(ctx, GHOST_SPRITE, bug.x, bug.y, '#6366f1');
+                } else {
+                    // ERROR "404" — blink effect
+                    const blink = Math.sin(now * 0.005) > 0;
+                    ctx.shadowBlur = blink ? 12 : 4;
+                    ctx.shadowColor = '#f59e0b';
+                    draw404(ctx, bug.x, bug.y, '#f59e0b');
+                }
                 ctx.restore();
             });
 
-            // Bullets
+            // Bullets — pixel rect rotated along travel direction
             bulletsRef.current.forEach(bullet => {
                 ctx.save();
                 ctx.globalAlpha = 0.9;
                 ctx.fillStyle = '#10b981';
-                ctx.shadowBlur = 12;
+                ctx.shadowBlur = 10;
                 ctx.shadowColor = '#10b981';
-                ctx.beginPath();
-                ctx.arc(bullet.x, bullet.y, 3, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.translate(bullet.x, bullet.y);
+                ctx.rotate(bullet.angle);
+                ctx.fillRect(-3, -1, 6, 2);
                 ctx.restore();
             });
 
-            // Explosions
+            // Explosions — scattered pixel art particles
             explosionsRef.current.forEach(exp => {
                 ctx.save();
-                ctx.globalAlpha = exp.life * 0.7;
-                ctx.strokeStyle = '#34d399';
-                ctx.lineWidth = 2;
-                ctx.shadowBlur = 14;
-                ctx.shadowColor = '#34d399';
-                ctx.beginPath();
-                ctx.arc(exp.x, exp.y, exp.radius, 0, Math.PI * 2);
-                ctx.stroke();
-
-                ctx.globalAlpha = exp.life * 0.4;
-                ctx.strokeStyle = '#6366f1';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.arc(exp.x, exp.y, exp.radius * 0.55, 0, Math.PI * 2);
-                ctx.stroke();
+                exp.particles.forEach(p => {
+                    ctx.globalAlpha = exp.life * 0.8;
+                    ctx.fillStyle = exp.life > 0.5 ? '#10b981' : '#34d399';
+                    ctx.shadowBlur = 4;
+                    ctx.shadowColor = '#10b981';
+                    ctx.fillRect(Math.round(p.x), Math.round(p.y), 3, 3);
+                });
                 ctx.restore();
             });
 
-            // Turret base
+            // ── TURRET ──
             ctx.save();
-            ctx.globalAlpha = 0.75;
-            ctx.fillStyle = '#111827';
-            ctx.strokeStyle = '#10b981';
-            ctx.lineWidth = 2;
+            ctx.globalAlpha = 0.9;
+
+            // Turret base — shadow outline
+            ctx.shadowBlur = 0;
+            drawSprite(ctx, TURRET_BASE, TX + 1, TY + 1, '#064e3b');
+
+            // Turret base — main color with glow
             ctx.shadowBlur = 12;
             ctx.shadowColor = '#10b981';
-            ctx.beginPath();
-            ctx.arc(tx, ty, 18, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
+            drawSprite(ctx, TURRET_BASE, TX, TY, '#10b981');
 
-            // Inner ring
-            ctx.globalAlpha = 0.4;
-            ctx.strokeStyle = '#34d399';
-            ctx.lineWidth = 1;
-            ctx.shadowBlur = 0;
-            ctx.beginPath();
-            ctx.arc(tx, ty, 9, 0, Math.PI * 2);
-            ctx.stroke();
-
-            // Barrel
-            ctx.globalAlpha = 0.9;
-            ctx.strokeStyle = '#10b981';
-            ctx.lineWidth = 4;
-            ctx.lineCap = 'round';
-            ctx.shadowBlur = 8;
+            // Barrel — series of 3×3 fillRect along angle (5 steps)
+            ctx.shadowBlur = 6;
             ctx.shadowColor = '#10b981';
-            ctx.beginPath();
-            ctx.moveTo(tx, ty);
-            ctx.lineTo(
-                tx + Math.cos(turretAngleRef.current) * 28,
-                ty + Math.sin(turretAngleRef.current) * 28
-            );
-            ctx.stroke();
+            ctx.fillStyle = '#10b981';
+            const angle = turretAngleRef.current;
+            for (let i = 2; i <= 7; i++) {
+                const bx = TX + Math.cos(angle) * (i * 3);
+                const by = TY + Math.sin(angle) * (i * 3);
+                ctx.fillRect(Math.round(bx) - 1, Math.round(by) - 1, 3, 3);
+            }
+
             ctx.restore();
 
             animId = requestAnimationFrame(animate);
@@ -239,7 +341,8 @@ const TurretDefense = () => {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed inset-0 pointer-events-none z-[2]"
+            className="fixed inset-0 pointer-events-none z-[55]"
+            style={{ imageRendering: 'pixelated' }}
         />
     );
 };

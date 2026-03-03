@@ -43,7 +43,7 @@ const Experience = () => {
                                 {/* Timeline dot */}
                                 <div
                                     className="absolute left-0 md:left-1/2 w-4 h-4 bg-background border-2 border-primary rounded-full -translate-x-[5px] md:-translate-x-1/2 mt-1.5 hidden md:block z-10"
-                                    style={{ boxShadow: '0 0 10px rgba(124,58,237,0.6)' }}
+                                    style={{ boxShadow: '0 0 10px rgba(16,185,129,0.6)' }}
                                 />
 
                                 <div className="flex-1" />

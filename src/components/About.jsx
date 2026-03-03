@@ -8,28 +8,28 @@ const About = () => {
             title: "Game Dev",
             desc: "Unity, C#, Godot, Blender",
             color: 'text-primary',
-            glow: 'rgba(124,58,237,0.2)',
+            glow: 'rgba(16,185,129,0.2)',
         },
         {
             icon: <Code2 />,
             title: "Web Dev",
             desc: "React, Node.js, TypeScript, MongoDB",
             color: 'text-secondary',
-            glow: 'rgba(236,72,153,0.2)',
+            glow: 'rgba(52,211,153,0.2)',
         },
         {
             icon: <Sparkles />,
             title: "AI Tools",
             desc: "Copilot, Claude, Cursor, Prompting",
             color: 'text-accent',
-            glow: 'rgba(251,191,36,0.2)',
+            glow: 'rgba(99,102,241,0.2)',
         },
         {
             icon: <Users />,
             title: "Soft Skills",
             desc: "Liderazgo, Prototipado, Optimización",
             color: 'text-primary',
-            glow: 'rgba(124,58,237,0.2)',
+            glow: 'rgba(16,185,129,0.2)',
         },
     ];
 

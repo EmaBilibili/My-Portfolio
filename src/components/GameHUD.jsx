@@ -66,21 +66,23 @@ const GameHUD = () => {
     return (
         <div className="fixed top-20 right-4 z-[60] select-none pointer-events-none">
             {/* HUD Panel */}
-            <div className="bg-black/70 backdrop-blur-md border border-primary/30 rounded-lg px-4 py-3 w-36 font-mono pointer-events-auto"
-                style={{ boxShadow: '0 0 15px rgba(16,185,129,0.2), inset 0 0 15px rgba(16,185,129,0.05)' }}>
+            <div className="bg-black/70 backdrop-blur-md border border-primary/30 rounded-none px-4 py-3 w-36 font-mono pointer-events-auto"
+                style={{
+                    boxShadow: '2px 0 0 0 #10b981, -2px 0 0 0 #10b981, 0 2px 0 0 #10b981, 0 -2px 0 0 #10b981, 0 0 15px rgba(16,185,129,0.2), inset 0 0 15px rgba(16,185,129,0.05)',
+                }}>
 
                 {/* Score */}
                 <div className="mb-2">
-                    <p className="text-[10px] text-primary/60 tracking-widest uppercase">Score</p>
-                    <p className="text-lg font-bold text-primary leading-none tabular-nums">
+                    <p style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '8px' }} className="text-primary/60 uppercase mb-1">Score</p>
+                    <p style={{ fontFamily: "'Press Start 2P', monospace" }} className="text-sm text-primary leading-none tabular-nums">
                         {String(score).padStart(6, '0')}
                     </p>
                 </div>
 
                 {/* Level */}
                 <div className="mb-2 border-t border-white/5 pt-2">
-                    <p className="text-[10px] text-secondary/60 tracking-widest uppercase">LVL</p>
-                    <p className="text-lg font-bold text-secondary leading-none">
+                    <p style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '8px' }} className="text-secondary/60 uppercase mb-1">LVL</p>
+                    <p style={{ fontFamily: "'Press Start 2P', monospace" }} className="text-sm text-secondary leading-none">
                         {String(level).padStart(2, '0')}
                     </p>
                 </div>

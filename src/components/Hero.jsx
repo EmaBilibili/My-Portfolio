@@ -2,17 +2,17 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Gamepad2, Code2, Sparkles, Star } from 'lucide-react';
 
 const floatingIcons = [
-    { icon: Gamepad2, color: '#7c3aed', top: '15%', left: '8%', delay: 0 },
-    { icon: Code2, color: '#ec4899', top: '25%', right: '10%', delay: 0.4 },
-    { icon: Sparkles, color: '#fbbf24', bottom: '30%', left: '6%', delay: 0.8 },
-    { icon: Star, color: '#a78bfa', bottom: '20%', right: '8%', delay: 1.2 },
+    { icon: Gamepad2, color: '#10b981', top: '15%', left: '8%', delay: 0 },
+    { icon: Code2, color: '#34d399', top: '25%', right: '10%', delay: 0.4 },
+    { icon: Sparkles, color: '#f59e0b', bottom: '30%', left: '6%', delay: 0.8 },
+    { icon: Star, color: '#6ee7b7', bottom: '20%', right: '8%', delay: 1.2 },
 ];
 
 const Hero = () => {
     return (
         <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-24">
             {/* Radial glow */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_40%,rgba(124,58,237,0.12)_0%,transparent_70%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_40%,rgba(16,185,129,0.10)_0%,transparent_70%)] pointer-events-none" />
 
             {/* Floating icons — desktop only */}
             {floatingIcons.map(({ icon: Icon, color, delay, ...pos }, i) => (
@@ -43,9 +43,9 @@ const Hero = () => {
                     className="max-w-3xl mx-auto text-center flex flex-col items-center gap-6"
                 >
                     {/* Available badge */}
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/8 backdrop-blur-sm">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 border border-primary/30 bg-primary/8 backdrop-blur-sm" style={{ borderRadius: 0 }}>
                         <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                        <span className="text-primary font-mono tracking-widest text-xs uppercase">
+                        <span className="text-primary tracking-widest uppercase" style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '8px' }}>
                             ✦ Available for Projects
                         </span>
                     </div>
@@ -61,7 +61,7 @@ const Hero = () => {
                     </div>
 
                     {/* Subtitle */}
-                    <h2 className="text-xl sm:text-2xl font-heading font-light text-gray-300 tracking-wide">
+                    <h2 className="text-sm sm:text-base text-gray-300 tracking-wide" style={{ fontFamily: "'Press Start 2P', monospace", lineHeight: 1.8 }}>
                         <span className="text-primary">Game Developer</span>
                         <span className="text-white/40 mx-3">&</span>
                         <span className="text-secondary">Web Developer</span>
@@ -83,17 +83,17 @@ const Hero = () => {
                     <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm sm:max-w-none sm:justify-center">
                         <a
                             href="#projects"
-                            className="flex items-center justify-center gap-2 px-8 py-3.5 font-bold font-mono tracking-wide text-white transition-all duration-300 rounded-lg"
+                            className="flex items-center justify-center gap-2 px-8 py-3.5 font-bold font-mono tracking-wide text-white transition-all duration-300"
                             style={{
-                                background: 'linear-gradient(135deg, #7c3aed, #ec4899)',
-                                boxShadow: '0 0 25px rgba(124,58,237,0.4)',
+                                background: 'linear-gradient(135deg, #10b981, #6366f1)',
+                                boxShadow: '2px 0 0 0 #10b981, -2px 0 0 0 #10b981, 0 2px 0 0 #10b981, 0 -2px 0 0 #10b981, 0 0 25px rgba(16,185,129,0.4)',
                             }}
                         >
                             VER PROYECTOS <ArrowRight className="w-4 h-4" />
                         </a>
                         <a
                             href="#contact"
-                            className="flex items-center justify-center gap-2 px-8 py-3.5 font-bold font-mono tracking-wide border border-primary/40 text-primary hover:bg-primary/10 transition-all duration-300 rounded-lg"
+                            className="flex items-center justify-center gap-2 px-8 py-3.5 font-bold font-mono tracking-wide border border-primary/40 text-primary hover:bg-primary/10 transition-all duration-300"
                         >
                             CONTACTAR
                         </a>

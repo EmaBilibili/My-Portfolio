@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 
 const COLORS = ['#10b981', '#34d399', '#6366f1', '#6ee7b7', '#818cf8'];
 const PIXEL_COUNT = 60;
-const DOT_GRID_SPACING = 40;
 const MOUSE_RADIUS = 150;
 
 const FloatingPixels = () => {
@@ -29,7 +28,7 @@ const FloatingPixels = () => {
                 y: Math.random() * canvas.height,
                 baseX: 0,
                 baseY: 0,
-                size: Math.random() * 2 + 2,         // 2–4px
+                size: Math.random() * 3 + 3,         // 3–6px
                 color: COLORS[Math.floor(Math.random() * COLORS.length)],
                 speedX: (Math.random() - 0.5) * 0.4,
                 speedY: (Math.random() - 0.5) * 0.4,
@@ -53,14 +52,20 @@ const FloatingPixels = () => {
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Dot grid
-            ctx.fillStyle = 'rgba(255,255,255,0.05)';
-            for (let x = DOT_GRID_SPACING; x < canvas.width; x += DOT_GRID_SPACING) {
-                for (let y = DOT_GRID_SPACING; y < canvas.height; y += DOT_GRID_SPACING) {
-                    ctx.beginPath();
-                    ctx.arc(x, y, 1, 0, Math.PI * 2);
-                    ctx.fill();
-                }
+            // Pixel grid (1px lines every 32px)
+            ctx.strokeStyle = 'rgba(16,185,129,0.04)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < canvas.width; x += 32) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = 0; y < canvas.height; y += 32) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
             }
 
             const now = Date.now() * 0.001;
@@ -117,6 +122,7 @@ const FloatingPixels = () => {
         <canvas
             ref={canvasRef}
             className="fixed inset-0 pointer-events-none z-0"
+            style={{ imageRendering: 'pixelated' }}
         />
     );
 };

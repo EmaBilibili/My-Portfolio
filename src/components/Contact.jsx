@@ -51,7 +51,7 @@ const Contact = () => {
 
     return (
         <section id="contact" className="py-20 bg-transparent relative">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_60%_at_0%_100%,rgba(124,58,237,0.08)_0%,transparent_70%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_60%_at_0%_100%,rgba(16,185,129,0.08)_0%,transparent_70%)] pointer-events-none" />
 
             <div className="container mx-auto px-6 relative z-10">
                 <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
@@ -172,7 +172,7 @@ const Contact = () => {
                                     type="submit"
                                     disabled={status === 'submitting'}
                                     className="w-full text-white font-bold py-4 rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                                    style={{ background: 'linear-gradient(135deg, #7c3aed, #ec4899)', boxShadow: '0 0 20px rgba(124,58,237,0.3)' }}
+                                    style={{ background: 'linear-gradient(135deg, #10b981, #6366f1)', boxShadow: '0 0 20px rgba(16,185,129,0.3)' }}
                                 >
                                     {status === 'submitting' ? 'Enviando...' : 'Enviar Mensaje'}
                                     {status !== 'submitting' && <Send className="w-4 h-4" />}

@@ -93,7 +93,7 @@ const Projects = () => {
 
                         <div className="space-y-10">
                             {gameProjects.map((project, index) => (
-                                <ProjectCard key={index} project={project} accentColor="#7c3aed" hoverColor="primary" />
+                                <ProjectCard key={index} project={project} accentColor="#10b981" hoverColor="primary" />
                             ))}
                         </div>
                     </div>
@@ -112,7 +112,7 @@ const Projects = () => {
 
                         <div className="space-y-10">
                             {webProjects.map((project, index) => (
-                                <ProjectCard key={index} project={project} accentColor="#ec4899" hoverColor="secondary" />
+                                <ProjectCard key={index} project={project} accentColor="#34d399" hoverColor="secondary" />
                             ))}
                         </div>
 

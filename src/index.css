@@ -11,6 +11,7 @@
   --font-heading: 'Outfit', sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
   --font-sans: 'Inter', system-ui, sans-serif;
+  --font-pixel: 'Press Start 2P', monospace;
 }
 
 @layer base {
@@ -20,9 +21,37 @@
 
   body {
     background-color: var(--color-background);
+    background-image:
+      repeating-linear-gradient(
+        transparent,
+        transparent 31px,
+        rgba(255,255,255,0.03) 31px,
+        rgba(255,255,255,0.03) 32px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 31px,
+        rgba(255,255,255,0.03) 31px,
+        rgba(255,255,255,0.03) 32px
+      );
     color: white;
     font-family: var(--font-sans);
     overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      transparent 0px,
+      transparent 3px,
+      rgba(0,0,0,0.08) 3px,
+      rgba(0,0,0,0.08) 4px
+    );
   }
 
   section {
@@ -67,10 +96,30 @@
   .game-border:hover,
   .tech-border:hover {
     box-shadow:
-      3px 0 0 0 rgba(16, 185, 129, 0.6),
-      -3px 0 0 0 rgba(16, 185, 129, 0.6),
-      0 3px 0 0 rgba(52, 211, 153, 0.6),
-      0 -3px 0 0 rgba(52, 211, 153, 0.6);
+      4px 0 0 0 rgba(16, 185, 129, 0.6),
+      -4px 0 0 0 rgba(16, 185, 129, 0.6),
+      0 4px 0 0 rgba(52, 211, 153, 0.6),
+      0 -4px 0 0 rgba(52, 211, 153, 0.6);
+  }
+
+  /* Chunky 8-bit style border */
+  .pixel-border {
+    box-shadow:
+      2px 0 0 0 #10b981,
+      -2px 0 0 0 #10b981,
+      0 2px 0 0 #10b981,
+      0 -2px 0 0 #10b981,
+      4px 0 0 0 rgba(16,185,129,0.3),
+      -4px 0 0 0 rgba(16,185,129,0.3),
+      0 4px 0 0 rgba(16,185,129,0.3),
+      0 -4px 0 0 rgba(16,185,129,0.3);
+  }
+
+  /* Pixel art heading */
+  .pixel-heading {
+    font-family: var(--font-pixel);
+    font-size: 0.85em;
+    line-height: 1.8;
   }
 }
 
