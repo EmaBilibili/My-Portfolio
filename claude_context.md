@@ -23,4 +23,6 @@ Este archivo proporciona un resumen eficiente en tokens para asistir a la IA.
 ## Notas Clave
 - El sitio es un portfolio personal interactivo con temática cyber/gaming.
 - Utiliza **Tailwind CSS v4** y motion animations con **Framer Motion**.
-- El proyecto tiene soporte avanzado para **Claude Code** mediante skills locales, permitiendo generación de UI/UX (`artifacts-builder`), branding y otras tareas de despliegue automatizado.
+- La tipografía principal en todo el sitio es pixelart (`Press Start 2P`), con contenedores y componentes adaptados (responsive, break-words) para móviles.
+- Los minijuegos de background están integrados y adaptados estéticamente al DOM dinámico (ej. `TurretDefense` lee las posiciones de la UI usando `getBoundingClientRect()`).
+- El proyecto tiene soporte avanzado para **Claude Code** mediante skills locales, permitiendo generación de UI/UX (`artifacts-builder`), branding y despliegue automatizado.
