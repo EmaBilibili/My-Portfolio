@@ -28,39 +28,39 @@ const Hero = () => {
                     </div>
 
                     {/* Name */}
-                    <div className="space-y-1">
-                        <div className="text-5xl sm:text-7xl lg:text-8xl font-heading font-bold tracking-tight leading-none">
+                    <div className="space-y-1 mt-4 sm:mt-0">
+                        <div className="text-3xl sm:text-6xl lg:text-8xl font-heading font-bold tracking-tight leading-none">
                             <span className="text-gradient">EMANUEL</span>
                         </div>
-                        <div className="text-5xl sm:text-7xl lg:text-8xl font-heading font-bold tracking-tight leading-none text-white">
+                        <div className="text-3xl sm:text-6xl lg:text-8xl font-heading font-bold tracking-tight leading-none text-white mt-3 sm:mt-1">
                             BINIMELIS
                         </div>
                     </div>
 
                     {/* Subtitle */}
-                    <h2 className="text-sm sm:text-base text-gray-300 tracking-wide" style={{ fontFamily: "'Press Start 2P', monospace", lineHeight: 1.8 }}>
-                        <span className="text-primary">Game Developer</span>
-                        <span className="text-white/40 mx-3">&</span>
-                        <span className="text-secondary">Web Developer</span>
+                    <h2 className="text-xs sm:text-sm md:text-base text-gray-300 tracking-wide mt-2" style={{ fontFamily: "'Press Start 2P', monospace", lineHeight: 2 }}>
+                        <span className="text-primary block sm:inline">Game Developer</span>
+                        <span className="text-white/40 mx-3 hidden sm:inline">&</span>
+                        <span className="text-secondary block sm:inline mt-2 sm:mt-0">Web Developer</span>
                     </h2>
 
                     {/* Tag */}
-                    <p className="font-mono text-sm text-gray-500 tracking-wider">
+                    <p className="font-mono text-xs sm:text-sm text-gray-500 tracking-wider">
                         AI-Powered Development · Unity · React · Node.js
                     </p>
 
                     {/* Description */}
-                    <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl">
+                    <p className="text-gray-400 text-xs sm:text-sm md:text-lg leading-relaxed max-w-xl px-2">
                         Creando mundos interactivos con <span className="text-white font-medium">Unity y C#</span>,
                         construyendo aplicaciones web con <span className="text-white font-medium">React y Node.js</span>,
                         y potenciando todo con <span className="text-accent font-medium">herramientas de IA</span>.
                     </p>
 
                     {/* CTA buttons */}
-                    <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm sm:max-w-none sm:justify-center">
+                    <div className="flex flex-col sm:flex-row gap-4 w-full max-w-xs sm:max-w-none sm:justify-center mt-2">
                         <a
                             href="#projects"
-                            className="flex items-center justify-center gap-2 px-8 py-3.5 font-bold font-mono tracking-wide text-white transition-all duration-300"
+                            className="flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-3.5 text-xs sm:text-sm font-bold font-mono tracking-wide text-white transition-all duration-300"
                             style={{
                                 background: 'linear-gradient(135deg, #10b981, #6366f1)',
                                 boxShadow: '2px 0 0 0 #10b981, -2px 0 0 0 #10b981, 0 2px 0 0 #10b981, 0 -2px 0 0 #10b981, 0 0 25px rgba(16,185,129,0.4)',
@@ -70,7 +70,7 @@ const Hero = () => {
                         </a>
                         <a
                             href="#contact"
-                            className="flex items-center justify-center gap-2 px-8 py-3.5 font-bold font-mono tracking-wide border border-primary/40 text-primary hover:bg-primary/10 transition-all duration-300"
+                            className="flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-3.5 text-xs sm:text-sm font-bold font-mono tracking-wide border border-primary/40 text-primary hover:bg-primary/10 transition-all duration-300"
                         >
                             CONTACTAR
                         </a>
@@ -78,9 +78,9 @@ const Hero = () => {
                 </motion.div>
             </div>
 
-            {/* Scroll indicator */}
+            {/* Scroll indicator (hidden on very small screens to avoid overlaps) */}
             <motion.div
-                className="absolute bottom-8 left-1/2 -translate-x-1/2"
+                className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 hidden sm:block"
                 animate={{ y: [0, 10, 0] }}
                 transition={{ repeat: Infinity, duration: 2 }}
             >

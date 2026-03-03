@@ -9,9 +9,7 @@ const BUG_SPEED_MAX = 1.2;
 const HIT_RADIUS = 16;
 const MAX_BUGS = 10;
 
-// Fixed turret position — right of "EB.Dev" logo in navbar
-const TX = 210;
-const TY = 40;
+// We will track the turret position dynamically inside the hook
 
 // Space Invader sprite — 11×8, 2 animation frames
 const INVADER_FRAMES = [
@@ -123,6 +121,8 @@ const TurretDefense = () => {
     const bugIdRef = useRef(0);
     const frameRef = useRef(0);
 
+    const turretPosRef = useRef({ x: 210, y: 40 });
+
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -133,6 +133,15 @@ const TurretDefense = () => {
         const resize = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+
+            // Adjust turret position dynamically based on screen width
+            if (window.innerWidth < 500) {
+                // For small mobile widths (e.g. below 442px), move it further right or adjust spacing
+                // "EB.Dev" in px-6 container -> we shift it far right, just before the hamburger menu
+                turretPosRef.current = { x: window.innerWidth - 80, y: 36 };
+            } else {
+                turretPosRef.current = { x: 210, y: 40 };
+            }
         };
         resize();
         window.addEventListener('resize', resize);
@@ -172,6 +181,9 @@ const TurretDefense = () => {
                 if (frameRef.current % 30 === 0) bug.animFrame = 1 - bug.animFrame;
                 return bug.y < canvas.height + 30;
             });
+
+            const TX = turretPosRef.current.x;
+            const TY = turretPosRef.current.y;
 
             // Find nearest bug to turret
             let target = null;
@@ -302,6 +314,9 @@ const TurretDefense = () => {
             });
 
             // ── TURRET ──
+            const TX = turretPosRef.current.x;
+            const TY = turretPosRef.current.y;
+
             ctx.save();
             ctx.globalAlpha = 0.9;
 
