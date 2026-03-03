@@ -58,14 +58,16 @@ const ProjectCard = ({ project, accentColor, hoverColor }) => (
                 >
                     <Play className="w-4 h-4" /> <span className="uppercase tracking-wide">Demo</span>
                 </a>
-                <a
-                    href={project.repoLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative z-20 flex-1 border border-white/20 text-white py-2.5 font-bold text-sm hover:bg-white/10 transition-all flex items-center justify-center gap-2"
-                >
-                    <Github className="w-4 h-4" /> <span className="uppercase tracking-wide">Code</span>
-                </a>
+                {project.repoLink && project.repoLink !== "#" && (
+                    <a
+                        href={project.repoLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative z-20 flex-1 border border-white/20 text-white py-2.5 font-bold text-sm hover:bg-white/10 transition-all flex items-center justify-center gap-2"
+                    >
+                        <Github className="w-4 h-4" /> <span className="uppercase tracking-wide">Code</span>
+                    </a>
+                )}
             </div>
         </div>
     </motion.div>
@@ -79,26 +81,7 @@ const Projects = () => {
         <section id="projects" className="py-20 bg-transparent relative overflow-hidden">
             <div className="container mx-auto px-6 relative z-50">
                 <div className="grid md:grid-cols-2 gap-12">
-                    {/* LEFT — Game Projects */}
-                    <div className="flex flex-col gap-10">
-                        <div>
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-primary/20 text-primary text-sm mb-4 font-mono">
-                                <Gamepad2 className="w-4 h-4" />
-                                <span>GAME PROJECTS</span>
-                            </div>
-                            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-heading text-white leading-relaxed break-words">
-                                Proyectos
-                            </h2>
-                        </div>
-
-                        <div className="space-y-10">
-                            {gameProjects.map((project, index) => (
-                                <ProjectCard key={index} project={project} accentColor="#10b981" hoverColor="primary" />
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* RIGHT — Web Projects */}
+                    {/* LEFT — Web Projects */}
                     <div className="flex flex-col gap-10">
                         <div>
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-secondary/20 text-secondary text-sm mb-4 font-mono">
@@ -122,6 +105,25 @@ const Projects = () => {
                                 Web projects coming soon...
                             </div>
                         )}
+                    </div>
+
+                    {/* RIGHT — Game Projects */}
+                    <div className="flex flex-col gap-10">
+                        <div>
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-primary/20 text-primary text-sm mb-4 font-mono">
+                                <Gamepad2 className="w-4 h-4" />
+                                <span>GAME PROJECTS</span>
+                            </div>
+                            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-heading text-white leading-relaxed break-words">
+                                Proyectos
+                            </h2>
+                        </div>
+
+                        <div className="space-y-10">
+                            {gameProjects.map((project, index) => (
+                                <ProjectCard key={index} project={project} accentColor="#10b981" hoverColor="primary" />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

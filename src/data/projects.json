@@ -1,48 +1,5 @@
 [
     {
-        "title": "Kenopsia",
-        "category": "Survival Horror",
-        "image": "/assets/kenopsia.png",
-        "tech": [
-            "Unity",
-            "C#",
-            "AI",
-            "Horror"
-        ],
-        "description": "Juego de survival horror inspirado en Backrooms y Outlast. Proyecto de tesis universitaria con IA para NPCs y sistemas de tensión ambiental.",
-        "domain": "gaming",
-        "demoLink": "https://emabilibili.itch.io/kenopsia",
-        "repoLink": "https://github.com/EmaBilibili/TesisKenopsia"
-    },
-    {
-        "title": "Skuishy Souls",
-        "category": "Game Jam Winner",
-        "image": "https://images.unsplash.com/photo-1551103782-8ab07afd45c1?auto=format&fit=crop&q=80&w=800",
-        "tech": [
-            "Unity",
-            "2D",
-            "Game Jam"
-        ],
-        "description": "Ganador del 1er puesto en VideoGamesClub Mendoza GAMEJAM. Premio al Mejor Juego por su mecánica innovadora y arte pixel.",
-        "domain": "gaming",
-        "demoLink": "#",
-        "repoLink": "#"
-    },
-    {
-        "title": "Game Jam 2022",
-        "category": "Arcade Game",
-        "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800",
-        "tech": [
-            "Unity",
-            "C#",
-            "Prototyping"
-        ],
-        "description": "2do puesto en VideoGamesClub Mendoza GAMEJAM. Mención honorífica por innovación en mecánicas y diseño de niveles.",
-        "domain": "gaming",
-        "demoLink": "#",
-        "repoLink": "#"
-    },
-    {
         "title": "Parrilla Las Hermanas",
         "category": "Restaurant App",
         "image": "/assets/projects/parrilla.png",
@@ -113,5 +70,34 @@
         "domain": "web",
         "demoLink": "#",
         "repoLink": "https://github.com/EmaBilibili/My-Portfolio"
+    },
+    {
+        "title": "Kenopsia",
+        "category": "Survival Horror",
+        "image": "/assets/kenopsia.png",
+        "tech": [
+            "Unity",
+            "C#",
+            "AI",
+            "Horror"
+        ],
+        "description": "Juego de survival horror inspirado en Backrooms y Outlast. Proyecto de tesis universitaria con IA para NPCs y sistemas de tensión ambiental.",
+        "domain": "gaming",
+        "demoLink": "https://emabilibili.itch.io/kenopsia",
+        "repoLink": "https://github.com/EmaBilibili/TesisKenopsia"
+    },
+    {
+        "title": "Skuishy Souls",
+        "category": "Game Jam Winner",
+        "image": "/assets/projects/skuishi_souls.png",
+        "tech": [
+            "Unity",
+            "2D",
+            "Game Jam"
+        ],
+        "description": "Ganador del 1er puesto en VideoGamesClub Mendoza GAMEJAM. Premio al Mejor Juego por su mecánica innovadora y arte pixel.",
+        "domain": "gaming",
+        "demoLink": "https://jcanovas97.itch.io/skuishy",
+        "repoLink": ""
     }
 ]
