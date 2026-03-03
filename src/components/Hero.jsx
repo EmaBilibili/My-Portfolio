@@ -1,12 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Gamepad2, Code2, Sparkles, Star } from 'lucide-react';
 
-const floatingIcons = [
-    { icon: Gamepad2, color: '#10b981', top: '15%', left: '8%', delay: 0 },
-    { icon: Code2, color: '#34d399', top: '25%', right: '10%', delay: 0.4 },
-    { icon: Sparkles, color: '#f59e0b', bottom: '30%', left: '6%', delay: 0.8 },
-    { icon: Star, color: '#6ee7b7', bottom: '20%', right: '8%', delay: 1.2 },
-];
 
 const Hero = () => {
     return (
@@ -14,23 +8,6 @@ const Hero = () => {
             {/* Radial glow */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_40%,rgba(16,185,129,0.10)_0%,transparent_70%)] pointer-events-none" />
 
-            {/* Floating icons — desktop only */}
-            {floatingIcons.map(({ icon: Icon, color, delay, ...pos }, i) => (
-                <motion.div
-                    key={i}
-                    className="absolute hidden lg:flex items-center justify-center w-12 h-12 rounded-xl"
-                    style={{
-                        ...pos,
-                        background: `${color}18`,
-                        border: `1px solid ${color}30`,
-                        boxShadow: `0 0 20px ${color}20`,
-                    }}
-                    animate={{ y: [0, -12, 0] }}
-                    transition={{ repeat: Infinity, duration: 3.5, delay, ease: 'easeInOut' }}
-                >
-                    <Icon style={{ color, width: 22, height: 22 }} />
-                </motion.div>
-            ))}
 
             <div className="container mx-auto px-6 relative z-10">
                 {/* SEO heading */}
