@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "seo:plan": "python .claude/skills/seo/seo.py programmatic",
+    "seo:competitors": "python .claude/skills/seo/seo.py competitor-pages"
   },
   "dependencies": {
     "framer-motion": "^12.23.24",

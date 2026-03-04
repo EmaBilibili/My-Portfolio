@@ -32,23 +32,26 @@ const Navbar = () => {
                 }`}
         >
             <div className="container mx-auto px-6 flex justify-between items-center">
-                <a href="#" id="navbar-logo" className="text-xl md:text-2xl font-bold font-heading text-white flex items-center gap-2 group">
+                <a href="#" id="navbar-logo" className="text-xl md:text-2xl font-bold font-heading text-white flex items-center gap-2 group shrink-0">
                     <Gamepad2 className="text-primary group-hover:rotate-12 transition-transform duration-300" />
                     <span className="text-gradient">EB.Dev</span>
                 </a>
 
                 {/* Desktop Menu */}
-                <div className="hidden md:flex items-center gap-8">
-                    {navLinks.map((link) => (
-                        <a
-                            key={link.name}
-                            href={link.href}
-                            className="text-gray-400 hover:text-primary transition-colors text-sm uppercase tracking-wider font-medium relative group"
-                        >
-                            {link.name}
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-                        </a>
-                    ))}
+                <div className="hidden md:flex items-center gap-8 justify-end flex-1">
+                    <div id="turret-anchor" className="w-16 h-10 flex items-center justify-center shrink-0" />
+                    <div className="flex items-center gap-8">
+                        {navLinks.map((link) => (
+                            <a
+                                key={link.name}
+                                href={link.href}
+                                className="text-gray-400 hover:text-primary transition-colors text-sm uppercase tracking-wider font-medium relative group whitespace-nowrap"
+                            >
+                                {link.name}
+                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                            </a>
+                        ))}
+                    </div>
 
                     <button
                         onClick={toggleLanguage}
