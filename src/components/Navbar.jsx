@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Gamepad2 } from 'lucide-react';
+import { Menu, X, Gamepad2, Globe } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
@@ -14,12 +15,15 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const { language, toggleLanguage, t } = useLanguage();
+
     const navLinks = [
-        { name: 'Inicio', href: '#home' },
-        { name: 'Sobre mí', href: '#about' },
-        { name: 'Experiencia', href: '#experience' },
-        { name: 'Proyectos', href: '#projects' },
-        { name: 'Contacto', href: '#contact' },
+        { name: t('nav.home'), href: '#home' },
+        { name: t('nav.about'), href: '#about' },
+        { name: t('nav.experience'), href: '#experience' },
+        { name: t('nav.projects'), href: '#projects' },
+        { name: t('nav.education'), href: '#education' },
+        { name: t('nav.contact'), href: '#contact' },
     ];
 
     return (
@@ -45,15 +49,34 @@ const Navbar = () => {
                             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
                         </a>
                     ))}
+
+                    <button
+                        onClick={toggleLanguage}
+                        className="flex items-center gap-2 text-gray-400 hover:text-primary transition-all text-sm font-bold tracking-wider bg-white/5 px-3 py-1.5 rounded-xl border border-white/10 hover:border-primary/50"
+                        title="Cambiar idioma / Change language"
+                    >
+                        <span>{language === 'es' ? 'ES' : 'EN'}</span>
+                        <Globe className="w-4 h-4" />
+                    </button>
                 </div>
 
-                {/* Mobile Menu Button */}
-                <button
-                    className="md:hidden text-white hover:text-primary transition-colors"
-                    onClick={() => setIsOpen(!isOpen)}
-                >
-                    {isOpen ? <X /> : <Menu />}
-                </button>
+                {/* Mobile Menu Button - Also render Language Switcher next to hamburger if possible, or just in dropdown */}
+                <div className="md:hidden flex items-center gap-4">
+                    <button
+                        onClick={toggleLanguage}
+                        className="flex items-center gap-1 text-gray-400 hover:text-primary transition-colors p-2"
+                    >
+                        <span className="font-bold text-xs">{language === 'es' ? 'ES' : 'EN'}</span>
+                        <Globe className="w-4 h-4" />
+                    </button>
+
+                    <button
+                        className="text-white hover:text-primary transition-colors"
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        {isOpen ? <X /> : <Menu />}
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Menu Overlay */}

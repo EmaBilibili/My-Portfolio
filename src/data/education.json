@@ -1,18 +1,24 @@
 [
     {
         "type": "degree",
-        "title": "Video Game Development Technician",
-        "institution": "Mendoza University",
-        "period": "Graduated Feb 2025",
+        "title": "Técnico en Desarrollo de Videojuegos",
+        "title_en": "Video Game Development Technician",
+        "institution": "Universidad de Mendoza",
+        "period": "Egresado Feb 2025",
+        "period_en": "Graduated Feb 2025",
         "desc": "Formación técnica integral en desarrollo de videojuegos, diseño de mecánicas, programación en Unity & C#, y producción de assets 3D.",
+        "desc_en": "Comprehensive technical training in game development, mechanics design, programming in Unity & C#, and 3D asset production.",
         "domain": "gaming"
     },
     {
         "type": "certification",
-        "title": "Master Builder",
-        "institution": "High school Sagrada Familia",
-        "period": "Graduated Feb 2021",
+        "title": "Maestro Mayor de Obras",
+        "title_en": "Master Builder",
+        "institution": "Colegio Sagrada Familia",
+        "period": "Egresado Feb 2021",
+        "period_en": "Graduated Feb 2021",
         "desc": "Título técnico en construcción con enfoque en planificación, gestión de proyectos y trabajo en equipo multidisciplinario.",
+        "desc_en": "Technical degree in construction focusing on planning, project management, and multidisciplinary teamwork.",
         "domain": "dev"
     }
 ]

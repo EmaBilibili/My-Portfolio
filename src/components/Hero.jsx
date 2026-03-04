@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Gamepad2, Code2, Sparkles, Star } from 'lucide-react';
-
+import { useLanguage } from '../context/LanguageContext';
 
 const Hero = () => {
+    const { t } = useLanguage();
+
     return (
         <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-24">
             {/* Radial glow */}
@@ -23,7 +25,7 @@ const Hero = () => {
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 border border-primary/30 bg-primary/8 backdrop-blur-sm" style={{ borderRadius: 0 }}>
                         <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
                         <span className="text-primary tracking-widest uppercase" style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '8px' }}>
-                            ✦ Available for Projects
+                            {t('hero.available')}
                         </span>
                     </div>
 
@@ -39,21 +41,21 @@ const Hero = () => {
 
                     {/* Subtitle */}
                     <h2 className="text-xs sm:text-sm md:text-base text-gray-300 tracking-wide mt-2" style={{ fontFamily: "'Press Start 2P', monospace", lineHeight: 2 }}>
-                        <span className="text-primary block sm:inline">Game Developer</span>
+                        <span className="text-primary block sm:inline">{t('hero.role1')}</span>
                         <span className="text-white/40 mx-3 hidden sm:inline">&</span>
-                        <span className="text-secondary block sm:inline mt-2 sm:mt-0">Web Developer</span>
+                        <span className="text-secondary block sm:inline mt-2 sm:mt-0">{t('hero.role2')}</span>
                     </h2>
 
                     {/* Tag */}
                     <p className="font-mono text-xs sm:text-sm text-gray-500 tracking-wider">
-                        AI-Powered Development · Unity · React · Node.js
+                        {t('hero.skills')}
                     </p>
 
                     {/* Description */}
                     <p className="text-gray-400 text-xs sm:text-sm md:text-lg leading-relaxed max-w-xl px-2">
-                        Creando mundos interactivos con <span className="text-white font-medium">Unity y C#</span>,
-                        construyendo aplicaciones web con <span className="text-white font-medium">React y Node.js</span>,
-                        y potenciando todo con <span className="text-accent font-medium">herramientas de IA</span>.
+                        {t('hero.desc1')}<span className="text-white font-medium">{t('hero.desc2')}</span>{t('hero.desc3')}
+                        <span className="text-white font-medium">{t('hero.desc4')}</span>{t('hero.desc5')}
+                        <span className="text-accent font-medium">{t('hero.desc6')}</span>{t('hero.desc7')}
                     </p>
 
                     {/* CTA buttons */}
@@ -66,13 +68,13 @@ const Hero = () => {
                                 boxShadow: '2px 0 0 0 #10b981, -2px 0 0 0 #10b981, 0 2px 0 0 #10b981, 0 -2px 0 0 #10b981, 0 0 25px rgba(16,185,129,0.4)',
                             }}
                         >
-                            VER PROYECTOS <ArrowRight className="w-4 h-4" />
+                            {t('hero.btnProjects')} <ArrowRight className="w-4 h-4" />
                         </a>
                         <a
                             href="#contact"
                             className="flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-3.5 text-xs sm:text-sm font-bold font-mono tracking-wide border border-primary/40 text-primary hover:bg-primary/10 transition-all duration-300"
                         >
-                            CONTACTAR
+                            {t('hero.btnContact')}
                         </a>
                     </div>
                 </motion.div>
@@ -85,7 +87,7 @@ const Hero = () => {
                 transition={{ repeat: Infinity, duration: 2 }}
             >
                 <div className="flex flex-col items-center gap-2 font-mono text-xs tracking-[0.2em] uppercase text-primary/40">
-                    Scroll
+                    {t('hero.scroll')}
                     <div className="w-px h-10 bg-gradient-to-b from-primary/50 to-transparent" />
                 </div>
             </motion.div>

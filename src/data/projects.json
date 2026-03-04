@@ -1,7 +1,9 @@
 [
     {
         "title": "Parrilla Las Hermanas",
+        "title_en": "Las Hermanas Steakhouse",
         "category": "Restaurant App",
+        "category_en": "Restaurant App",
         "image": "/assets/projects/parrilla.png",
         "tech": [
             "React",
@@ -10,13 +12,16 @@
             "Responsive"
         ],
         "description": "Menú digital y aplicación web para un restaurante parrilla. Interfaz exquisita y optimizada enfocada en la experiencia de usuario y visualización de platos.",
+        "description_en": "Digital menu and web application for a steakhouse restaurant. Exquisite and optimized interface focused on user experience and dish visualization.",
         "domain": "web",
         "demoLink": "https://parrilla-las-hermanas.vercel.app/",
         "repoLink": "https://github.com/EmaBilibili/Parrilla-LasHermanas"
     },
     {
         "title": "CoachOS",
+        "title_en": "CoachOS",
         "category": "Fitness Platform",
+        "category_en": "Fitness Platform",
         "image": "/assets/projects/coachos.png",
         "tech": [
             "React",
@@ -24,13 +29,16 @@
             "Auth"
         ],
         "description": "Plataforma SaaS todo en uno para Entrenadores Personales. Permite la gestión de planes, progreso de clientes, rutinas y estadísticas deportivas de alto rendimiento.",
+        "description_en": "All-in-one SaaS platform for Personal Trainers. Allows for the management of plans, client progress, routines, and high-performance sports statistics.",
         "domain": "web",
         "demoLink": "https://coach-os-five.vercel.app/",
         "repoLink": "https://github.com/EmaBilibili/CoachOS"
     },
     {
         "title": "EasyVet",
+        "title_en": "EasyVet",
         "category": "Veterinary System",
+        "category_en": "Veterinary System",
         "image": "/assets/projects/easyvet.png",
         "tech": [
             "React",
@@ -38,13 +46,16 @@
             "System Design"
         ],
         "description": "Sistema de gestión clínica para centros veterinarios. Control de historiales médicos, turnos presenciales y administración de mascotas centralizada.",
+        "description_en": "Clinical management system for veterinary centers. Control of medical records, in-person appointments, and centralized pet administration.",
         "domain": "web",
         "demoLink": "https://easyvet.pages.dev/",
         "repoLink": "https://github.com/EmaBilibili/easyvet-app-bilibilisfactory"
     },
     {
         "title": "CómputoYa",
+        "title_en": "CómputoYa",
         "category": "Professional Tool",
+        "category_en": "Professional Tool",
         "image": "/assets/projects/computoya.png",
         "tech": [
             "React",
@@ -52,13 +63,16 @@
             "SaaS"
         ],
         "description": "Herramienta financiera y gestión de presupuestos en tiempo real para profesionales de oficios y construcción. Sincronización con base de materiales y factor de inflación.",
+        "description_en": "Financial tool and real-time budget management for trade and construction professionals. Synchronization with materials database and inflation factor.",
         "domain": "web",
         "demoLink": "https://computoya.pages.dev/",
         "repoLink": "https://github.com/EmaBilibili/ComputoYa"
     },
     {
         "title": "Portfolio Web",
+        "title_en": "Portfolio Web",
         "category": "Web App",
+        "category_en": "Web App",
         "image": "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&q=80&w=800",
         "tech": [
             "React",
@@ -67,13 +81,16 @@
             "Framer Motion"
         ],
         "description": "Portfolio personal con animaciones canvas, efectos interactivos y diseño responsivo. Construido con React + Vite y herramientas de IA.",
+        "description_en": "Personal portfolio with canvas animations, interactive effects, and responsive design. Built with React + Vite and AI tools.",
         "domain": "web",
         "demoLink": "#",
         "repoLink": "https://github.com/EmaBilibili/My-Portfolio"
     },
     {
         "title": "Kenopsia",
+        "title_en": "Kenopsia",
         "category": "Survival Horror",
+        "category_en": "Survival Horror",
         "image": "/assets/kenopsia.png",
         "tech": [
             "Unity",
@@ -82,13 +99,16 @@
             "Horror"
         ],
         "description": "Juego de survival horror inspirado en Backrooms y Outlast. Proyecto de tesis universitaria con IA para NPCs y sistemas de tensión ambiental.",
+        "description_en": "Survival horror game inspired by Backrooms and Outlast. University thesis project with AI for NPCs and environmental tension systems.",
         "domain": "gaming",
         "demoLink": "https://emabilibili.itch.io/kenopsia",
         "repoLink": "https://github.com/EmaBilibili/TesisKenopsia"
     },
     {
         "title": "Skuishy Souls",
+        "title_en": "Skuishy Souls",
         "category": "Game Jam Winner",
+        "category_en": "Game Jam Winner",
         "image": "/assets/projects/skuishi_souls.png",
         "tech": [
             "Unity",
@@ -96,6 +116,7 @@
             "Game Jam"
         ],
         "description": "Ganador del 1er puesto en VideoGamesClub Mendoza GAMEJAM. Premio al Mejor Juego por su mecánica innovadora y arte pixel.",
+        "description_en": "1st place winner at VideoGamesClub Mendoza GAMEJAM. Best Game award for its innovative mechanics and pixel art.",
         "domain": "gaming",
         "demoLink": "https://jcanovas97.itch.io/skuishy",
         "repoLink": ""

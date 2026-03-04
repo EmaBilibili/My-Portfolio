@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Briefcase, Globe, Gamepad2 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 import experienceData from '../data/experience.json';
 
@@ -10,6 +11,7 @@ const categoryIcon = (category) => {
 };
 
 const Experience = () => {
+    const { t, language } = useLanguage();
     const experiences = experienceData;
 
     return (
@@ -23,7 +25,7 @@ const Experience = () => {
                     viewport={{ once: true }}
                     className="text-2xl md:text-3xl font-bold mb-16 text-center font-heading heading-readable leading-relaxed"
                 >
-                    Experiencia <span className="text-gradient">Profesional</span>
+                    {t('experience.title1')} <span className="text-gradient">{t('experience.title2')}</span>
                 </motion.h2>
 
                 <div className="max-w-3xl mx-auto relative">
@@ -53,11 +55,11 @@ const Experience = () => {
 
                                         <div className="flex items-center gap-3 mb-2">
                                             {categoryIcon(exp.category)}
-                                            <span className="text-sm text-gray-400 font-mono tracking-wider">{exp.period}</span>
+                                            <span className="text-sm text-gray-400 font-mono tracking-wider">{language === 'en' && exp.period_en ? exp.period_en : exp.period}</span>
                                         </div>
-                                        <h3 className="text-xl font-bold text-white mb-1 font-heading">{exp.role}</h3>
-                                        <h4 className="text-primary font-medium mb-3 text-sm">{exp.company}</h4>
-                                        <p className="text-gray-400 text-sm leading-relaxed">{exp.desc}</p>
+                                        <h3 className="text-xl font-bold text-white mb-1 font-heading">{language === 'en' && exp.role_en ? exp.role_en : exp.role}</h3>
+                                        <h4 className="text-primary font-medium mb-3 text-sm">{language === 'en' && exp.company_en ? exp.company_en : exp.company}</h4>
+                                        <p className="text-gray-400 text-sm leading-relaxed">{language === 'en' && exp.desc_en ? exp.desc_en : exp.desc}</p>
                                     </div>
                                 </div>
                             </motion.div>

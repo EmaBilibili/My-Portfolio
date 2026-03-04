@@ -1,33 +1,36 @@
 import { motion } from 'framer-motion';
 import { Gamepad2, Code2, Sparkles, Users } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const About = () => {
+    const { t } = useLanguage();
+
     const skills = [
         {
             icon: <Gamepad2 />,
-            title: "Game Dev",
-            desc: "Unity, C#, Godot, Blender",
+            title: t('about.skills.gameTitle'),
+            desc: t('about.skills.gameDesc'),
             color: 'text-primary',
             glow: 'rgba(16,185,129,0.2)',
         },
         {
             icon: <Code2 />,
-            title: "Web Dev",
-            desc: "React, Node.js, TypeScript, MongoDB",
+            title: t('about.skills.webTitle'),
+            desc: t('about.skills.webDesc'),
             color: 'text-secondary',
             glow: 'rgba(52,211,153,0.2)',
         },
         {
             icon: <Sparkles />,
-            title: "AI Tools",
-            desc: "Copilot, Claude, Cursor, Prompting",
+            title: t('about.skills.aiTitle'),
+            desc: t('about.skills.aiDesc'),
             color: 'text-accent',
             glow: 'rgba(99,102,241,0.2)',
         },
         {
             icon: <Users />,
-            title: "Soft Skills",
-            desc: "Liderazgo, Prototipado, Optimización",
+            title: t('about.skills.softTitle'),
+            desc: t('about.skills.softDesc'),
             color: 'text-primary',
             glow: 'rgba(16,185,129,0.2)',
         },
@@ -44,20 +47,17 @@ const About = () => {
                     className="max-w-4xl mx-auto"
                 >
                     <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-12 text-center heading-readable leading-relaxed break-words">
-                        Sobre <span className="text-gradient">Mí</span>
+                        {t('about.title1')}<span className="text-gradient">{t('about.title2')}</span>
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
                         <div className="space-y-6 text-gray-400 leading-relaxed bg-black/40 backdrop-blur-sm p-6 rounded-xl border border-white/5">
                             <p>
-                                Desarrollador de videojuegos y aplicaciones web con sede en Mendoza, Argentina.
-                                Combino la creatividad del <span className="text-white font-medium">desarrollo de juegos</span> con
-                                la potencia del <span className="text-white font-medium">desarrollo web moderno</span>.
+                                {t('about.p1_1')}<span className="text-white font-medium">{t('about.p1_2')}</span>{t('about.p1_3')}
+                                <span className="text-white font-medium">{t('about.p1_4')}</span>{t('about.p1_5')}
                             </p>
                             <p>
-                                Utilizo <span className="text-accent font-medium">herramientas de IA</span> como GitHub Copilot y Claude
-                                para acelerar el desarrollo y mejorar la calidad del código. Mi objetivo:
-                                crear experiencias digitales inmersivas y de alto impacto.
+                                {t('about.p2_1')}<span className="text-accent font-medium">{t('about.p2_2')}</span>{t('about.p2_3')}
                             </p>
                         </div>
 
@@ -66,7 +66,7 @@ const About = () => {
                             <div className="relative bg-black/60 border border-white/10 rounded-2xl p-6 aspect-video flex items-center justify-center overflow-hidden">
                                 <div className="text-center">
                                     <span className="text-6xl font-bold text-white block mb-2">3+</span>
-                                    <span className="text-gray-400 uppercase tracking-widest text-sm">Años de Experiencia</span>
+                                    <span className="text-gray-400 uppercase tracking-widest text-sm">{t('about.expYears')}</span>
                                 </div>
                             </div>
                         </div>
