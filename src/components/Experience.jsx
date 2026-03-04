@@ -48,8 +48,8 @@ const Experience = () => {
                                     style={{ boxShadow: '0 0 10px rgba(16,185,129,0.6)' }}
                                 />
 
-                                <div className="flex-1" />
-                                <div className="flex-1">
+                                <div className="flex-1 min-w-0" />
+                                <div className="flex-1 min-w-0">
                                     <div className="relative group p-6 rounded-xl border border-white/5 bg-white/3 hover:bg-white/8 transition-colors backdrop-blur-sm">
                                         <div className="absolute inset-0 rounded-xl border border-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 

@@ -24,7 +24,7 @@ const Hero = () => {
                     {/* Available badge */}
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 border border-primary/30 bg-primary/8 backdrop-blur-sm" style={{ borderRadius: 0 }}>
                         <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                        <span className="text-primary tracking-widest uppercase" style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '8px' }}>
+                        <span className="text-primary tracking-widest uppercase" style={{ fontFamily: "'Press Start 2P', monospace", fontSize: 'clamp(10px, 1.2vw, 11px)' }}>
                             {t('hero.available')}
                         </span>
                     </div>

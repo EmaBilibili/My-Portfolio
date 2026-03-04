@@ -32,7 +32,7 @@ const Navbar = () => {
                 }`}
         >
             <div className="container mx-auto px-6 flex items-center">
-                <a href="#" id="navbar-logo" className="text-xl md:text-2xl font-bold font-heading text-white flex items-center gap-2 group shrink-0">
+                <a href="#home" id="navbar-logo" className="text-xl md:text-2xl font-bold font-heading text-white flex items-center gap-2 group shrink-0">
                     <Gamepad2 className="text-primary group-hover:rotate-12 transition-transform duration-300" />
                     <span className="text-gradient">EB.Dev</span>
                 </a>
@@ -70,14 +70,16 @@ const Navbar = () => {
                     <div className="md:hidden flex items-center gap-4">
                         <button
                             onClick={toggleLanguage}
-                            className="flex items-center gap-1 text-gray-400 hover:text-primary transition-colors p-2"
+                            aria-label="Cambiar idioma / Change language"
+                            className="flex items-center gap-1 text-gray-400 hover:text-primary transition-colors min-w-[44px] min-h-[44px] px-3 py-2"
                         >
-                            <span className="font-bold text-xs">{language === 'es' ? 'ES' : 'EN'}</span>
+                            <span className="font-bold text-sm">{language === 'es' ? 'ES' : 'EN'}</span>
                             <Globe className="w-4 h-4" />
                         </button>
 
                         <button
-                            className="text-white hover:text-primary transition-colors"
+                            aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+                            className="text-white hover:text-primary transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
                             onClick={() => setIsOpen(!isOpen)}
                         >
                             {isOpen ? <X /> : <Menu />}

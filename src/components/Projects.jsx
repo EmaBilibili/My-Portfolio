@@ -21,6 +21,10 @@ const ProjectCard = ({ project, accentColor, hoverColor }) => (
             <img
                 src={project.image}
                 alt={project.title}
+                width={800}
+                height={450}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000 ease-out"
             />
             <div

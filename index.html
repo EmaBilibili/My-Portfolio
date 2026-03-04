@@ -1,14 +1,109 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Emanuel Binimelis - Game Developer & Web Developer. AI-powered development portfolio showcasing Unity games, React apps, and creative interactive experiences." />
+
+    <!-- SEO basics -->
     <title>Emanuel Binimelis | Game Dev & Web Dev</title>
+    <meta name="description" content="Emanuel Binimelis - Game Developer & Web Developer. AI-powered portfolio con juegos Unity, apps React y experiencias interactivas. Mendoza, Argentina." />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://www.bilibilisfactory.tech/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.bilibilisfactory.tech/" />
+    <meta property="og:title" content="Emanuel Binimelis | Game Dev & Web Dev" />
+    <meta property="og:description" content="Game Developer & Web Developer. Juegos Unity, apps React, tooling con IA. Mendoza, Argentina." />
+    <meta property="og:image" content="https://www.bilibilisfactory.tech/og-image.png" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Emanuel Binimelis | Game Dev & Web Dev" />
+    <meta name="twitter:description" content="Game Developer & Web Developer. Unity · React · AI-Powered. Mendoza, Argentina." />
+    <meta name="twitter:image" content="https://www.bilibilisfactory.tech/og-image.png" />
+
+    <!-- Fonts: only Press Start 2P is used — load non-blocking -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"></noscript>
+
+    <!-- Schema.org: ProfilePage + Person -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "dateModified": "2026-03-03",
+      "url": "https://www.bilibilisfactory.tech/",
+      "mainEntity": {
+        "@type": "Person",
+        "@id": "https://www.bilibilisfactory.tech/#person",
+        "name": "Emanuel Binimelis",
+        "alternateName": "Bilibili",
+        "url": "https://www.bilibilisfactory.tech/",
+        "email": "bilibilisfactorydev@gmail.com",
+        "description": "Game Developer and Web Developer based in Mendoza, Argentina. Specializes in Unity/C# game development, React web applications, and AI-powered tooling.",
+        "jobTitle": "Game Developer & Web Developer",
+        "knowsAbout": ["Game Development", "Unity", "C#", "React", "Web Development", "Artificial Intelligence", "Node.js"],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Mendoza",
+          "addressCountry": "AR"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Universidad de Mendoza"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/emanuelbinimelis",
+          "https://github.com/EmaBilibili",
+          "https://emabilibili.itch.io"
+        ]
+      }
+    }
+    </script>
+
+    <!-- Schema.org: WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://www.bilibilisfactory.tech/#website",
+      "url": "https://www.bilibilisfactory.tech/",
+      "name": "Emanuel Binimelis | Game Dev & Web Dev",
+      "description": "Portfolio personal de Emanuel Binimelis — Game Developer, Web Developer y AI-powered builder en Mendoza, Argentina.",
+      "inLanguage": ["es", "en"],
+      "author": { "@id": "https://www.bilibilisfactory.tech/#person" },
+      "publisher": { "@id": "https://www.bilibilisfactory.tech/#person" }
+    }
+    </script>
+
+    <!-- Schema.org: VideoGame (Kenopsia) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Kenopsia",
+      "description": "Survival horror game inspired by Backrooms and Outlast. University thesis project featuring AI-driven NPCs and environmental tension systems. Built with Unity and C#.",
+      "url": "https://emabilibili.itch.io/kenopsia",
+      "genre": ["Survival Horror", "Indie"],
+      "gamePlatform": "PC",
+      "operatingSystem": "Windows",
+      "author": { "@type": "Person", "@id": "https://www.bilibilisfactory.tech/#person" },
+      "publisher": { "@type": "Person", "@id": "https://www.bilibilisfactory.tech/#person" },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "url": "https://emabilibili.itch.io/kenopsia",
+        "availability": "https://schema.org/InStock"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

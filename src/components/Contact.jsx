@@ -184,10 +184,10 @@ const Contact = () => {
                     viewport={{ once: true }}
                     className="flex justify-center gap-6 mt-20 pt-10 border-t border-white/5"
                 >
-                    <a href="https://www.linkedin.com/in/emanuelbinimelis" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300 hover:-translate-y-1">
+                    <a href="https://www.linkedin.com/in/emanuelbinimelis" target="_blank" rel="noopener noreferrer" aria-label="Perfil de LinkedIn de Emanuel Binimelis" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300 hover:-translate-y-1">
                         <Linkedin className="w-6 h-6" />
                     </a>
-                    <a href="https://github.com/EmaBilibili" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300 hover:-translate-y-1">
+                    <a href="https://github.com/EmaBilibili" target="_blank" rel="noopener noreferrer" aria-label="Perfil de GitHub de Emanuel Binimelis" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300 hover:-translate-y-1">
                         <Github className="w-6 h-6" />
                     </a>
                 </motion.div>

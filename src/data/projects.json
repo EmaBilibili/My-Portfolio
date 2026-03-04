@@ -4,7 +4,7 @@
         "title_en": "Las Hermanas Steakhouse",
         "category": "Restaurant App",
         "category_en": "Restaurant App",
-        "image": "/assets/projects/parrilla.png",
+        "image": "/assets/projects/parrilla.webp",
         "tech": [
             "React",
             "Vite",
@@ -22,7 +22,7 @@
         "title_en": "CoachOS",
         "category": "Fitness Platform",
         "category_en": "Fitness Platform",
-        "image": "/assets/projects/coachos.png",
+        "image": "/assets/projects/coachos.webp",
         "tech": [
             "React",
             "Dashboard",
@@ -39,7 +39,7 @@
         "title_en": "EasyVet",
         "category": "Veterinary System",
         "category_en": "Veterinary System",
-        "image": "/assets/projects/easyvet.png",
+        "image": "/assets/projects/easyvet.webp",
         "tech": [
             "React",
             "Appwrite",
@@ -56,7 +56,7 @@
         "title_en": "CómputoYa",
         "category": "Professional Tool",
         "category_en": "Professional Tool",
-        "image": "/assets/projects/computoya.png",
+        "image": "/assets/projects/computoya.webp",
         "tech": [
             "React",
             "Finance",
@@ -83,7 +83,7 @@
         "description": "Portfolio personal con animaciones canvas, efectos interactivos y diseño responsivo. Construido con React + Vite y herramientas de IA.",
         "description_en": "Personal portfolio with canvas animations, interactive effects, and responsive design. Built with React + Vite and AI tools.",
         "domain": "web",
-        "demoLink": "#",
+        "demoLink": "https://www.bilibilisfactory.tech/",
         "repoLink": "https://github.com/EmaBilibili/My-Portfolio"
     },
     {
@@ -91,7 +91,7 @@
         "title_en": "Kenopsia",
         "category": "Survival Horror",
         "category_en": "Survival Horror",
-        "image": "/assets/kenopsia.png",
+        "image": "/assets/kenopsia.webp",
         "tech": [
             "Unity",
             "C#",
@@ -109,7 +109,7 @@
         "title_en": "Skuishy Souls",
         "category": "Game Jam Winner",
         "category_en": "Game Jam Winner",
-        "image": "/assets/projects/skuishi_souls.png",
+        "image": "/assets/projects/skuishi_souls.webp",
         "tech": [
             "Unity",
             "2D",
