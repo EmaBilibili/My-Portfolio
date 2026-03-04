@@ -134,17 +134,21 @@ const TurretDefense = () => {
             const anchor = document.getElementById('turret-anchor');
             if (anchor) {
                 const rect = anchor.getBoundingClientRect();
-                // Draw exactly in the center of the anchor div
-                turretPosRef.current = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
-            } else {
-                // Fallback to logo position if anchor isn't found
-                const logo = document.getElementById('navbar-logo');
-                if (logo) {
-                    const rect = logo.getBoundingClientRect();
-                    turretPosRef.current = { x: rect.right + 40, y: rect.top + rect.height / 2 };
-                } else {
-                    turretPosRef.current = { x: 210, y: 40 };
+                // Check if the anchor actually has dimensions (not display: none)
+                if (rect.width > 0) {
+                    turretPosRef.current = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+                    return;
                 }
+            }
+
+            // Fallback to logo position if anchor isn't found or has no size
+            const logo = document.getElementById('navbar-logo');
+            if (logo) {
+                const rect = logo.getBoundingClientRect();
+                // Place turret to the right of the logo
+                turretPosRef.current = { x: rect.right + 40, y: rect.top + rect.height / 2 };
+            } else {
+                turretPosRef.current = { x: 210, y: 40 };
             }
         };
 
@@ -182,7 +186,9 @@ const TurretDefense = () => {
                 const anchor = document.getElementById('turret-anchor');
                 if (anchor) {
                     const rect = anchor.getBoundingClientRect();
-                    turretPosRef.current = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+                    if (rect.width > 0) {
+                        turretPosRef.current = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+                    }
                 }
             }
 
