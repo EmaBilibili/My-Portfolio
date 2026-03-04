@@ -32,7 +32,7 @@ const Navbar = () => {
                 }`}
         >
             <div className="container mx-auto px-6 flex items-center">
-                <a href="#home" id="navbar-logo" className="text-xl md:text-2xl font-bold font-heading text-white flex items-center gap-2 group shrink-0">
+                <a href="#home" id="navbar-logo" className="text-lg font-bold font-heading text-white flex items-center gap-2 group shrink-0">
                     <Gamepad2 className="text-primary group-hover:rotate-12 transition-transform duration-300" />
                     <span className="text-gradient">EB.Dev</span>
                 </a>
@@ -42,13 +42,13 @@ const Navbar = () => {
 
                 <div className="flex-1 flex justify-end items-center gap-4">
                     {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center gap-8">
-                        <div className="flex items-center gap-8">
+                    <div className="hidden md:flex items-center gap-4 lg:gap-6">
+                        <div className="flex items-center gap-4 lg:gap-6">
                             {navLinks.map((link) => (
                                 <a
                                     key={link.name}
                                     href={link.href}
-                                    className="text-gray-400 hover:text-primary transition-colors text-sm uppercase tracking-wider font-medium relative group whitespace-nowrap"
+                                    className="text-gray-400 hover:text-primary transition-colors text-xs lg:text-sm uppercase tracking-wide font-medium relative group whitespace-nowrap"
                                 >
                                     {link.name}
                                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
@@ -58,7 +58,7 @@ const Navbar = () => {
 
                         <button
                             onClick={toggleLanguage}
-                            className="flex items-center gap-2 text-gray-400 hover:text-primary transition-all text-sm font-bold tracking-wider bg-white/5 px-3 py-1.5 rounded-xl border border-white/10 hover:border-primary/50"
+                            className="flex items-center gap-1.5 text-gray-400 hover:text-primary transition-all text-xs font-bold tracking-wide bg-white/5 px-2.5 py-1.5 rounded-lg border border-white/10 hover:border-primary/50 shrink-0"
                             title="Cambiar idioma / Change language"
                         >
                             <span>{language === 'es' ? 'ES' : 'EN'}</span>
