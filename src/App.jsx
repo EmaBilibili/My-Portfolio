@@ -13,91 +13,7 @@ import {
   Radar,
   X,
 } from 'lucide-react';
-
-const copy = {
-  es: {
-    nav: ['Perfil', 'Ruta', 'Base técnica', 'Contacto'],
-    navAria: 'Navegación principal',
-    homeAria: 'Emanuel Binimelis, inicio',
-    menuAria: 'Abrir o cerrar menú',
-    principleAria: 'Principios de perfil',
-    role: 'SOC / BLUE TEAM — EN FORMACIÓN',
-    availability: 'Disponible para oportunidades junior',
-    intro: 'Desarrollador con base sólida en C# y software, enfocado actualmente en construir criterio defensivo para operaciones de seguridad.',
-    primary: 'Ver ruta activa',
-    secondary: 'Contactar',
-    dossier: 'RUTA DE FORMACIÓN',
-    caseId: 'PREPARACIÓN / 01',
-    reviewed: 'ACTUALIZADO / AGO 2026',
-    status: 'ESTADO: FORMACIÓN ACTIVA',
-    route: [
-      ['TryHackMe · SEC1', 'En curso', 'Fundamentos prácticos de seguridad.'],
-      ['Hack The Box · SOC Level 1', 'Próximo', 'Siguiente objetivo de especialización.'],
-    ],
-    note: 'Sin certificaciones obtenidas todavía. Progreso comunicado con precisión.',
-    focusTitle: 'El foco es defensa, no apariencia.',
-    focus: 'Estoy orientando mi experiencia de desarrollo hacia un primer rol SOC / Blue Team: aprender a investigar, contextualizar y comunicar eventos de seguridad con rigor.',
-    principles: [
-      ['Aprendizaje verificable', 'La ruta muestra lo que está en curso y lo que sigue, sin promesas infladas.'],
-      ['Mentalidad de ingeniería', 'C# y desarrollo de software aportan disciplina de depuración, lógica y sistemas.'],
-      ['Preparación para el equipo', 'Busco convertir formación práctica en una contribución útil en un entorno defensivo.'],
-    ],
-    evidenceTitle: 'Base técnica transferible',
-    evidence: 'Antes de enfocar mi camino en seguridad, desarrollé software y experiencias interactivas. Mantengo esta evidencia como prueba de criterio técnico, no como el centro del portfolio.',
-    csharp: 'EVIDENCIA C#',
-    csharpText: 'Desarrollo en Unity y C#, con sistemas de IA para NPCs, mecánicas de sigilo, herramientas de pipeline y depuración de comportamiento.',
-    project: 'Proyecto de tesis · Kenopsia',
-    projectText: 'Co-desarrollo de un proyecto de survival horror con IA para NPCs, iluminación y sistemas de tensión ambiental.',
-    contactTitle: '¿Hablamos de seguridad?',
-    contact: 'Estoy construyendo mi entrada al mundo SOC / Blue Team y abierto a oportunidades junior, mentoría y conversaciones técnicas.',
-    email: 'Escribirme por email',
-    copied: 'Email copiado',
-    copyEmail: 'Copiar email',
-    location: 'Mendoza, Argentina',
-    footer: 'Portfolio de transición a ciberseguridad',
-  },
-  en: {
-    nav: ['Profile', 'Path', 'Technical base', 'Contact'],
-    navAria: 'Main navigation',
-    homeAria: 'Emanuel Binimelis, home',
-    menuAria: 'Open or close menu',
-    principleAria: 'Profile principles',
-    role: 'SOC / BLUE TEAM — IN TRAINING',
-    availability: 'Open to junior opportunities',
-    intro: 'Developer with a strong C# and software foundation, currently building defensive judgment for security operations.',
-    primary: 'View active path',
-    secondary: 'Contact',
-    dossier: 'TRAINING PATH',
-    caseId: 'READINESS / 01',
-    reviewed: 'UPDATED / AUG 2026',
-    status: 'STATUS: ACTIVE TRAINING',
-    route: [
-      ['TryHackMe · SEC1', 'In progress', 'Hands-on security fundamentals.'],
-      ['Hack The Box · SOC Level 1', 'Next', 'Next specialization goal.'],
-    ],
-    note: 'No certifications earned yet. Progress is described precisely.',
-    focusTitle: 'The focus is defense, not appearance.',
-    focus: 'I am directing my development background toward a first SOC / Blue Team role: learning to investigate, contextualize, and communicate security events rigorously.',
-    principles: [
-      ['Verifiable learning', 'The path makes clear what is active and what comes next—without inflated claims.'],
-      ['Engineering mindset', 'C# and software development bring debugging discipline, systems thinking, and logic.'],
-      ['Team readiness', 'I want to turn practical training into useful contribution in a defensive environment.'],
-    ],
-    evidenceTitle: 'Transferable technical base',
-    evidence: 'Before focusing my path on security, I built software and interactive experiences. This remains as proof of technical judgment, not the portfolio’s central identity.',
-    csharp: 'C# EVIDENCE',
-    csharpText: 'Unity and C# development, including NPC AI systems, stealth mechanics, pipeline tools, and behavior debugging.',
-    project: 'Thesis project · Kenopsia',
-    projectText: 'Co-development of a survival-horror project with NPC AI, lighting, and environmental tension systems.',
-    contactTitle: 'Talk security?',
-    contact: 'I am building my entry into SOC / Blue Team work and am open to junior opportunities, mentorship, and technical conversations.',
-    email: 'Email me',
-    copied: 'Email copied',
-    copyEmail: 'Copy email',
-    location: 'Mendoza, Argentina',
-    footer: 'Cybersecurity transition portfolio',
-  },
-};
+import { portfolioCopy } from './features/terminal/content';
 
 function App() {
   const [language, setLanguage] = useState('es');
@@ -105,7 +21,7 @@ function App() {
   const [booted, setBooted] = useState(false);
   const [copied, setCopied] = useState(false);
   const terminalRef = useRef(null);
-  const t = copy[language];
+  const t = portfolioCopy[language];
   const navTargets = ['profile', 'path', 'evidence', 'contact'];
 
   useEffect(() => {
