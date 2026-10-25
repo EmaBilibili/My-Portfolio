@@ -8,6 +8,7 @@ const VERTEX_SHADER = /* glsl */ `
   uniform float uMouseRadius;
   uniform float uPixelRatio;
   uniform float uAspect;
+  uniform float uSizeScale;
 
   attribute vec3 aTargetPosition;
   attribute vec3 aTargetNormal;
@@ -127,8 +128,8 @@ const VERTEX_SHADER = /* glsl */ `
 
     gl_Position = projectionMatrix * mvPosition;
 
-    // 4. Perspective-attenuated point size
-    float baseSize = 15.0 + aRandom * 13.0 + influence * 15.0;
+    // 4. Perspective-attenuated point size with responsive mobile scaling
+    float baseSize = (15.0 + aRandom * 13.0 + influence * 15.0) * uSizeScale;
     gl_PointSize = baseSize * uPixelRatio * (1.0 / -mvPosition.z);
 
     vNoise = combinedNoise;
@@ -138,6 +139,8 @@ const VERTEX_SHADER = /* glsl */ `
 `;
 
 const FRAGMENT_SHADER = /* glsl */ `
+  uniform float uAlphaScale;
+
   varying float vNoise;
   varying float vInfluence;
   varying float vRandom;
@@ -161,7 +164,7 @@ const FRAGMENT_SHADER = /* glsl */ `
 
     vec3 finalColor = mix(baseColor, colorCursor, vInfluence * 0.85);
 
-    float alpha = glow * (0.56 + 0.3 * vRandom + 0.25 * vInfluence);
+    float alpha = glow * (0.56 + 0.3 * vRandom + 0.25 * vInfluence) * uAlphaScale;
     gl_FragColor = vec4(finalColor, alpha);
   }
 `;
@@ -177,7 +180,6 @@ const PARTICLE_COUNT = 13000;
  * 4: RED GLOBAL DE NODOS (Meridian Cyber Globe & Orbits)
  */
 function buildCyberShapes(count) {
-  // Helper to push a vertex + normal into typed arrays
   const createBufferPair = () => ({
     positions: new Float32Array(count * 3),
     normals: new Float32Array(count * 3),
@@ -198,7 +200,8 @@ function buildCyberShapes(count) {
   // SHAPE 0: CYBER SHIELD (Escudo Defensivo Blue Team)
   // =========================================================
   const shield = createBufferPair();
-  const shieldHalfWidth = (h) => 2.05 * Math.pow(Math.max(h, 0.001), 0.56) * (1.0 - 0.14 * Math.pow(h, 2.8));
+  const shieldHalfWidth = (h) =>
+    2.05 * Math.pow(Math.max(h, 0.001), 0.56) * (1.0 - 0.14 * Math.pow(h, 2.8));
 
   for (let i = 0; i < count; i++) {
     const r = Math.random();
@@ -207,13 +210,11 @@ function buildCyberShapes(count) {
     let z = 0;
 
     if (r < 0.38) {
-      // Shield armored perimeter & bevel rim
       const h = Math.random();
       y = -2.35 + h * 4.5;
       const side = Math.random() < 0.5 ? -1 : 1;
       const w = shieldHalfWidth(h);
       if (h > 0.96 && Math.random() < 0.45) {
-        // Top crest arch
         const u = (Math.random() - 0.5) * 2;
         x = u * shieldHalfWidth(1.0);
         y = 2.15 - 0.18 * Math.abs(u) + (Math.random() - 0.5) * 0.08;
@@ -222,25 +223,21 @@ function buildCyberShapes(count) {
       }
       z = (Math.random() - 0.5) * 0.45;
     } else if (r < 0.56) {
-      // Inner tactical chevron & central vertical spine
       if (Math.random() < 0.45) {
-        // Vertical spine
         y = -1.9 + Math.random() * 3.7;
         x = (Math.random() - 0.5) * 0.14;
         z = (Math.random() < 0.5 ? 1 : -1) * (0.42 + Math.random() * 0.08);
       } else {
-        // Inner V-Chevron emblem
         const arm = (Math.random() - 0.5) * 2.2;
         x = arm;
         y = 0.45 - Math.abs(arm) * 0.75 + (Math.random() - 0.5) * 0.12;
         z = (Math.random() < 0.5 ? 1 : -1) * 0.42;
       }
     } else {
-      // Curved 3D shield face (front and back shells)
       const h = Math.pow(Math.random(), 0.72);
       y = -2.35 + h * 4.5;
       const maxW = shieldHalfWidth(h);
-      const u = (Math.random() * 2 - 1);
+      const u = Math.random() * 2 - 1;
       x = u * maxW;
       const curvature = Math.max(0, 1 - u * u);
       const face = Math.random() < 0.5 ? 1 : -1;
@@ -264,14 +261,12 @@ function buildCyberShapes(count) {
     let nz = 1;
 
     if (r < 0.34) {
-      // Top U-Shackle (Arco de acero del candado)
       const u = Math.random();
       const tubeAngle = Math.random() * Math.PI * 2;
       const tubeR = 0.22 + (Math.random() - 0.5) * 0.04;
       const majorR = 1.05;
 
       if (u < 0.65) {
-        // Semicircular top arch
         const archAngle = (u / 0.65) * Math.PI;
         const cx = Math.cos(archAngle) * majorR;
         const cy = 1.15 + Math.sin(archAngle) * majorR;
@@ -285,7 +280,6 @@ function buildCyberShapes(count) {
         ny = radialY * Math.cos(tubeAngle);
         nz = Math.sin(tubeAngle);
       } else {
-        // Vertical shackle legs
         const side = Math.random() < 0.5 ? -1 : 1;
         x = side * majorR + Math.cos(tubeAngle) * tubeR;
         y = 0.25 + ((u - 0.65) / 0.35) * 0.9;
@@ -294,18 +288,15 @@ function buildCyberShapes(count) {
         ny = 0;
         nz = Math.sin(tubeAngle);
       }
-    } else if (r < 0.50) {
-      // Central Keyhole Emblem (Ojo de cerradura)
+    } else if (r < 0.5) {
       const side = Math.random() < 0.5 ? 1 : -1;
       z = side * (0.58 + (Math.random() - 0.5) * 0.04);
       if (Math.random() < 0.58) {
-        // Keyhole circle
         const a = Math.random() * Math.PI * 2;
         const kr = 0.22 + Math.random() * 0.14;
         x = Math.cos(a) * kr;
         y = -0.68 + Math.sin(a) * kr;
       } else {
-        // Keyhole vertical trapezoid slot
         const h = Math.random();
         y = -1.55 + h * 0.72;
         const slotW = 0.12 + (1 - h) * 0.12;
@@ -315,7 +306,6 @@ function buildCyberShapes(count) {
       ny = 0;
       nz = side;
     } else {
-      // Padlock Vault Body (Cuerpo blindado con bordes biselados)
       const bw = 1.62;
       const bhTop = 0.28;
       const bhBot = -2.25;
@@ -323,7 +313,6 @@ function buildCyberShapes(count) {
 
       const facePick = Math.random();
       if (facePick < 0.45) {
-        // High-density edges & frame of the lock body
         const edge = Math.floor(Math.random() * 12);
         const t = Math.random();
         const jitter = () => (Math.random() - 0.5) * 0.08;
@@ -341,7 +330,6 @@ function buildCyberShapes(count) {
           z = -bd + t * (bd * 2);
         }
       } else {
-        // Body surfaces
         x = (Math.random() * 2 - 1) * bw;
         y = bhBot + Math.random() * (bhTop - bhBot);
         z = (Math.random() < 0.5 ? 1 : -1) * bd + (Math.random() - 0.5) * 0.06;
@@ -365,22 +353,19 @@ function buildCyberShapes(count) {
     let z = 0;
 
     if (r < 0.36) {
-      // Upper and lower almond eyelid arcs
-      const u = (Math.random() * 2 - 1); // -1 to 1
+      const u = Math.random() * 2 - 1;
       const lid = Math.random() < 0.5 ? 1 : -1;
       x = u * 2.65;
       const curve = 1.0 - u * u;
       y = lid * (1.28 * curve) + (Math.random() - 0.5) * 0.1;
       z = 0.45 * curve + (Math.random() - 0.5) * 0.22;
     } else if (r < 0.74) {
-      // Biometric Iris Ring with radial scan fibers
       const angle = Math.random() * Math.PI * 2;
       const radius = 0.52 + Math.random() * 0.72;
       x = Math.cos(angle) * radius;
       y = Math.sin(angle) * radius;
       z = 0.25 * Math.cos((radius - 0.52) * Math.PI) + (Math.random() - 0.5) * 0.12;
     } else if (r < 0.88) {
-      // Dense Pupil Core Sphere
       const u = Math.random();
       const v = Math.random();
       const theta = u * 2.0 * Math.PI;
@@ -390,7 +375,6 @@ function buildCyberShapes(count) {
       y = rad * Math.sin(phi) * Math.sin(theta);
       z = rad * Math.cos(phi) + 0.25;
     } else {
-      // Outer tactical HUD radar ring
       const angle = Math.random() * Math.PI * 2;
       const rad = 2.15 + (Math.random() - 0.5) * 0.08;
       x = Math.cos(angle) * rad;
@@ -418,7 +402,8 @@ function buildCyberShapes(count) {
     for (let b = a + 1; b < 8; b++) {
       const va = vertices[a];
       const vb = vertices[b];
-      const diff = Math.abs(va[0] - vb[0]) + Math.abs(va[1] - vb[1]) + Math.abs(va[2] - vb[2]);
+      const diff =
+        Math.abs(va[0] - vb[0]) + Math.abs(va[1] - vb[1]) + Math.abs(va[2] - vb[2]);
       if (diff === 2) edges.push([va, vb]);
     }
   }
@@ -434,21 +419,18 @@ function buildCyberShapes(count) {
     let z = 0;
 
     if (r < 0.48) {
-      // 12 Outer Cube Beams
       const [va, vb] = edges[i % 12];
       const t = Math.random();
       x = (va[0] + (vb[0] - va[0]) * t) * outerScale + jitter();
       y = (va[1] + (vb[1] - va[1]) * t) * outerScale + jitter();
       z = (va[2] + (vb[2] - va[2]) * t) * outerScale + jitter();
     } else if (r < 0.78) {
-      // 12 Inner Cube Beams
       const [va, vb] = edges[i % 12];
       const t = Math.random();
       x = (va[0] + (vb[0] - va[0]) * t) * innerScale + jitter() * 0.7;
       y = (va[1] + (vb[1] - va[1]) * t) * innerScale + jitter() * 0.7;
       z = (va[2] + (vb[2] - va[2]) * t) * innerScale + jitter() * 0.7;
     } else {
-      // 8 Diagonal 4D Connectors between Inner and Outer Cube vertices
       const v = vertices[i % 8];
       const t = Math.random();
       const s = innerScale + (outerScale - innerScale) * t;
@@ -471,17 +453,14 @@ function buildCyberShapes(count) {
     let z = 0;
 
     if (r < 0.72) {
-      // Meridian & Parallel bands on a tactical sphere
       const radius = 2.05;
       let theta;
       let phi;
       if (Math.random() < 0.55) {
-        // Quantized longitude meridians (12 bands)
         const meridianIdx = Math.floor(Math.random() * 12);
         theta = (meridianIdx / 12) * Math.PI * 2 + (Math.random() - 0.5) * 0.04;
         phi = Math.acos(2.0 * Math.random() - 1.0);
       } else {
-        // Quantized latitude parallels (9 bands)
         const latIdx = Math.floor(Math.random() * 9) + 1;
         phi = (latIdx / 10) * Math.PI + (Math.random() - 0.5) * 0.03;
         theta = Math.random() * Math.PI * 2;
@@ -490,7 +469,6 @@ function buildCyberShapes(count) {
       y = radius * Math.cos(phi);
       z = radius * Math.sin(phi) * Math.sin(theta);
     } else {
-      // Dual Tilted Satellite Telemetry Orbits
       const orbitIdx = i % 2;
       const orbitRadius = orbitIdx === 0 ? 2.65 : 2.95;
       const tilt = orbitIdx === 0 ? 0.52 : -0.58;
@@ -529,7 +507,6 @@ export default function DefenseRadarScene({ activeShapeIndex = 0 }) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
-    camera.position.set(0, 0, 6.8);
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -566,6 +543,8 @@ export default function DefenseRadarScene({ activeShapeIndex = 0 }) {
       uMouseRadius: { value: 0.44 },
       uPixelRatio: { value: pixelRatio },
       uAspect: { value: width / height },
+      uSizeScale: { value: 1.0 },
+      uAlphaScale: { value: 1.0 },
     };
 
     const particlesMaterial = new THREE.ShaderMaterial({
@@ -580,6 +559,28 @@ export default function DefenseRadarScene({ activeShapeIndex = 0 }) {
     const particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
     scene.add(particleSystem);
 
+    // Responsive camera distance & particle tuning for mobile vs desktop
+    const updateCameraAndScale = (w, h) => {
+      const aspect = w / h;
+      camera.aspect = aspect;
+      if (aspect < 0.85) {
+        // Portrait mobile / tablet: pull camera back so full width of 3D shape fits inside screen
+        camera.position.z = Math.min(12.2, 5.4 / Math.max(aspect, 0.44));
+        particleSystem.position.y = 0.25;
+        uniforms.uSizeScale.value = 0.82;
+        uniforms.uAlphaScale.value = 0.78;
+      } else {
+        camera.position.z = 6.8;
+        particleSystem.position.y = 0;
+        uniforms.uSizeScale.value = 1.0;
+        uniforms.uAlphaScale.value = 1.0;
+      }
+      camera.updateProjectionMatrix();
+      uniforms.uAspect.value = aspect;
+    };
+
+    updateCameraAndScale(width, height);
+
     // State for multi-shape morphing
     let currentTargetIdx = 0;
     let morphProgress = 1;
@@ -588,7 +589,6 @@ export default function DefenseRadarScene({ activeShapeIndex = 0 }) {
       const normalizedNext = ((nextIdx % shapes.length) + shapes.length) % shapes.length;
       if (normalizedNext === currentTargetIdx) return;
 
-      // Bake current interpolated position as the new source so mid-flight changes are 100% smooth
       const t = uniforms.uMorphProgress.value;
       const srcP = posAttr.array;
       const dstP = targetPosAttr.array;
@@ -602,7 +602,6 @@ export default function DefenseRadarScene({ activeShapeIndex = 0 }) {
       posAttr.needsUpdate = true;
       normAttr.needsUpdate = true;
 
-      // Load the new target shape into aTargetPosition / aTargetNormal
       targetPosAttr.array.set(shapes[normalizedNext].positions);
       targetNormAttr.array.set(shapes[normalizedNext].normals);
       targetPosAttr.needsUpdate = true;
@@ -613,11 +612,9 @@ export default function DefenseRadarScene({ activeShapeIndex = 0 }) {
       uniforms.uMorphProgress.value = 0;
     };
 
-    container._morphToShape = triggerMorphTo;
-
-    // Pointer tracking
-    const targetMouse = new THREE.Vector2(0, 0);
-    const currentMouse = new THREE.Vector2(0, 0);
+    // Pointer & Touch tracking
+    const targetMouse = new THREE.Vector2(999, 999);
+    const currentMouse = new THREE.Vector2(999, 999);
     let pointerActive = false;
 
     const handlePointerMove = (event) => {
@@ -626,7 +623,14 @@ export default function DefenseRadarScene({ activeShapeIndex = 0 }) {
       targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
 
+    const handlePointerLeave = () => {
+      pointerActive = false;
+      targetMouse.set(999, 999);
+    };
+
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('pointerup', handlePointerLeave, { passive: true });
+    window.addEventListener('pointercancel', handlePointerLeave, { passive: true });
 
     let animationFrameId;
     const clock = new THREE.Clock();
@@ -638,27 +642,33 @@ export default function DefenseRadarScene({ activeShapeIndex = 0 }) {
       const elapsedTime = clock.getElapsedTime();
       uniforms.uTime.value = elapsedTime;
 
-      // Check if target shape changed
       if (targetShapeRef.current !== currentTargetIdx) {
         triggerMorphTo(targetShapeRef.current);
       }
 
-      // Smoothly advance morph progress from 0 -> 1
       if (morphProgress < 1) {
         morphProgress = Math.min(1, morphProgress + delta * 0.95);
         uniforms.uMorphProgress.value = morphProgress;
       }
 
-      // Smoothly interpolate cursor coordinates
-      if (pointerActive) {
-        currentMouse.x += (targetMouse.x - currentMouse.x) * 0.085;
-        currentMouse.y += (targetMouse.y - currentMouse.y) * 0.085;
+      if (pointerActive && targetMouse.x < 10) {
+        if (currentMouse.x > 10) {
+          currentMouse.copy(targetMouse);
+        } else {
+          currentMouse.x += (targetMouse.x - currentMouse.x) * 0.09;
+          currentMouse.y += (targetMouse.y - currentMouse.y) * 0.09;
+        }
         uniforms.uMouse.value.copy(currentMouse);
+      } else {
+        uniforms.uMouse.value.set(999, 999);
+        currentMouse.set(999, 999);
       }
 
-      // Subtle, readable 3D oscillation so each cybersecurity symbol is clearly recognizable
-      particleSystem.rotation.y = Math.sin(elapsedTime * 0.35) * 0.38 + currentMouse.x * 0.32;
-      particleSystem.rotation.x = Math.cos(elapsedTime * 0.25) * 0.14 - currentMouse.y * 0.22;
+      const tiltX = pointerActive && currentMouse.x < 10 ? currentMouse.x * 0.3 : 0;
+      const tiltY = pointerActive && currentMouse.y < 10 ? currentMouse.y * 0.2 : 0;
+
+      particleSystem.rotation.y = Math.sin(elapsedTime * 0.35) * 0.38 + tiltX;
+      particleSystem.rotation.x = Math.cos(elapsedTime * 0.25) * 0.14 - tiltY;
 
       renderer.render(scene, camera);
     };
@@ -670,20 +680,19 @@ export default function DefenseRadarScene({ activeShapeIndex = 0 }) {
       const newHeight = window.innerHeight;
       const newPixelRatio = Math.min(window.devicePixelRatio || 1, 2);
 
-      camera.aspect = newWidth / newHeight;
-      camera.updateProjectionMatrix();
-
       renderer.setSize(newWidth, newHeight);
       renderer.setPixelRatio(newPixelRatio);
-
       uniforms.uPixelRatio.value = newPixelRatio;
-      uniforms.uAspect.value = newWidth / newHeight;
+
+      updateCameraAndScale(newWidth, newHeight);
     };
 
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerLeave);
+      window.removeEventListener('pointercancel', handlePointerLeave);
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
 
