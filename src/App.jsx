@@ -13,8 +13,7 @@ import {
   Play,
   ShieldCheck,
   Sparkles,
-  Terminal,
-  X,
+   X,
 } from 'lucide-react';
 import {
   certificateUrl,
@@ -25,6 +24,23 @@ import {
 } from './features/terminal/content';
 import DefenseRadarScene from './components/DefenseRadarScene';
 
+const CYBER_SHAPES = {
+  es: [
+    '01/05 · ESCUDO DEFENSIVO',
+    '02/05 · CANDADO CRIPTO',
+    '03/05 · SENSOR / OJO SOC',
+    '04/05 · HIPERCUBO FIREWALL',
+    '05/05 · RED GLOBAL',
+  ],
+  en: [
+    '01/05 · CYBER SHIELD',
+    '02/05 · CRYPTO PADLOCK',
+    '03/05 · SOC CYBER EYE',
+    '04/05 · FIREWALL TESSERACT',
+    '05/05 · GLOBAL NETWORK',
+  ],
+};
+
 function App() {
   const [language, setLanguage] = useState('es');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -32,13 +48,15 @@ function App() {
   const [command, setCommand] = useState('');
   const [lines, setLines] = useState(portfolioCopy.es.terminalIntro);
   const [activeSection, setActiveSection] = useState('');
-  const [morphTarget, setMorphTarget] = useState(0);
+  const [shapeIndex, setShapeIndex] = useState(0);
   const [copied, setCopied] = useState(false);
   const clearPulseRef = useRef(null);
   const logContainerRef = useRef(null);
+  const lastScrollBandRef = useRef(0);
 
   const t = portfolioCopy[language];
   const experiences = experienceData[language];
+  const shapeLabels = CYBER_SHAPES[language];
 
   const filteredProjects =
     activeFilter === 'all'
@@ -57,23 +75,38 @@ function App() {
     }
   }, [lines]);
 
-  // Global window click listener to toggle 3D particle morphing
+  // Morph between the 5 Cybersecurity shapes automatically as the user scrolls
+  useEffect(() => {
+    const handleScrollMorph = () => {
+      const maxScroll = Math.max(
+        document.documentElement.scrollHeight - window.innerHeight,
+        1
+      );
+      const progress = Math.min(Math.max(window.scrollY / maxScroll, 0), 0.999);
+      const band = Math.floor(progress * 5); // 0, 1, 2, 3, or 4
+      if (band !== lastScrollBandRef.current) {
+        lastScrollBandRef.current = band;
+        setShapeIndex(band);
+      }
+    };
+
+    window.addEventListener('scroll', handleScrollMorph, { passive: true });
+    return () => window.removeEventListener('scroll', handleScrollMorph);
+  }, []);
+
+  // Global window click listener to cycle through the 5 Cybersecurity shapes
   useEffect(() => {
     const handleWindowClick = (event) => {
       const interactiveEl = event.target.closest('a, button, input, form');
       if (interactiveEl && !interactiveEl.hasAttribute('data-morph-trigger')) {
         return;
       }
-      setMorphTarget((prev) => (prev === 0 ? 1 : 0));
+      setShapeIndex((prev) => (prev + 1) % 5);
     };
 
     window.addEventListener('click', handleWindowClick);
     return () => window.removeEventListener('click', handleWindowClick);
   }, []);
-
-  const toggleMorph = () => {
-    setMorphTarget((prev) => (prev === 0 ? 1 : 0));
-  };
 
   const focusSection = (id) => {
     setActiveSection(id);
@@ -104,7 +137,7 @@ function App() {
           '  nmap portfolio     -> Escanear áreas técnicas / Scan technical domains',
           '  cat training.log   -> Ruta SOC & Certificado TryHackMe',
           '  cat experience.log -> Experiencia laboral y título universitario',
-          '  morph              -> Cambiar geometría 3D (Esfera <-> Torus Knot)',
+          '  morph              -> Siguiente forma 3D de ciberseguridad (5 formas)',
           '  contact            -> Datos de contacto directo / Direct contact',
           '  clear              -> Limpiar terminal / Clear output',
         ],
@@ -123,8 +156,8 @@ function App() {
       morph: {
         output: [
           language === 'es'
-            ? 'Transición morfológica activada en el shader GLSL (uMorphProgress).'
-            : 'Morphological transition triggered in GLSL shader (uMorphProgress).',
+            ? 'Cambiando geometría de partículas 3D (Escudo -> Candado -> Ojo SOC -> Firewall -> Red Global).'
+            : 'Cycling 3D particle geometry (Shield -> Padlock -> SOC Eye -> Firewall -> Global Network).',
         ],
       },
       'ls projects': {
@@ -183,7 +216,7 @@ function App() {
     }
 
     if (input === 'morph') {
-      toggleMorph();
+      setShapeIndex((prev) => (prev + 1) % 5);
     }
 
     const result = commands[input] || {
@@ -215,19 +248,18 @@ function App() {
   return (
     <main className="portfolio-shell">
       {/* 1. CAPA DE FONDO THREE.JS (position: fixed; inset: 0; z-index: 0; pointer-events: none; background: #050508;) */}
-      <DefenseRadarScene morphTarget={morphTarget} />
+      <DefenseRadarScene activeShapeIndex={shapeIndex} />
 
-      {/* BOTÓN / INDICADOR FLOTANTE DE MORPHING */}
+      {/* BOTÓN / INDICADOR FLOTANTE DE MORPHING (5 FORMAS DE CIBERSEGURIDAD) */}
       <button
         type="button"
         data-morph-trigger="true"
         className="morph-floating-indicator"
-        onClick={toggleMorph}
         aria-label="Cambiar forma 3D"
       >
         <Sparkles size={15} />
         <span>{language === 'es' ? 'Cambiar forma (Click)' : 'Change shape (Click)'}</span>
-        <small>{morphTarget === 0 ? 'SPHERE' : 'TORUS KNOT'}</small>
+        <small>{shapeLabels[shapeIndex]}</small>
       </button>
 
       {/* 2. CAPA DE INTERFAZ MINIMALISTA (z-index: 1; pointer-events: auto;) */}
@@ -281,9 +313,7 @@ function App() {
             </div>
 
             <p className="hero-kicker">
-              {language === 'es'
-                ? 'CREATIVE & SYSTEMS DEVELOPER · SOC / BLUE TEAM'
-                : 'CREATIVE & SYSTEMS DEVELOPER · SOC / BLUE TEAM'}
+              CREATIVE & SYSTEMS DEVELOPER · SOC / BLUE TEAM
             </p>
 
             <h1>Emanuel Binimelis</h1>
