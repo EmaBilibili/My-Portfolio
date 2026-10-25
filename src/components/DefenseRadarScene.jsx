@@ -612,12 +612,31 @@ export default function DefenseRadarScene({ activeShapeIndex = 0 }) {
       uniforms.uMorphProgress.value = 0;
     };
 
-    // Pointer & Touch tracking
+    // Pointer & Mouse tracking (disabled on mobile / touch devices to avoid scroll repulsion artifacts)
     const targetMouse = new THREE.Vector2(999, 999);
     const currentMouse = new THREE.Vector2(999, 999);
     let pointerActive = false;
 
+    const isMobileOrTouch = (event) => {
+      if (event && event.pointerType === 'touch') return true;
+      if (window.innerWidth < 860) return true;
+      if (
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(hover: none) and (pointer: coarse)').matches
+      ) {
+        return true;
+      }
+      return false;
+    };
+
     const handlePointerMove = (event) => {
+      // Disallow repulsion tracking on mobile screens or touch events
+      if (isMobileOrTouch(event)) {
+        pointerActive = false;
+        targetMouse.set(999, 999);
+        return;
+      }
+
       pointerActive = true;
       targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -679,6 +698,12 @@ export default function DefenseRadarScene({ activeShapeIndex = 0 }) {
       const newWidth = window.innerWidth;
       const newHeight = window.innerHeight;
       const newPixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+
+      if (newWidth < 860) {
+        pointerActive = false;
+        targetMouse.set(999, 999);
+        uniforms.uMouse.value.set(999, 999);
+      }
 
       renderer.setSize(newWidth, newHeight);
       renderer.setPixelRatio(newPixelRatio);
