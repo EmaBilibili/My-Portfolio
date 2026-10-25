@@ -1,77 +1,60 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowUpRight, Github, Globe2, Mail, Menu, Play, X } from 'lucide-react';
-import { portfolioCopy } from './features/terminal/content';
+import {
+  ArrowDown,
+  ArrowUpRight,
+  Check,
+  Copy,
+  ExternalLink,
+  Github,
+  Globe2,
+  Lock,
+  Mail,
+  Menu,
+  Play,
+  ShieldCheck,
+  Terminal,
+  X,
+} from 'lucide-react';
+import {
+  certificateUrl,
+  experienceData,
+  githubProfileUrl,
+  portfolioCopy,
+  projectsData,
+} from './features/terminal/content';
 import DefenseRadarScene from './components/DefenseRadarScene';
-
-const certificateUrl = 'https://tryhackme.com/certificate/THM-KRRNP9WDN7';
-
-const interfaceCopy = {
-  es: {
-    nav: ['Perfil', 'Terminal', 'Evidencia', 'Contacto'],
-    status: 'Disponible para oportunidades junior',
-    heroLine: 'Software developer → SOC / Blue Team',
-    heroAction: 'Explorar la terminal',
-    terminalLabel: 'Terminal interactiva · simulación local',
-    terminalIntro: ['EmanuelOS / portfolio interface', 'Escribe help o usa un comando rápido.'],
-    placeholder: 'escribe un comando…',
-    run: 'Ejecutar',
-    facetsTitle: 'Dos facetas. Un mismo criterio técnico.',
-    security: 'Seguridad defensiva',
-    software: 'Desarrollo de software',
-    training: 'Formación activa',
-    next: 'Siguiente objetivo',
-    verified: 'Verificación externa',
-    archive: 'Archivo de desarrollo',
-    archiveText: 'Una selección visual de proyectos construidos antes y durante mi transición hacia ciberseguridad.',
-    contactTitle: 'Construyamos una conversación útil.',
-    contactText: 'Estoy abierto a oportunidades junior, mentoría y conversaciones técnicas sobre seguridad defensiva y desarrollo.',
-  },
-  en: {
-    nav: ['Profile', 'Terminal', 'Evidence', 'Contact'],
-    status: 'Open to junior opportunities',
-    heroLine: 'Software developer → SOC / Blue Team',
-    heroAction: 'Explore the terminal',
-    terminalLabel: 'Interactive terminal · local simulation',
-    terminalIntro: ['EmanuelOS / portfolio interface', 'Type help or use a quick command.'],
-    placeholder: 'type a command…',
-    run: 'Run',
-    facetsTitle: 'Two disciplines. One technical mindset.',
-    security: 'Defensive security',
-    software: 'Software development',
-    training: 'Active training',
-    next: 'Next objective',
-    verified: 'External verification',
-    archive: 'Development archive',
-    archiveText: 'A visual selection of work built before and during my transition into cybersecurity.',
-    contactTitle: 'Let’s start a useful conversation.',
-    contactText: 'I am open to junior opportunities, mentorship, and technical conversations about defensive security and development.',
-  },
-};
-
-const projects = [
-  { name: 'Kenopsia', image: '/assets/kenopsia.webp', type: 'C# / Unity', href: 'https://github.com/EmaBilibili/TesisKenopsia' },
-  { name: 'CoachOS', image: '/assets/projects/coachos.webp', type: 'Software' },
-  { name: 'Computoya', image: '/assets/projects/computoya.webp', type: 'Web' },
-  { name: 'EasyVet', image: '/assets/projects/easyvet.webp', type: 'Product' },
-  { name: 'Skuishi Souls', image: '/assets/projects/skuishi_souls.webp', type: 'Game' },
-];
 
 function App() {
   const [language, setLanguage] = useState('es');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeFilter, setActiveFilter] = useState('all');
   const [command, setCommand] = useState('');
-  const [lines, setLines] = useState(interfaceCopy.es.terminalIntro);
+  const [lines, setLines] = useState(portfolioCopy.es.terminalIntro);
   const [activeSection, setActiveSection] = useState('');
   const [radarPulse, setRadarPulse] = useState(0);
+  const [copied, setCopied] = useState(false);
   const clearPulseRef = useRef(null);
+  const logContainerRef = useRef(null);
+
   const t = portfolioCopy[language];
-  const ui = interfaceCopy[language];
+  const experiences = experienceData[language];
+
+  const filteredProjects =
+    activeFilter === 'all'
+      ? projectsData
+      : projectsData.filter((project) => project.domain === activeFilter);
 
   useEffect(() => {
     document.documentElement.lang = language;
   }, [language]);
 
   useEffect(() => () => window.clearTimeout(clearPulseRef.current), []);
+
+  useEffect(() => {
+    if (logContainerRef.current) {
+      logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
+    }
+  }, [lines]);
 
   const focusSection = (id) => {
     setActiveSection(id);
@@ -80,16 +63,89 @@ function App() {
     clearPulseRef.current = window.setTimeout(() => setActiveSection(''), 1800);
   };
 
+  const copyEmailAddress = async () => {
+    try {
+      await navigator.clipboard.writeText('bilibilisfactorydev@gmail.com');
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2200);
+    } catch {
+      window.location.href = 'mailto:bilibilisfactorydev@gmail.com';
+    }
+  };
+
   const executeCommand = (rawCommand) => {
     const input = rawCommand.trim().toLowerCase();
     const commands = {
-      help: { output: ['whoami · nmap portfolio · cat training.log · ls projects · open certificate · contact · clear'] },
-      whoami: { output: [language === 'es' ? 'Emanuel Binimelis — desarrollador orientándose a SOC / Blue Team.' : 'Emanuel Binimelis — developer moving toward SOC / Blue Team.'], target: 'profile' },
-      'nmap portfolio': { output: ['PORT 80/tcp   OPEN  software', 'PORT 443/tcp  OPEN  defensive-security', 'Result: local visual simulation — no network request executed.'], target: 'facets' },
-      'cat training.log': { output: [`TryHackMe SEC1 — ${t.route[0][1]}`, `Hack The Box SOC Level 1 — ${t.route[1][1]}`], target: 'training' },
-      'ls projects': { output: projects.map((project) => `./${project.name.toLowerCase().replaceAll(' ', '-')}`), target: 'projects' },
-      'open certificate': { output: [`TryHackMe / THM-KRRNP9WDN7`, language === 'es' ? 'Enlace verificable disponible en la sección de formación.' : 'Verifiable link available in the training section.'], target: 'training' },
-      contact: { output: ['bilibilisfactorydev@gmail.com'], target: 'contact' },
+      help: {
+        output: [
+          'Comandos disponibles / Available commands:',
+          '  whoami             -> Resumen de perfil / Profile summary',
+          '  ls projects        -> Listar 11 proyectos reales / List 11 shipped projects',
+          '  stack              -> Matriz tecnológica / Technical stack matrix',
+          '  nmap portfolio     -> Escanear áreas técnicas / Scan technical domains',
+          '  cat training.log   -> Ruta SOC & Certificado TryHackMe',
+          '  cat experience.log -> Experiencia laboral y título universitario',
+          '  contact            -> Datos de contacto directo / Direct contact',
+          '  clear              -> Limpiar terminal / Clear output',
+        ],
+      },
+      whoami: {
+        output: [
+          language === 'es'
+            ? 'Emanuel Binimelis (Mendoza, AR) — Software & Systems Developer (Rust, C#, TS, Linux) en transición a SOC / Blue Team.'
+            : 'Emanuel Binimelis (Mendoza, AR) — Software & Systems Developer (Rust, C#, TS, Linux) transitioning to SOC / Blue Team.',
+          language === 'es'
+            ? 'Graduado Técnico en Desarrollo de Videojuegos (Univ. de Mendoza, 2025) · +11 proyectos desplegados.'
+            : 'Video Game Development Graduate (Univ. de Mendoza, 2025) · 11+ shipped projects.',
+        ],
+        target: 'profile',
+      },
+      'ls projects': {
+        output: [
+          ...projectsData.map(
+            (p) => `[${p.year}] ${p.name.padEnd(28, ' ')} :: ${p.tech.slice(0, 3).join(', ')}`
+          ),
+        ],
+        target: 'projects',
+      },
+      stack: {
+        output: [
+          '[SECURITY & OS]  Linux (Arch/Omarchy), TryHackMe SEC1, TCP/IP, Log Triage, Bash',
+          '[SYSTEMS/NATIVE] Rust, Tauri v2, C# / .NET, Unity 3D/2D, FFmpeg Pipelines',
+          '[FULL-STACK WEB] TypeScript, React 19, Next.js, Svelte 5, Supabase (PostgreSQL)',
+        ],
+        target: 'facets',
+      },
+      'nmap portfolio': {
+        output: [
+          'PORT     STATE  SERVICE             EVIDENCE',
+          '22/tcp   OPEN   linux-systems-rust  SnapStream, QuickCompress, Omarchy Terra',
+          '80/tcp   OPEN   fullstack-web-saas  Mi-Rancho PWA, Vestta, CoachOS, EasyVet',
+          '443/tcp  OPEN   defensive-sec-soc   TryHackMe SEC1 (THM-KRRNP9WDN7), HTB SOC L1',
+          '8080/tcp OPEN   csharp-ai-engines   Kenopsia Thesis, Skuishy Souls (1st Place)',
+        ],
+        target: 'facets',
+      },
+      'cat training.log': {
+        output: [
+          `[ACTIVE]   ${t.route[0][0]} — ${t.route[0][1]}`,
+          `[NEXT]     ${t.route[1][0]} — ${t.route[1][1]}`,
+          `[VERIFIED] TryHackMe Certificate ID: THM-KRRNP9WDN7 (${certificateUrl})`,
+        ],
+        target: 'training',
+      },
+      'cat experience.log': {
+        output: experiences.map((exp) => `${exp.period} | ${exp.role} @ ${exp.org}`),
+        target: 'training',
+      },
+      contact: {
+        output: [
+          'Email  :: bilibilisfactorydev@gmail.com',
+          'GitHub :: https://github.com/EmaBilibili',
+          'Loc    :: Mendoza, Argentina',
+        ],
+        target: 'contact',
+      },
     };
 
     if (!input) return;
@@ -99,8 +155,15 @@ function App() {
       return;
     }
 
-    const result = commands[input] || { output: [language === 'es' ? `Comando desconocido: ${input}. Escribe help.` : `Unknown command: ${input}. Type help.`] };
-    setLines((current) => [...current, `$ ${rawCommand.trim()}`, ...result.output].slice(-14));
+    const result = commands[input] || {
+      output: [
+        language === 'es'
+          ? `Comando no reconocido: "${input}". Escribe "help" para ver la lista de comandos.`
+          : `Unrecognized command: "${input}". Type "help" for available commands.`,
+      ],
+    };
+
+    setLines((current) => [...current, `$ ${rawCommand.trim()}`, ...result.output].slice(-18));
     setCommand('');
     setRadarPulse((prev) => prev + 1);
     if (result.target) focusSection(result.target);
@@ -114,61 +177,380 @@ function App() {
   const switchLanguage = () => {
     const nextLanguage = language === 'es' ? 'en' : 'es';
     setLanguage(nextLanguage);
-    setLines(interfaceCopy[nextLanguage].terminalIntro);
+    setLines(portfolioCopy[nextLanguage].terminalIntro);
   };
+
+  const navTargets = ['profile', 'terminal', 'projects', 'facets', 'training', 'contact'];
 
   return (
     <main className="portfolio-shell">
       <header className="site-nav">
-        <a className="identity" href="#profile" aria-label={t.homeAria}><b>EB</b><span>Emanuel Binimelis</span></a>
+        <a className="identity" href="#profile" aria-label={t.homeAria}>
+          <b>EB</b>
+          <span>Emanuel Binimelis</span>
+        </a>
         <nav className={menuOpen ? 'nav-links is-open' : 'nav-links'} aria-label={t.navAria}>
-          {['profile', 'terminal', 'facets', 'contact'].map((id, index) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{ui.nav[index]}</a>)}
+          {navTargets.map((id, index) => (
+            <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>
+              {t.nav[index]}
+            </a>
+          ))}
         </nav>
-        <div className="nav-actions"><button onClick={switchLanguage} aria-label="Change language">{language === 'es' ? 'EN' : 'ES'} <Globe2 size={15} /></button><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label={t.menuAria} aria-expanded={menuOpen}>{menuOpen ? <X /> : <Menu />}</button></div>
+        <div className="nav-actions">
+          <a
+            className="nav-icon-link"
+            href={githubProfileUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub EmaBilibili"
+            title="GitHub"
+          >
+            <Github size={16} />
+          </a>
+          <button onClick={switchLanguage} aria-label="Change language">
+            {language === 'es' ? 'EN' : 'ES'} <Globe2 size={15} />
+          </button>
+          <button
+            className="menu-button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={t.menuAria}
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
       </header>
 
+      {/* HERO SECTION */}
       <section className={`hero-section ${activeSection === 'profile' ? 'section-pulse' : ''}`} id="profile">
-        <div className="availability"><i />{ui.status}</div>
-        <div className="defense-radar-container">
-          <DefenseRadarScene pulseTrigger={radarPulse} />
+        <div className="hero-top-row">
+          <div className="availability">
+            <i />
+            {t.status}
+          </div>
+          <span className="hero-badge">{t.heroBadge}</span>
         </div>
-        <h1><span>Emanuel</span><span>Binimelis</span></h1>
-        <div className="hero-bottom"><p>{ui.heroLine}</p><p>{t.intro}</p><a href="#terminal">{ui.heroAction}<ArrowDown size={18} /></a></div>
+
+        <div className="hero-main-grid">
+          <div className="hero-title-block">
+            <h1>
+              <span>Emanuel</span>
+              <span>Binimelis</span>
+            </h1>
+            <p className="hero-lead">{t.heroLine}</p>
+            <p className="hero-sublead">{t.intro}</p>
+            <div className="hero-cta-group">
+              <a className="btn-primary-dark" href="#projects">
+                {t.primaryCta} <ArrowDown size={17} />
+              </a>
+              <a className="btn-secondary-dark" href="#terminal">
+                <Terminal size={16} /> {t.secondaryCta}
+              </a>
+              <a
+                className="btn-secondary-dark"
+                href={githubProfileUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Github size={16} /> GitHub
+              </a>
+            </div>
+          </div>
+
+          <div className="defense-radar-container">
+            <DefenseRadarScene pulseTrigger={radarPulse} />
+            <div className="radar-caption">
+              <span>TELEMETRY // SOC RADAR NODE</span>
+              <span>INTERACTIVE WEBGL</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="hero-metrics-bar">
+          {t.metrics.map((metric) => (
+            <div className="metric-card" key={metric.value}>
+              <strong>{metric.value}</strong>
+              <span>{metric.label}</span>
+            </div>
+          ))}
+        </div>
       </section>
 
+      {/* INTERACTIVE TERMINAL SECTION */}
       <section className="terminal-section" id="terminal">
-        <div className="terminal-caption"><span>{ui.terminalLabel}</span><span>NO EXTERNAL COMMANDS</span></div>
+        <div className="terminal-caption">
+          <span>{t.terminalLabel}</span>
+          <span>LOCAL SHELL // INTERACTIVE</span>
+        </div>
         <div className="terminal-window">
-          <div className="terminal-bar"><span>emanuel@portfolio:~</span><span>LOCAL / SAFE</span></div>
-          <div className="terminal-log" aria-live="polite">{lines.map((line, index) => <div className={line.startsWith('$') ? 'command-line' : ''} key={`${line}-${index}`}>{line}</div>)}</div>
-          <form className="terminal-input" onSubmit={handleSubmit}><span>$</span><input value={command} onChange={(event) => setCommand(event.target.value)} placeholder={ui.placeholder} aria-label="Terminal command" autoComplete="off" /><button type="submit">{ui.run}<Play size={14} /></button></form>
+          <div className="terminal-bar">
+            <div className="terminal-dots">
+              <span />
+              <span />
+              <span />
+            </div>
+            <span>emanuel@soc-workstation:~/portfolio</span>
+            <span>BASH / SAFE</span>
+          </div>
+          <div className="terminal-log" ref={logContainerRef} aria-live="polite">
+            {lines.map((line, index) => (
+              <div
+                className={line.startsWith('$') ? 'command-line' : ''}
+                key={`${line}-${index}`}
+              >
+                {line}
+              </div>
+            ))}
+          </div>
+          <form className="terminal-input" onSubmit={handleSubmit}>
+            <span>$</span>
+            <input
+              value={command}
+              onChange={(event) => setCommand(event.target.value)}
+              placeholder={t.placeholder}
+              aria-label="Terminal command"
+              autoComplete="off"
+            />
+            <button type="submit">
+              {t.run} <Play size={14} />
+            </button>
+          </form>
         </div>
-        <div className="quick-commands">{['whoami', 'nmap portfolio', 'cat training.log', 'ls projects'].map((item) => <button key={item} onClick={() => executeCommand(item)}>{item}</button>)}</div>
-      </section>
-
-      <section className={`facets-section ${activeSection === 'facets' ? 'section-pulse' : ''}`} id="facets">
-        <header><p>SECURITY × SOFTWARE</p><h2>{ui.facetsTitle}</h2></header>
-        <div className="facet-grid">
-          <article><span>DEFENSIVE</span><h3>{ui.security}</h3><p>{t.focus}</p><ul><li>TryHackMe SEC1</li><li>SOC / Blue Team</li><li>{t.principles[0][0]}</li></ul></article>
-          <article className="facet-inverse"><span>BUILD</span><h3>{ui.software}</h3><p>{t.csharpText}</p><ul><li>C#</li><li>Unity</li><li>Debugging</li></ul></article>
+        <div className="quick-commands">
+          {[
+            'help',
+            'ls projects',
+            'stack',
+            'nmap portfolio',
+            'cat training.log',
+            'cat experience.log',
+            'whoami',
+            'clear',
+          ].map((item) => (
+            <button key={item} onClick={() => executeCommand(item)}>
+              $ {item}
+            </button>
+          ))}
         </div>
       </section>
 
-      <section className={`training-section ${activeSection === 'training' ? 'section-pulse' : ''}`} id="training">
-        <div className="training-copy"><p>TRAINING / CREDENTIAL</p><h2>{t.credentialTitle}</h2><p>{t.credentialText}</p><a href={certificateUrl} target="_blank" rel="noreferrer">{t.viewCredential}<ArrowUpRight size={17} /></a></div>
-        <div className="training-list"><article><span>{ui.training}</span><strong>TryHackMe · SEC1</strong><small>{t.route[0][1]}</small></article><article><span>{ui.next}</span><strong>Hack The Box · SOC Level 1</strong><small>{t.route[1][1]}</small></article><article><span>{ui.verified}</span><strong>THM-KRRNP9WDN7</strong><small>TryHackMe</small></article></div>
+      {/* PROJECTS SECTION (11 CURATED GITHUB PROJECTS) */}
+      <section
+        className={`projects-section ${activeSection === 'projects' ? 'section-pulse' : ''}`}
+        id="projects"
+      >
+        <header className="projects-header">
+          <div>
+            <p className="section-kicker">{t.projectsKicker}</p>
+            <h2>{t.projectsTitle}</h2>
+          </div>
+          <p className="projects-intro">{t.projectsSubtitle}</p>
+        </header>
+
+        <div className="project-filters" role="tablist" aria-label="Project categories">
+          {t.filters.map((filter) => (
+            <button
+              key={filter.id}
+              role="tab"
+              aria-selected={activeFilter === filter.id}
+              className={activeFilter === filter.id ? 'filter-btn active' : 'filter-btn'}
+              onClick={() => setActiveFilter(filter.id)}
+            >
+              {filter.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="project-gallery">
+          {filteredProjects.map((project, index) => (
+            <article
+              className={`project-card ${project.featured && activeFilter === 'all' ? 'featured-card' : ''}`}
+              key={project.id}
+            >
+              <div className="project-image-wrap">
+                <img
+                  src={project.image}
+                  alt={project.name}
+                  loading={index > 2 ? 'lazy' : 'eager'}
+                />
+                <span className="project-year-badge">{project.year}</span>
+              </div>
+
+              <div className="project-body">
+                <div className="project-meta">
+                  <span>{project.type[language]}</span>
+                </div>
+                <h3>{project.name}</h3>
+                <p className="project-desc">{project.description[language]}</p>
+
+                <ul className="project-tech-list">
+                  {project.tech.map((tag) => (
+                    <li key={tag}>{tag}</li>
+                  ))}
+                </ul>
+
+                <div className="project-links">
+                  {project.demoUrl && (
+                    <a
+                      className="project-link primary-link"
+                      href={project.demoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {project.demoLabel ? project.demoLabel[language] : t.viewDemo}{' '}
+                      <ExternalLink size={15} />
+                    </a>
+                  )}
+                  {project.repoUrl ? (
+                    <a
+                      className="project-link secondary-link"
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Github size={15} /> {t.viewRepo} <ArrowUpRight size={15} />
+                    </a>
+                  ) : (
+                    <span className="project-private-tag">
+                      <Lock size={13} /> {t.privateRepoNote}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
-      <section className={`projects-section ${activeSection === 'projects' ? 'section-pulse' : ''}`} id="projects">
-        <header><p>SELECTED WORK</p><h2>{ui.archive}</h2><span>{ui.archiveText}</span></header>
-        <div className="project-gallery">{projects.map((project, index) => {
-          const content = <><img src={project.image} alt={`Vista de ${project.name}`} loading={index > 1 ? 'lazy' : 'eager'} /><div><span>{project.type}</span><h3>{project.name}</h3>{project.href && <ArrowUpRight size={19} />}</div></>;
-          return project.href ? <a className="project-tile" href={project.href} target="_blank" rel="noreferrer" key={project.name}>{content}</a> : <article className="project-tile" key={project.name}>{content}</article>;
-        })}</div>
+      {/* TECHNICAL PILLARS / ARCHITECTURE SECTION */}
+      <section
+        className={`facets-section ${activeSection === 'facets' ? 'section-pulse' : ''}`}
+        id="facets"
+      >
+        <header className="facets-header">
+          <div>
+            <p className="section-kicker">{t.facetsKicker}</p>
+            <h2>{t.facetsTitle}</h2>
+          </div>
+          <p className="facets-subtitle">{t.facetsSubtitle}</p>
+        </header>
+
+        <div className="facet-grid-three">
+          {t.pillars.map((pillar, idx) => (
+            <article
+              key={pillar.tag}
+              className={idx === 1 ? 'facet-card facet-inverse' : 'facet-card'}
+            >
+              <span className="facet-tag">{pillar.tag}</span>
+              <h3>{pillar.title}</h3>
+              <p>{pillar.desc}</p>
+              <ul>
+                {pillar.items.map((skill) => (
+                  <li key={skill}>{skill}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
       </section>
 
-      <section className={`contact-section ${activeSection === 'contact' ? 'section-pulse' : ''}`} id="contact"><p>CONTACT</p><h2>{ui.contactTitle}</h2><span>{ui.contactText}</span><div><a href="mailto:bilibilisfactorydev@gmail.com"><Mail size={18} />{t.email}</a><a href="https://github.com/EmaBilibili" target="_blank" rel="noreferrer"><Github size={18} />GitHub</a></div></section>
-      <footer><span>© {new Date().getFullYear()} Emanuel Binimelis</span><span>{t.location}</span><span>SECURITY × SOFTWARE</span></footer>
+      {/* TIMELINE, EXPERIENCE & SECURITY CREDENTIALS SECTION */}
+      <section
+        className={`training-section ${activeSection === 'training' ? 'section-pulse' : ''}`}
+        id="training"
+      >
+        <div className="training-left">
+          <p className="section-kicker">{t.trainingKicker}</p>
+          <h2>{t.trainingTitle}</h2>
+          <p className="training-lead">{t.trainingText}</p>
+
+          <div className="credential-box">
+            <div className="credential-header">
+              <ShieldCheck size={22} />
+              <div>
+                <strong>{t.credentialTitle}</strong>
+                <span>{t.credentialId}</span>
+              </div>
+            </div>
+            <div className="route-cards">
+              {t.route.map(([title, status, detail]) => (
+                <div className="route-row" key={title}>
+                  <div>
+                    <strong>{title}</strong>
+                    <p>{detail}</p>
+                  </div>
+                  <span className="route-badge">{status}</span>
+                </div>
+              ))}
+            </div>
+            <a
+              className="credential-cta"
+              href={certificateUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t.viewCredential} <ArrowUpRight size={17} />
+            </a>
+          </div>
+        </div>
+
+        <div className="training-right">
+          <div className="timeline-list">
+            {experiences.map((item) => (
+              <article className="timeline-item" key={`${item.period}-${item.role}`}>
+                <div className="timeline-top">
+                  <span className="timeline-period">{item.period}</span>
+                  <span className="timeline-tag">{item.tag}</span>
+                </div>
+                <h3>{item.role}</h3>
+                <strong className="timeline-org">{item.org}</strong>
+                <p>{item.desc}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT SECTION */}
+      <section
+        className={`contact-section ${activeSection === 'contact' ? 'section-pulse' : ''}`}
+        id="contact"
+      >
+        <p className="section-kicker">{t.contactKicker}</p>
+        <h2>{t.contactTitle}</h2>
+        <span className="contact-subtext">{t.contactText}</span>
+        <div className="contact-actions">
+          <a className="contact-btn primary" href="mailto:bilibilisfactorydev@gmail.com">
+            <Mail size={18} /> {t.email}
+          </a>
+          <button className="contact-btn" type="button" onClick={copyEmailAddress}>
+            {copied ? <Check size={18} /> : <Copy size={18} />}
+            {copied ? t.copied : t.copyEmail}
+          </button>
+          <a
+            className="contact-btn"
+            href={githubProfileUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Github size={18} /> GitHub (@EmaBilibili)
+          </a>
+          <a
+            className="contact-btn"
+            href={certificateUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <ShieldCheck size={18} /> TryHackMe Certificate
+          </a>
+        </div>
+      </section>
+
+      <footer>
+        <span>© {new Date().getFullYear()} Emanuel Binimelis</span>
+        <span>{t.location}</span>
+        <span>{t.footer}</span>
+      </footer>
     </main>
   );
 }
