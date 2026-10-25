@@ -12,8 +12,7 @@ import {
   Menu,
   Play,
   ShieldCheck,
-  Sparkles,
-   X,
+  X,
 } from 'lucide-react';
 import {
   certificateUrl,
@@ -23,23 +22,6 @@ import {
   projectsData,
 } from './features/terminal/content';
 import DefenseRadarScene from './components/DefenseRadarScene';
-
-const CYBER_SHAPES = {
-  es: [
-    '01/05 · ESCUDO DEFENSIVO',
-    '02/05 · CANDADO CRIPTO',
-    '03/05 · SENSOR / OJO SOC',
-    '04/05 · HIPERCUBO FIREWALL',
-    '05/05 · RED GLOBAL',
-  ],
-  en: [
-    '01/05 · CYBER SHIELD',
-    '02/05 · CRYPTO PADLOCK',
-    '03/05 · SOC CYBER EYE',
-    '04/05 · FIREWALL TESSERACT',
-    '05/05 · GLOBAL NETWORK',
-  ],
-};
 
 function App() {
   const [language, setLanguage] = useState('es');
@@ -56,7 +38,6 @@ function App() {
 
   const t = portfolioCopy[language];
   const experiences = experienceData[language];
-  const shapeLabels = CYBER_SHAPES[language];
 
   const filteredProjects =
     activeFilter === 'all'
@@ -97,8 +78,8 @@ function App() {
   // Global window click listener to cycle through the 5 Cybersecurity shapes
   useEffect(() => {
     const handleWindowClick = (event) => {
-      const interactiveEl = event.target.closest('a, button, input, form');
-      if (interactiveEl && !interactiveEl.hasAttribute('data-morph-trigger')) {
+      const interactiveEl = event.target.closest('a, button, input, textarea, select, form');
+      if (interactiveEl) {
         return;
       }
       setShapeIndex((prev) => (prev + 1) % 5);
@@ -250,18 +231,6 @@ function App() {
       {/* 1. CAPA DE FONDO THREE.JS (position: fixed; inset: 0; z-index: 0; pointer-events: none; background: #050508;) */}
       <DefenseRadarScene activeShapeIndex={shapeIndex} />
 
-      {/* BOTÓN / INDICADOR FLOTANTE DE MORPHING (5 FORMAS DE CIBERSEGURIDAD) */}
-      <button
-        type="button"
-        data-morph-trigger="true"
-        className="morph-floating-indicator"
-        aria-label="Cambiar forma 3D"
-      >
-        <Sparkles size={15} />
-        <span>{language === 'es' ? 'Cambiar forma (Click)' : 'Change shape (Click)'}</span>
-        <small>{shapeLabels[shapeIndex]}</small>
-      </button>
-
       {/* 2. CAPA DE INTERFAZ MINIMALISTA (z-index: 1; pointer-events: auto;) */}
       <div className="portfolio-ui-layer">
         <header className="site-nav">
@@ -327,14 +296,6 @@ function App() {
               <a className="btn-secondary-minimal" href="#projects">
                 {t.primaryCta} <ArrowDown size={16} />
               </a>
-              <button
-                type="button"
-                data-morph-trigger="true"
-                className="btn-secondary-minimal"
-              >
-                <Sparkles size={15} />{' '}
-                {language === 'es' ? 'Cambiar forma (Click)' : 'Change shape (Click)'}
-              </button>
             </div>
           </div>
 

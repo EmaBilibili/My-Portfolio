@@ -92,47 +92,6 @@ button {
   pointer-events: auto;
 }
 
-.morph-floating-indicator {
-  position: fixed;
-  bottom: 1.4rem;
-  right: 1.4rem;
-  z-index: 50;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  padding: 0.65rem 1.05rem;
-  border-radius: 999px;
-  border: 1px solid var(--border-accent);
-  background: rgba(12, 13, 22, 0.82);
-  backdrop-filter: blur(16px);
-  color: var(--text-primary);
-  font: 500 0.68rem 'IBM Plex Mono', monospace;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-}
-
-.morph-floating-indicator:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent-bright);
-  background: rgba(24, 26, 42, 0.9);
-}
-
-.morph-floating-indicator svg {
-  color: var(--accent-bright);
-  flex-shrink: 0;
-}
-
-.morph-floating-indicator small {
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
-  background: var(--accent-dim);
-  border: 1px solid rgba(184, 181, 232, 0.24);
-  color: var(--accent-bright);
-  font-size: 0.58rem;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-}
-
 /* =========================================
    NAVIGATION
    ========================================= */
@@ -1353,16 +1312,6 @@ footer {
   }
   .contact-btn {
     width: 100%;
-  }
-
-  /* Compact Bottom Docked Morph Bar on Mobile */
-  .morph-floating-indicator {
-    left: 0.85rem;
-    right: 0.85rem;
-    bottom: 0.85rem;
-    justify-content: space-between;
-    padding: 0.58rem 0.9rem;
-    font-size: 0.62rem;
   }
 }
 
