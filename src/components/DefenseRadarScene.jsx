@@ -1,33 +1,196 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-/**
- * Full-Viewport Interactive Three.js Background — Cyber Terminal & Network Topology
- * - Fixed full-screen WebGL canvas behind the entire portfolio
- * - 3D Network Nodes + Dynamic Synapse Lines
- * - Live Cursor Probe: connects the user's mouse in 3D space to nearby network nodes
- * - Scroll Choreography: camera travels through the 3D topology & horizon grids as user scrolls
- * - Shockwave Scan Rings: triggered on click, terminal commands, or UI interactions
- */
-export default function DefenseRadarScene({ pulseTrigger = 0 }) {
+const VERTEX_SHADER = /* glsl */ `
+  uniform float uTime;
+  uniform float uMorphProgress;
+  uniform vec2 uMouse;
+  uniform float uMouseRadius;
+  uniform float uPixelRatio;
+  uniform float uAspect;
+
+  attribute vec3 aTargetPosition;
+  attribute vec3 aTargetNormal;
+  attribute float aRandom;
+
+  varying float vNoise;
+  varying float vInfluence;
+  varying float vRandom;
+
+  // =========================================================
+  // Classic 3D Simplex Noise (Ashima Arts / Stefan Gustavson)
+  // =========================================================
+  vec4 permute(vec4 x) {
+    return mod(((x * 34.0) + 1.0) * x, 289.0);
+  }
+  vec4 taylorInvSqrt(vec4 r) {
+    return 1.79284291400159 - 0.85373472095314 * r;
+  }
+
+  float snoise(vec3 v) {
+    const vec2 C = vec2(1.0 / 6.0, 1.0 / 3.0);
+    const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+
+    // First corner
+    vec3 i  = floor(v + dot(v, C.yyy));
+    vec3 x0 = v - i + dot(i, C.xxx);
+
+    // Other corners
+    vec3 g = step(x0.yzx, x0.xyz);
+    vec3 l = 1.0 - g;
+    vec3 i1 = min(g.xyz, l.zxy);
+    vec3 i2 = max(g.xyz, l.zxy);
+
+    vec3 x1 = x0 - i1 + 1.0 * C.xxx;
+    vec3 x2 = x0 - i2 + 2.0 * C.xxx;
+    vec3 x3 = x0 - 1.0 + 3.0 * C.xxx;
+
+    // Permutations
+    i = mod(i, 289.0);
+    vec4 p = permute(
+      permute(
+        permute(i.z + vec4(0.0, i1.z, i2.z, 1.0))
+        + i.y + vec4(0.0, i1.y, i2.y, 1.0)
+      )
+      + i.x + vec4(0.0, i1.x, i2.x, 1.0)
+    );
+
+    // Gradients
+    float n_ = 1.0 / 7.0;
+    vec3 ns = n_ * D.wyz - D.xzx;
+
+    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+
+    vec4 x_ = floor(j * ns.z);
+    vec4 y_ = floor(j - 7.0 * x_);
+
+    vec4 x = x_ * ns.x + ns.yyyy;
+    vec4 y = y_ * ns.x + ns.yyyy;
+    vec4 h = 1.0 - abs(x) - abs(y);
+
+    vec4 b0 = vec4(x.xy, y.xy);
+    vec4 b1 = vec4(x.zw, y.zw);
+
+    vec4 s0 = floor(b0) * 2.0 + 1.0;
+    vec4 s1 = floor(b1) * 2.0 + 1.0;
+    vec4 sh = -step(h, vec4(0.0));
+
+    vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
+    vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
+
+    vec3 p0 = vec3(a0.xy, h.x);
+    vec3 p1 = vec3(a0.zw, h.y);
+    vec3 p2 = vec3(a1.xy, h.z);
+    vec3 p3 = vec3(a1.zw, h.w);
+
+    // Normalise gradients
+    vec4 norm = taylorInvSqrt(vec4(dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)));
+    p0 *= norm.x;
+    p1 *= norm.y;
+    p2 *= norm.z;
+    p3 *= norm.w;
+
+    // Mix final noise value
+    vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
+    m = m * m;
+    return 42.0 * dot(m * m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)));
+  }
+
+  void main() {
+    // Smooth cubic curve for morph transition
+    float t = smoothstep(0.0, 1.0, uMorphProgress);
+
+    // 1. Morphological interpolation between Sphere and TorusKnot
+    vec3 morphedPos = mix(position, aTargetPosition, t);
+    vec3 morphedNorm = normalize(mix(normal, aTargetNormal, t));
+
+    // 2. Organic 3D Simplex Noise displacement along vertex normal
+    float primaryWave = snoise(morphedPos * 0.58 + vec3(uTime * 0.24));
+    float secondaryWave = snoise(morphedPos * 1.35 - vec3(uTime * 0.38)) * 0.35;
+    float combinedNoise = primaryWave + secondaryWave;
+
+    vec3 displacedPos = morphedPos + morphedNorm * (combinedNoise * 0.32);
+
+    // 3. Project to view & clip space to evaluate cursor proximity
+    vec4 mvPosition = modelViewMatrix * vec4(displacedPos, 1.0);
+    vec4 projected = projectionMatrix * mvPosition;
+    vec2 ndcPos = projected.xy / max(projected.w, 0.0001);
+
+    // Aspect-corrected distance to normalized cursor uMouse (-1 to 1)
+    vec2 cursorDelta = ndcPos - uMouse;
+    cursorDelta.x *= uAspect;
+    float distToCursor = length(cursorDelta);
+
+    // Smooth repulsion field when cursor is within uMouseRadius
+    float influence = smoothstep(uMouseRadius, 0.0, distToCursor);
+    influence = pow(influence, 1.45);
+
+    vec2 repelDir = distToCursor > 0.0001 ? normalize(ndcPos - uMouse) : vec2(0.0, 1.0);
+    mvPosition.xy += repelDir * (influence * 0.72);
+    mvPosition.z += influence * 0.42 * sin(distToCursor * 10.0 - uTime * 3.5);
+
+    gl_Position = projectionMatrix * mvPosition;
+
+    // 4. Perspective-attenuated point size
+    float baseSize = 16.0 + aRandom * 14.0 + influence * 14.0;
+    gl_PointSize = baseSize * uPixelRatio * (1.0 / -mvPosition.z);
+
+    vNoise = combinedNoise;
+    vInfluence = influence;
+    vRandom = aRandom;
+  }
+`;
+
+const FRAGMENT_SHADER = /* glsl */ `
+  varying float vNoise;
+  varying float vInfluence;
+  varying float vRandom;
+
+  void main() {
+    // Soft radial glow attenuation (no square edges)
+    float dist = length(gl_PointCoord - vec2(0.5));
+    if (dist > 0.5) discard;
+
+    float radialFalloff = 1.0 - (dist * 2.0);
+    float glow = pow(radialFalloff, 2.2);
+
+    // Refined, non-generic palette: Slate Steel -> Platinum Silver -> Soft Iris Quartz
+    vec3 colorDeep = vec3(0.42, 0.47, 0.64);     // Cool Muted Slate
+    vec3 colorMid = vec3(0.76, 0.79, 0.90);      // Soft Silver-Blue
+    vec3 colorHighlight = vec3(0.95, 0.93, 0.98);// Warm Platinum Pearl
+    vec3 colorCursor = vec3(0.78, 0.72, 0.96);   // Subtle Iris Quartz on interaction
+
+    float noiseFactor = smoothstep(-0.7, 0.85, vNoise);
+    vec3 baseColor = mix(colorDeep, colorMid, noiseFactor);
+    baseColor = mix(baseColor, colorHighlight, pow(noiseFactor, 2.4));
+
+    // Highlight particles disturbed by the cursor
+    vec3 finalColor = mix(baseColor, colorCursor, vInfluence * 0.85);
+
+    float alpha = glow * (0.55 + 0.3 * vRandom + 0.25 * vInfluence);
+    gl_FragColor = vec4(finalColor, alpha);
+  }
+`;
+
+export default function DefenseRadarScene({ morphTarget = 0 }) {
   const mountRef = useRef(null);
-  const hudCoordsRef = useRef(null);
-  const [scanStatus, setScanStatus] = useState('IDLE // PASSIVE_MONITOR');
+  const targetMorphRef = useRef(0);
+
+  useEffect(() => {
+    targetMorphRef.current = morphTarget;
+  }, [morphTarget]);
 
   useEffect(() => {
     const container = mountRef.current;
     if (!container) return;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x060809, 0.045);
-
     const width = window.innerWidth;
     const height = window.innerHeight;
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
 
-    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 120);
-    camera.position.set(0, 0, 14);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
+    camera.position.set(0, 0, 6.8);
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -35,357 +198,175 @@ export default function DefenseRadarScene({ pulseTrigger = 0 }) {
       powerPreference: 'high-performance',
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(pixelRatio);
     container.appendChild(renderer.domElement);
 
     // =========================================================
-    // 1. 3D HORIZON CYBER GRIDS (FLOOR & CEILING)
+    // BUILD TWO BASE GEOMETRIES WITH IDENTICAL VERTEX COUNT
+    // (124 + 1) * (100 + 1) = 12,625 particles
     // =========================================================
-    const gridHelperBottom = new THREE.GridHelper(90, 45, 0x10b981, 0x16221e);
-    gridHelperBottom.position.y = -7.5;
-    gridHelperBottom.material.transparent = true;
-    gridHelperBottom.material.opacity = 0.25;
-    scene.add(gridHelperBottom);
+    const segU = 124;
+    const segV = 100;
 
-    const gridHelperTop = new THREE.GridHelper(90, 45, 0x10b981, 0x131c19);
-    gridHelperTop.position.y = 7.5;
-    gridHelperTop.material.transparent = true;
-    gridHelperTop.material.opacity = 0.14;
-    scene.add(gridHelperTop);
+    const sphereGeo = new THREE.SphereGeometry(2.35, segU, segV);
+    const torusKnotGeo = new THREE.TorusKnotGeometry(1.65, 0.48, segU, segV, 2, 3);
 
-    // =========================================================
-    // 2. INTERACTIVE 3D NETWORK NODES (PARTICLES)
-    // =========================================================
-    const NODE_COUNT = 115;
-    const nodePositions = new Float32Array(NODE_COUNT * 3);
-    const nodeVelocities = [];
-    const spreadX = 28;
-    const spreadY = 14;
-    const spreadZ = 26;
+    const spherePos = sphereGeo.attributes.position.array;
+    const sphereNorm = sphereGeo.attributes.normal.array;
+    const knotPos = torusKnotGeo.attributes.position.array;
+    const knotNorm = torusKnotGeo.attributes.normal.array;
 
-    for (let i = 0; i < NODE_COUNT; i++) {
-      nodePositions[i * 3] = (Math.random() - 0.5) * spreadX;
-      nodePositions[i * 3 + 1] = (Math.random() - 0.5) * spreadY;
-      nodePositions[i * 3 + 2] = (Math.random() - 0.5) * spreadZ - 2;
+    const particleCount = sphereGeo.attributes.position.count; // 12,625
 
-      nodeVelocities.push({
-        vx: (Math.random() - 0.5) * 0.014,
-        vy: (Math.random() - 0.5) * 0.014,
-        vz: (Math.random() - 0.5) * 0.012,
-      });
+    const positions = new Float32Array(particleCount * 3);
+    const normals = new Float32Array(particleCount * 3);
+    const targetPositions = new Float32Array(particleCount * 3);
+    const targetNormals = new Float32Array(particleCount * 3);
+    const randoms = new Float32Array(particleCount);
+
+    // Add slight organic tangent jitter so points don't look like rigid grid lines
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      const jitterX = (Math.random() - 0.5) * 0.045;
+      const jitterY = (Math.random() - 0.5) * 0.045;
+      const jitterZ = (Math.random() - 0.5) * 0.045;
+
+      positions[i3] = spherePos[i3] + jitterX;
+      positions[i3 + 1] = spherePos[i3 + 1] + jitterY;
+      positions[i3 + 2] = spherePos[i3 + 2] + jitterZ;
+
+      normals[i3] = sphereNorm[i3];
+      normals[i3 + 1] = sphereNorm[i3 + 1];
+      normals[i3 + 2] = sphereNorm[i3 + 2];
+
+      targetPositions[i3] = knotPos[i3] + jitterX;
+      targetPositions[i3 + 1] = knotPos[i3 + 1] + jitterY;
+      targetPositions[i3 + 2] = knotPos[i3 + 2] + jitterZ;
+
+      targetNormals[i3] = knotNorm[i3];
+      targetNormals[i3 + 1] = knotNorm[i3 + 1];
+      targetNormals[i3 + 2] = knotNorm[i3 + 2];
+
+      randoms[i] = Math.random();
     }
 
-    const nodesGeo = new THREE.BufferGeometry();
-    nodesGeo.setAttribute('position', new THREE.BufferAttribute(nodePositions, 3));
+    sphereGeo.dispose();
+    torusKnotGeo.dispose();
 
-    const nodesMat = new THREE.PointsMaterial({
-      color: 0x10b981,
-      size: 0.14,
+    const particlesGeometry = new THREE.BufferGeometry();
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particlesGeometry.setAttribute('normal', new THREE.BufferAttribute(normals, 3));
+    particlesGeometry.setAttribute(
+      'aTargetPosition',
+      new THREE.BufferAttribute(targetPositions, 3)
+    );
+    particlesGeometry.setAttribute('aTargetNormal', new THREE.BufferAttribute(targetNormals, 3));
+    particlesGeometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
+
+    const uniforms = {
+      uTime: { value: 0 },
+      uMorphProgress: { value: 0 },
+      uMouse: { value: new THREE.Vector2(999, 999) },
+      uMouseRadius: { value: 0.42 },
+      uPixelRatio: { value: pixelRatio },
+      uAspect: { value: width / height },
+    };
+
+    const particlesMaterial = new THREE.ShaderMaterial({
+      vertexShader: VERTEX_SHADER,
+      fragmentShader: FRAGMENT_SHADER,
+      uniforms,
       transparent: true,
-      opacity: 0.85,
-    });
-
-    const nodesPoints = new THREE.Points(nodesGeo, nodesMat);
-    scene.add(nodesPoints);
-
-    // =========================================================
-    // 3. DYNAMIC NETWORK CONNECTIONS (NODE-TO-NODE & CURSOR-TO-NODE)
-    // =========================================================
-    const maxSegments = NODE_COUNT * 10;
-    const linePositions = new Float32Array(maxSegments * 6);
-    const lineColors = new Float32Array(maxSegments * 6);
-
-    const linesGeo = new THREE.BufferGeometry();
-    linesGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-    linesGeo.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
-
-    const linesMat = new THREE.LineBasicMaterial({
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.55,
+      depthWrite: false,
       blending: THREE.AdditiveBlending,
     });
 
-    const networkLines = new THREE.LineSegments(linesGeo, linesMat);
-    scene.add(networkLines);
+    const particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particleSystem);
 
     // =========================================================
-    // 4. CURSOR 3D PROBE TARGET RETICLE
+    // POINTER & SCROLL TRACKING
     // =========================================================
-    const probeGroup = new THREE.Group();
-    const probeRingGeo = new THREE.RingGeometry(0.28, 0.33, 24);
-    const probeRingMat = new THREE.MeshBasicMaterial({
-      color: 0x10b981,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.65,
-    });
-    const probeRing = new THREE.Mesh(probeRingGeo, probeRingMat);
-    probeGroup.add(probeRing);
+    const targetMouse = new THREE.Vector2(0, 0);
+    const currentMouse = new THREE.Vector2(0, 0);
+    let pointerActive = false;
+    let scrollY = window.scrollY;
 
-    const probeInnerGeo = new THREE.RingGeometry(0.06, 0.09, 16);
-    const probeInner = new THREE.Mesh(probeInnerGeo, probeRingMat);
-    probeGroup.add(probeInner);
-    scene.add(probeGroup);
-
-    // =========================================================
-    // 5. EXPANDING SHOCKWAVE / PACKET SCAN RINGS
-    // =========================================================
-    const shockwaves = [];
-    const spawnShockwave = (originX = 0, originY = 0, colorHex = 0x10b981) => {
-      const ringGeo = new THREE.RingGeometry(0.2, 0.32, 48);
-      const ringMat = new THREE.MeshBasicMaterial({
-        color: colorHex,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.85,
-        blending: THREE.AdditiveBlending,
-      });
-      const mesh = new THREE.Mesh(ringGeo, ringMat);
-      mesh.position.set(originX, originY, 2);
-      scene.add(mesh);
-      shockwaves.push({ mesh, scale: 1, opacity: 0.85 });
-    };
-
-    // =========================================================
-    // 6. POINTER, SCROLL & CUSTOM EVENT LISTENERS
-    // =========================================================
-    const mouseNDC = new THREE.Vector2(0, 0);
-    const cursor3D = new THREE.Vector3(0, 0, 2);
-    const raycasterPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -2);
-    const raycaster = new THREE.Raycaster();
-    let scrollProgress = 0;
-    let boostEnergy = 0;
-
-    const updateMousePosition = (clientX, clientY) => {
-      mouseNDC.x = (clientX / window.innerWidth) * 2 - 1;
-      mouseNDC.y = -(clientY / window.innerHeight) * 2 + 1;
-
-      raycaster.setFromCamera(mouseNDC, camera);
-      raycaster.ray.intersectPlane(raycasterPlane, cursor3D);
-
-      if (hudCoordsRef.current) {
-        const xStr = cursor3D.x.toFixed(2).padStart(6, ' ');
-        const yStr = cursor3D.y.toFixed(2).padStart(6, ' ');
-        const scrollPct = Math.round(scrollProgress * 100)
-          .toString()
-          .padStart(3, '0');
-        hudCoordsRef.current.textContent = `PROBE_XY:[${xStr}, ${yStr}] // DEPTH:${scrollPct}%`;
-      }
-    };
-
-    const handleMouseMove = (event) => {
-      updateMousePosition(event.clientX, event.clientY);
-    };
-
-    const handleMouseDown = (event) => {
-      updateMousePosition(event.clientX, event.clientY);
-      spawnShockwave(cursor3D.x, cursor3D.y, 0x10b981);
-      boostEnergy = Math.min(boostEnergy + 0.7, 1.5);
+    const handlePointerMove = (event) => {
+      pointerActive = true;
+      targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
 
     const handleScroll = () => {
-      const maxScroll = Math.max(
-        document.documentElement.scrollHeight - window.innerHeight,
-        1
-      );
-      scrollProgress = window.scrollY / maxScroll;
+      scrollY = window.scrollY;
     };
 
-    const handleCustomPulse = (event) => {
-      const detail = event.detail || {};
-      const color = detail.color || 0x10b981;
-      spawnShockwave(cursor3D.x * 0.5, cursor3D.y * 0.5, color);
-      boostEnergy = 1.2;
-      setScanStatus('ACTIVE // PACKET_BURST_DETECTED');
-      window.setTimeout(() => setScanStatus('IDLE // PASSIVE_MONITOR'), 1400);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('mousedown', handleMouseDown, { passive: true });
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('cyber-pulse', handleCustomPulse);
-    handleScroll();
-
-    // Store trigger function on container for React prop updates
-    container._triggerScan = () => {
-      spawnShockwave(0, 0, 0x34d399);
-      spawnShockwave(cursor3D.x * 0.4, cursor3D.y * 0.4, 0xffffff);
-      boostEnergy = 1.5;
-      setScanStatus('EXEC // TERMINAL_SCAN_PULSE');
-      window.setTimeout(() => setScanStatus('IDLE // PASSIVE_MONITOR'), 1600);
-    };
 
     // =========================================================
-    // 7. RENDER & PHYSICS LOOP
+    // ANIMATION LOOP
     // =========================================================
     let animationFrameId;
     const clock = new THREE.Clock();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const delta = clock.getDelta();
-      const elapsed = clock.getElapsedTime();
 
-      boostEnergy = Math.max(0, boostEnergy - delta * 0.8);
+      const elapsedTime = clock.getElapsedTime();
+      uniforms.uTime.value = elapsedTime;
 
-      // Smoothly move camera based on scroll + mouse parallax
-      const targetCamZ = 14 - scrollProgress * 8.5;
-      const targetCamY = -scrollProgress * 2.2 + mouseNDC.y * 0.65;
-      const targetCamX = mouseNDC.x * 0.95;
+      // Smoothly interpolate uMorphProgress (0 <-> 1)
+      uniforms.uMorphProgress.value +=
+        (targetMorphRef.current - uniforms.uMorphProgress.value) * 0.045;
 
-      camera.position.x += (targetCamX - camera.position.x) * 0.05;
-      camera.position.y += (targetCamY - camera.position.y) * 0.05;
-      camera.position.z += (targetCamZ - camera.position.z) * 0.05;
-      camera.lookAt(mouseNDC.x * 0.3, -scrollProgress * 1.5, 0);
-
-      // Animate horizon grids
-      gridHelperBottom.position.z = (elapsed * 1.2) % 2;
-      gridHelperTop.position.z = (elapsed * 1.2) % 2;
-
-      // Update 3D cursor probe reticle
-      probeGroup.position.lerp(cursor3D, 0.22);
-      probeGroup.rotation.z = elapsed * 1.4;
-      const probeScale = 1 + Math.sin(elapsed * 4) * 0.1 + boostEnergy * 0.35;
-      probeGroup.scale.set(probeScale, probeScale, 1);
-
-      // Update shockwave rings
-      for (let i = shockwaves.length - 1; i >= 0; i--) {
-        const sw = shockwaves[i];
-        sw.scale += delta * 24;
-        sw.opacity -= delta * 0.95;
-        sw.mesh.scale.set(sw.scale, sw.scale, 1);
-        sw.mesh.material.opacity = Math.max(0, sw.opacity);
-        if (sw.opacity <= 0) {
-          scene.remove(sw.mesh);
-          sw.mesh.geometry.dispose();
-          sw.mesh.material.dispose();
-          shockwaves.splice(i, 1);
-        }
+      // Smoothly interpolate cursor coordinates (lerp)
+      if (pointerActive) {
+        currentMouse.x += (targetMouse.x - currentMouse.x) * 0.08;
+        currentMouse.y += (targetMouse.y - currentMouse.y) * 0.08;
+        uniforms.uMouse.value.copy(currentMouse);
       }
 
-      // Update node positions & compute synapse connections
-      const posAttr = nodesGeo.attributes.position;
-      const posArray = posAttr.array;
-      const speedMult = prefersReducedMotion ? 0.15 : 1 + boostEnergy * 2.2;
-
-      for (let i = 0; i < NODE_COUNT; i++) {
-        const idx = i * 3;
-        posArray[idx] += nodeVelocities[i].vx * speedMult;
-        posArray[idx + 1] += nodeVelocities[i].vy * speedMult;
-        posArray[idx + 2] += nodeVelocities[i].vz * speedMult;
-
-        // Wrap around bounds
-        if (posArray[idx] > spreadX / 2) posArray[idx] = -spreadX / 2;
-        if (posArray[idx] < -spreadX / 2) posArray[idx] = spreadX / 2;
-        if (posArray[idx + 1] > spreadY / 2) posArray[idx + 1] = -spreadY / 2;
-        if (posArray[idx + 1] < -spreadY / 2) posArray[idx + 1] = spreadY / 2;
-        if (posArray[idx + 2] > 6) posArray[idx + 2] = -spreadZ + 6;
-        if (posArray[idx + 2] < -spreadZ + 6) posArray[idx + 2] = 6;
-      }
-      posAttr.needsUpdate = true;
-
-      // Rebuild dynamic lines (node-to-node + cursor-to-node)
-      let segmentCount = 0;
-      const connectionDistSq = 13.5;
-      const cursorDistSq = 22.0;
-
-      for (let i = 0; i < NODE_COUNT; i++) {
-        const ix = posArray[i * 3];
-        const iy = posArray[i * 3 + 1];
-        const iz = posArray[i * 3 + 2];
-
-        // Check connection to user's 3D cursor probe
-        const dxCursor = ix - cursor3D.x;
-        const dyCursor = iy - cursor3D.y;
-        const dzCursor = iz - cursor3D.z;
-        const distCursorSq = dxCursor * dxCursor + dyCursor * dyCursor + dzCursor * dzCursor * 0.35;
-
-        if (distCursorSq < cursorDistSq && segmentCount < maxSegments) {
-          const alpha = 1 - distCursorSq / cursorDistSq;
-          const base = segmentCount * 6;
-          linePositions[base] = ix;
-          linePositions[base + 1] = iy;
-          linePositions[base + 2] = iz;
-          linePositions[base + 3] = cursor3D.x;
-          linePositions[base + 4] = cursor3D.y;
-          linePositions[base + 5] = cursor3D.z;
-
-          // Bright emerald trace line to cursor
-          lineColors[base] = 0.06 * alpha;
-          lineColors[base + 1] = 0.85 * alpha;
-          lineColors[base + 2] = 0.55 * alpha;
-          lineColors[base + 3] = 0.25 * alpha;
-          lineColors[base + 4] = 1.0 * alpha;
-          lineColors[base + 5] = 0.7 * alpha;
-          segmentCount++;
-        }
-
-        // Check node-to-node connections
-        for (let j = i + 1; j < NODE_COUNT; j++) {
-          if (segmentCount >= maxSegments) break;
-          const jx = posArray[j * 3];
-          const jy = posArray[j * 3 + 1];
-          const jz = posArray[j * 3 + 2];
-
-          const dx = ix - jx;
-          const dy = iy - jy;
-          const dz = iz - jz;
-          const dSq = dx * dx + dy * dy + dz * dz;
-
-          if (dSq < connectionDistSq) {
-            const intensity = (1 - dSq / connectionDistSq) * (0.35 + boostEnergy * 0.45);
-            const base = segmentCount * 6;
-            linePositions[base] = ix;
-            linePositions[base + 1] = iy;
-            linePositions[base + 2] = iz;
-            linePositions[base + 3] = jx;
-            linePositions[base + 4] = jy;
-            linePositions[base + 5] = jz;
-
-            lineColors[base] = 0.05 * intensity;
-            lineColors[base + 1] = 0.55 * intensity;
-            lineColors[base + 2] = 0.38 * intensity;
-            lineColors[base + 3] = 0.05 * intensity;
-            lineColors[base + 4] = 0.55 * intensity;
-            lineColors[base + 5] = 0.38 * intensity;
-            segmentCount++;
-          }
-        }
-      }
-
-      linesGeo.setDrawRange(0, segmentCount * 2);
-      linesGeo.attributes.position.needsUpdate = true;
-      linesGeo.attributes.color.needsUpdate = true;
+      // Gentle orbital rotation + subtle scroll & cursor tilt
+      const scrollOffset = scrollY * 0.0006;
+      particleSystem.rotation.y = elapsedTime * 0.11 + currentMouse.x * 0.28 + scrollOffset;
+      particleSystem.rotation.x =
+        Math.sin(elapsedTime * 0.18) * 0.15 - currentMouse.y * 0.22 + scrollOffset * 0.5;
 
       renderer.render(scene, camera);
     };
 
     animate();
 
+    // =========================================================
+    // RESPONSIVE RESIZE
+    // =========================================================
     const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      const newPixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+
+      camera.aspect = newWidth / newHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      renderer.setSize(newWidth, newHeight);
+      renderer.setPixelRatio(newPixelRatio);
+
+      uniforms.uPixelRatio.value = newPixelRatio;
+      uniforms.uAspect.value = newWidth / newHeight;
     };
 
     window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('cyber-pulse', handleCustomPulse);
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
 
-      nodesGeo.dispose();
-      nodesMat.dispose();
-      linesGeo.dispose();
-      linesMat.dispose();
-      probeRingGeo.dispose();
-      probeInnerGeo.dispose();
-      probeRingMat.dispose();
+      particlesGeometry.dispose();
+      particlesMaterial.dispose();
       renderer.dispose();
 
       if (container.contains(renderer.domElement)) {
@@ -394,23 +375,5 @@ export default function DefenseRadarScene({ pulseTrigger = 0 }) {
     };
   }, []);
 
-  useEffect(() => {
-    if (pulseTrigger && mountRef.current?._triggerScan) {
-      mountRef.current._triggerScan();
-    }
-  }, [pulseTrigger]);
-
-  return (
-    <div className="cyber-bg-wrapper" aria-hidden="true">
-      <div ref={mountRef} className="cyber-bg-canvas" />
-      <div className="cyber-hud-bar">
-        <span className="cyber-hud-status">
-          <i /> SYS_TOPOLOGY // {scanStatus}
-        </span>
-        <span ref={hudCoordsRef} className="cyber-hud-coords">
-          PROBE_XY:[  0.00,   0.00] // DEPTH:000%
-        </span>
-      </div>
-    </div>
-  );
+  return <div ref={mountRef} className="webgl-particle-bg" aria-hidden="true" />;
 }

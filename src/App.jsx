@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-  Activity,
   ArrowDown,
   ArrowUpRight,
   Check,
@@ -13,6 +12,7 @@ import {
   Menu,
   Play,
   ShieldCheck,
+  Sparkles,
   Terminal,
   X,
 } from 'lucide-react';
@@ -32,7 +32,7 @@ function App() {
   const [command, setCommand] = useState('');
   const [lines, setLines] = useState(portfolioCopy.es.terminalIntro);
   const [activeSection, setActiveSection] = useState('');
-  const [radarPulse, setRadarPulse] = useState(0);
+  const [morphTarget, setMorphTarget] = useState(0);
   const [copied, setCopied] = useState(false);
   const clearPulseRef = useRef(null);
   const logContainerRef = useRef(null);
@@ -57,8 +57,22 @@ function App() {
     }
   }, [lines]);
 
-  const emitCyberPulse = (color = 0x10b981) => {
-    window.dispatchEvent(new CustomEvent('cyber-pulse', { detail: { color } }));
+  // Global window click listener to toggle 3D particle morphing
+  useEffect(() => {
+    const handleWindowClick = (event) => {
+      const interactiveEl = event.target.closest('a, button, input, form');
+      if (interactiveEl && !interactiveEl.hasAttribute('data-morph-trigger')) {
+        return;
+      }
+      setMorphTarget((prev) => (prev === 0 ? 1 : 0));
+    };
+
+    window.addEventListener('click', handleWindowClick);
+    return () => window.removeEventListener('click', handleWindowClick);
+  }, []);
+
+  const toggleMorph = () => {
+    setMorphTarget((prev) => (prev === 0 ? 1 : 0));
   };
 
   const focusSection = (id) => {
@@ -69,7 +83,6 @@ function App() {
   };
 
   const copyEmailAddress = async () => {
-    emitCyberPulse(0x34d399);
     try {
       await navigator.clipboard.writeText('bilibilisfactorydev@gmail.com');
       setCopied(true);
@@ -91,6 +104,7 @@ function App() {
           '  nmap portfolio     -> Escanear áreas técnicas / Scan technical domains',
           '  cat training.log   -> Ruta SOC & Certificado TryHackMe',
           '  cat experience.log -> Experiencia laboral y título universitario',
+          '  morph              -> Cambiar geometría 3D (Esfera <-> Torus Knot)',
           '  contact            -> Datos de contacto directo / Direct contact',
           '  clear              -> Limpiar terminal / Clear output',
         ],
@@ -98,13 +112,20 @@ function App() {
       whoami: {
         output: [
           language === 'es'
-            ? 'Emanuel Binimelis (Mendoza, AR) — Software & Systems Developer (Rust, C#, TS, Linux) en transición a SOC / Blue Team.'
-            : 'Emanuel Binimelis (Mendoza, AR) — Software & Systems Developer (Rust, C#, TS, Linux) transitioning to SOC / Blue Team.',
+            ? 'Emanuel Binimelis (Mendoza, AR) — Creative & Systems Developer (Rust, C#, TS, Linux) en transición a SOC / Blue Team.'
+            : 'Emanuel Binimelis (Mendoza, AR) — Creative & Systems Developer (Rust, C#, TS, Linux) transitioning to SOC / Blue Team.',
           language === 'es'
             ? 'Graduado Técnico en Desarrollo de Videojuegos (Univ. de Mendoza, 2025) · +11 proyectos desplegados.'
             : 'Video Game Development Graduate (Univ. de Mendoza, 2025) · 11+ shipped projects.',
         ],
         target: 'profile',
+      },
+      morph: {
+        output: [
+          language === 'es'
+            ? 'Transición morfológica activada en el shader GLSL (uMorphProgress).'
+            : 'Morphological transition triggered in GLSL shader (uMorphProgress).',
+        ],
       },
       'ls projects': {
         output: [
@@ -158,8 +179,11 @@ function App() {
     if (input === 'clear') {
       setLines([]);
       setCommand('');
-      setRadarPulse((prev) => prev + 1);
       return;
+    }
+
+    if (input === 'morph') {
+      toggleMorph();
     }
 
     const result = commands[input] || {
@@ -172,7 +196,6 @@ function App() {
 
     setLines((current) => [...current, `$ ${rawCommand.trim()}`, ...result.output].slice(-18));
     setCommand('');
-    setRadarPulse((prev) => prev + 1);
     if (result.target) focusSection(result.target);
   };
 
@@ -185,26 +208,34 @@ function App() {
     const nextLanguage = language === 'es' ? 'en' : 'es';
     setLanguage(nextLanguage);
     setLines(portfolioCopy[nextLanguage].terminalIntro);
-    emitCyberPulse(0x34d399);
-  };
-
-  const handleFilterChange = (filterId) => {
-    setActiveFilter(filterId);
-    emitCyberPulse(0x10b981);
   };
 
   const navTargets = ['profile', 'terminal', 'projects', 'facets', 'training', 'contact'];
 
   return (
     <main className="portfolio-shell">
-      {/* FULL-SCREEN INTERACTIVE THREE.JS CYBER NETWORK & TERMINAL TOPOLOGY */}
-      <DefenseRadarScene pulseTrigger={radarPulse} />
+      {/* 1. CAPA DE FONDO THREE.JS (position: fixed; inset: 0; z-index: 0; pointer-events: none; background: #050508;) */}
+      <DefenseRadarScene morphTarget={morphTarget} />
 
-      <div className="portfolio-content-layer">
+      {/* BOTÓN / INDICADOR FLOTANTE DE MORPHING */}
+      <button
+        type="button"
+        data-morph-trigger="true"
+        className="morph-floating-indicator"
+        onClick={toggleMorph}
+        aria-label="Cambiar forma 3D"
+      >
+        <Sparkles size={15} />
+        <span>{language === 'es' ? 'Cambiar forma (Click)' : 'Change shape (Click)'}</span>
+        <small>{morphTarget === 0 ? 'SPHERE' : 'TORUS KNOT'}</small>
+      </button>
+
+      {/* 2. CAPA DE INTERFAZ MINIMALISTA (z-index: 1; pointer-events: auto;) */}
+      <div className="portfolio-ui-layer">
         <header className="site-nav">
           <a className="identity" href="#profile" aria-label={t.homeAria}>
             <b>EB</b>
-            <span>EMANUEL_BINIMELIS // SYS_PORTFOLIO</span>
+            <span>Emanuel Binimelis</span>
           </a>
           <nav className={menuOpen ? 'nav-links is-open' : 'nav-links'} aria-label={t.navAria}>
             {navTargets.map((id, index) => (
@@ -238,91 +269,43 @@ function App() {
           </div>
         </header>
 
-        {/* HERO SECTION */}
+        {/* HERO MINIMALISTA CENTRADO SOBRE LAS PARTÍCULAS */}
         <section
           className={`hero-section ${activeSection === 'profile' ? 'section-pulse' : ''}`}
           id="profile"
         >
-          <div className="hero-top-row">
-            <div className="availability">
+          <div className="hero-minimal-center">
+            <div className="hero-pill">
               <i />
-              {t.status}
-            </div>
-            <span className="hero-badge">{t.heroBadge}</span>
-          </div>
-
-          <div className="hero-main-grid">
-            <div className="hero-title-block">
-              <p className="hero-prompt">root@emanuel-soc:~# ./init_profile.sh --verbose</p>
-              <h1>
-                <span>Emanuel</span>
-                <span>Binimelis</span>
-              </h1>
-              <p className="hero-lead">{t.heroLine}</p>
-              <p className="hero-sublead">{t.intro}</p>
-              <div className="hero-cta-group">
-                <a className="btn-primary-cyber" href="#projects" onClick={() => emitCyberPulse()}>
-                  {t.primaryCta} <ArrowDown size={17} />
-                </a>
-                <a
-                  className="btn-secondary-cyber"
-                  href="#terminal"
-                  onClick={() => emitCyberPulse()}
-                >
-                  <Terminal size={16} /> {t.secondaryCta}
-                </a>
-                <a
-                  className="btn-secondary-cyber"
-                  href={githubProfileUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Github size={16} /> GitHub
-                </a>
-              </div>
+              <span>{t.status}</span>
             </div>
 
-            <aside className="hero-dossier-card">
-              <div className="dossier-header">
-                <span>
-                  <Activity size={14} /> SYS_DOSSIER // LIVE_TELEMETRY
-                </span>
-                <span className="dossier-online">ONLINE</span>
-              </div>
-              <div className="dossier-body">
-                <div className="dossier-row">
-                  <span>ROLE_TARGET</span>
-                  <strong>SOC / Blue Team & Systems Dev</strong>
-                </div>
-                <div className="dossier-row">
-                  <span>PRIMARY_OS</span>
-                  <strong>Arch / Omarchy Linux</strong>
-                </div>
-                <div className="dossier-row">
-                  <span>CORE_LANGS</span>
-                  <strong>Rust · C# · TypeScript · Bash</strong>
-                </div>
-                <div className="dossier-row">
-                  <span>ACTIVE_LABS</span>
-                  <strong>TryHackMe SEC1 → HTB SOC L1</strong>
-                </div>
-                <div className="dossier-row">
-                  <span>VERIFIED_CERT</span>
-                  <a href={certificateUrl} target="_blank" rel="noreferrer">
-                    THM-KRRNP9WDN7 <ArrowUpRight size={13} />
-                  </a>
-                </div>
-              </div>
-              <div className="dossier-footer">
-                <button
-                  type="button"
-                  className="dossier-ping-btn"
-                  onClick={() => executeCommand('nmap portfolio')}
-                >
-                  $ nmap portfolio --scan-nodes
-                </button>
-              </div>
-            </aside>
+            <p className="hero-kicker">
+              {language === 'es'
+                ? 'CREATIVE & SYSTEMS DEVELOPER · SOC / BLUE TEAM'
+                : 'CREATIVE & SYSTEMS DEVELOPER · SOC / BLUE TEAM'}
+            </p>
+
+            <h1>Emanuel Binimelis</h1>
+
+            <p className="hero-subtitle">{t.intro}</p>
+
+            <div className="hero-cta-row">
+              <a className="btn-primary-minimal" href="#contact">
+                <Mail size={16} /> {language === 'es' ? 'Contactar' : 'Get in Touch'}
+              </a>
+              <a className="btn-secondary-minimal" href="#projects">
+                {t.primaryCta} <ArrowDown size={16} />
+              </a>
+              <button
+                type="button"
+                data-morph-trigger="true"
+                className="btn-secondary-minimal"
+              >
+                <Sparkles size={15} />{' '}
+                {language === 'es' ? 'Cambiar forma (Click)' : 'Change shape (Click)'}
+              </button>
+            </div>
           </div>
 
           <div className="hero-metrics-bar">
@@ -339,7 +322,7 @@ function App() {
         <section className="terminal-section" id="terminal">
           <div className="terminal-caption">
             <span>{t.terminalLabel}</span>
-            <span>LOCAL SHELL // INTERACTIVE</span>
+            <span>GLSL // INTERACTIVE SHELL</span>
           </div>
           <div className="terminal-window">
             <div className="terminal-bar">
@@ -348,8 +331,8 @@ function App() {
                 <span />
                 <span />
               </div>
-              <span>emanuel@soc-workstation:~/portfolio</span>
-              <span>BASH / SAFE</span>
+              <span>emanuel@workstation:~/portfolio</span>
+              <span>READY</span>
             </div>
             <div className="terminal-log" ref={logContainerRef} aria-live="polite">
               {lines.map((line, index) => (
@@ -380,10 +363,10 @@ function App() {
               'help',
               'ls projects',
               'stack',
+              'morph',
               'nmap portfolio',
               'cat training.log',
               'cat experience.log',
-              'whoami',
               'clear',
             ].map((item) => (
               <button key={item} onClick={() => executeCommand(item)}>
@@ -413,7 +396,7 @@ function App() {
                 role="tab"
                 aria-selected={activeFilter === filter.id}
                 className={activeFilter === filter.id ? 'filter-btn active' : 'filter-btn'}
-                onClick={() => handleFilterChange(filter.id)}
+                onClick={() => setActiveFilter(filter.id)}
               >
                 {filter.label}
               </button>
@@ -427,7 +410,6 @@ function App() {
                   project.featured && activeFilter === 'all' ? 'featured-card' : ''
                 }`}
                 key={project.id}
-                onMouseEnter={() => emitCyberPulse(0x10b981)}
               >
                 <div className="project-image-wrap">
                   <img
@@ -502,7 +484,6 @@ function App() {
               <article
                 key={pillar.tag}
                 className={idx === 0 ? 'facet-card facet-highlight' : 'facet-card'}
-                onMouseEnter={() => emitCyberPulse(0x10b981)}
               >
                 <span className="facet-tag">{pillar.tag}</span>
                 <h3>{pillar.title}</h3>
