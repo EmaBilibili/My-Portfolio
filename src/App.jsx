@@ -161,7 +161,7 @@ function App() {
         output: [
           'PORT     STATE  SERVICE             EVIDENCE',
           '22/tcp   OPEN   linux-systems-rust  SnapStream, QuickCompress, Omarchy Terra',
-          '80/tcp   OPEN   fullstack-web-saas  Mi-Rancho PWA, Vestta, CoachOS, EasyVet',
+          '80/tcp   OPEN   fullstack-web-saas  Mi-Rancho PWA, CoachOS, EasyVet',
           '443/tcp  OPEN   defensive-sec-soc   TryHackMe SEC1 (THM-KRRNP9WDN7), HTB SOC L1',
           '8080/tcp OPEN   csharp-ai-engines   Kenopsia Thesis, Skuishy Souls (1st Place)',
         ],

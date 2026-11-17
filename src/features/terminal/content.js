@@ -62,25 +62,6 @@ export const projectsData = [
     repoUrl: '',
   },
   {
-    id: 'vestta',
-    name: 'Vestta Interiorismo & Cotizador',
-    year: '2026',
-    domain: 'web',
-    featured: false,
-    type: {
-      es: 'E-Commerce Editorial & Cotizador',
-      en: 'Editorial Showcase & Quoting Engine',
-    },
-    description: {
-      es: 'Landing page editorial a medida y motor de cotización dinámico alimentado por datos CSV/Excel para estudio de diseño e interiorismo, con ilustraciones vectoriales propias.',
-      en: 'Bespoke editorial landing page and dynamic CSV/Excel-driven quoting engine for an interior design studio, featuring custom vector line-art illustrations.',
-    },
-    tech: ['React 19', 'TypeScript', 'Tailwind v4', 'Custom SVG', 'Data Parser'],
-    image: '/assets/projects/vestta.webp',
-    demoUrl: 'https://cotizador-vestta.vercel.app',
-    repoUrl: '',
-  },
-  {
     id: 'omarchy-terra',
     name: 'Omarchy Terra Islands',
     year: '2026',
