@@ -105,48 +105,48 @@ export const projects = [
     demoLabel: { es: 'Descargar Binario', en: 'Download Binary' },
   },
   {
-    id: 'mi-rancho',
-    name: 'Mi-Rancho PWA',
+    id: 'cartaclub',
+    name: 'CartaClub',
     year: '2026',
     domain: 'web',
     featured: true,
     type: {
-      es: 'SaaS / PWA · React & Supabase',
-      en: 'SaaS / PWA · React & Supabase',
+      es: 'SaaS Multi-Tenant · Next.js 16 & Neon',
+      en: 'Multi-Tenant SaaS · Next.js 16 & Neon',
     },
     description: {
-      es: 'Aplicación web progresiva offline-first para administración de reservas exclusivas, cálculo automático de señas del 50%, control financiero en tiempo real y emisión de boletos digitales en PNG.',
-      en: 'Offline-first progressive web app for exclusive booking management, automatic 50% deposit calculation, real-time revenue tracking, and PNG digital pass generation.',
+      es: 'Plataforma SaaS multi-tenant para rotiserías y bares: cartas digitales por slug propio, carrito con envío/retiro, pedidos formateados directo a WhatsApp sin comisiones, panel de administración con auth, almacenamiento S3 y actualizaciones en tiempo real.',
+      en: 'Multi-tenant SaaS platform for rotisseries and bars: custom-slug digital menus, delivery/pickup cart, commission-free WhatsApp order formatting, authenticated client dashboard, S3 object storage, and real-time updates.',
     },
     breakdown: {
       es: {
         problem:
-          'La gestión manual de reservas y señas generaba errores de cobro, pérdida de trazabilidad financiera y demoras en entornos con conectividad móvil inestable.',
+          'Los locales gastronómicos dependen de apps de delivery con altas comisiones o PDFs estáticos difíciles de actualizar, perdiendo control sobre su catálogo y canal directo con el cliente.',
         architecture:
-          'PWA en TypeScript y React respaldada por Supabase (PostgreSQL), diseñada con estrategia offline-first, cálculo automático de señas del 50% y renderizado local de pases digitales en PNG.',
+          'Aplicación Next.js 16 (App Router) y React 19 con PostgreSQL en Neon vía Drizzle ORM, autenticación con Neon Auth, sincronización en tiempo real (@neon/realtime), almacenamiento S3 para imágenes y rutas dinámicas multi-tenant por [slug] con panel /dashboard y /superadmin.',
         highlights: [
-          'Operación offline-first para registrar y consultar reservas en campo sin perder estado.',
-          'Cálculo automático de señas (50%) y balance financiero consolidado en tiempo real.',
-          'Generación instantánea de comprobantes y boletos digitales descargables en formato PNG.',
+          'Arquitectura multi-tenant con subrutas dinámicas por comercio, panel de autogestión y consola superadmin.',
+          'Persistencia tipada en PostgreSQL (Drizzle ORM + Zod), autenticación integrada y actualizaciones en tiempo real.',
+          'Generación de códigos QR, subida de assets a almacenamiento S3 y flujo de pedidos sin comisiones directo a WhatsApp.',
         ],
       },
       en: {
         problem:
-          'Manual reservation and deposit tracking led to accounting discrepancies and operational friction when managing bookings in low-connectivity environments.',
+          'Local food businesses rely on high-commission delivery aggregators or static PDFs that are hard to maintain, losing ownership of their catalog and direct customer channel.',
         architecture:
-          'TypeScript and React progressive web app backed by Supabase (PostgreSQL), featuring offline-first resilience, automated 50% deposit logic, and client-side PNG pass generation.',
+          'Next.js 16 (App Router) and React 19 platform backed by Neon Postgres via Drizzle ORM, Neon Auth, real-time sync (@neon/realtime), S3 object storage, and dynamic multi-tenant [slug] storefronts with /dashboard and /superadmin consoles.',
         highlights: [
-          'Offline-first PWA architecture preserving booking workflows under unstable connectivity.',
-          'Automated 50% deposit calculation paired with real-time financial tracking.',
-          'Instant generation of downloadable PNG digital passes for guests.',
+          'Multi-tenant architecture with per-store dynamic routes, client self-service dashboard, and superadmin panel.',
+          'Type-safe PostgreSQL persistence (Drizzle ORM + Zod), integrated authentication, and real-time updates.',
+          'QR code generation, S3 media uploads, and commission-free WhatsApp order routing.',
         ],
       },
     },
-    tech: ['TypeScript', 'React', 'Supabase', 'PostgreSQL', 'PWA Offline-First'],
-    image: '/assets/projects/mirancho.webp',
+    tech: ['TypeScript', 'Next.js 16', 'Neon Postgres', 'Drizzle ORM', 'Neon Auth', 'S3 Storage'],
+    image: '/assets/projects/cartaclub.webp',
     imageWidth: 1280,
     imageHeight: 800,
-    demoUrl: 'https://mi-rancho-eight.vercel.app',
+    demoUrl: '',
     repoUrl: '',
   },
   {
