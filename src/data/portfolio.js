@@ -13,6 +13,98 @@ export const siteConfig = {
 
 export const projects = [
   {
+    id: 'cartaclub',
+    name: 'CartaClub',
+    year: '2026',
+    domain: 'web',
+    featured: true,
+    type: {
+      es: 'SaaS Multi-Tenant · Next.js 16 & Neon',
+      en: 'Multi-Tenant SaaS · Next.js 16 & Neon',
+    },
+    description: {
+      es: 'Plataforma SaaS multi-tenant para rotiserías y bares: cartas digitales por slug propio, carrito con envío/retiro, pedidos formateados directo a WhatsApp sin comisiones, panel de administración con auth, almacenamiento S3 y actualizaciones en tiempo real.',
+      en: 'Multi-tenant SaaS platform for rotisseries and bars: custom-slug digital menus, delivery/pickup cart, commission-free WhatsApp order formatting, authenticated client dashboard, S3 object storage, and real-time updates.',
+    },
+    breakdown: {
+      es: {
+        problem:
+          'Los locales gastronómicos dependen de apps de delivery con altas comisiones o PDFs estáticos difíciles de actualizar, perdiendo control sobre su catálogo y canal directo con el cliente.',
+        architecture:
+          'Aplicación Next.js 16 (App Router) y React 19 con PostgreSQL en Neon vía Drizzle ORM, autenticación con Neon Auth, sincronización en tiempo real (@neon/realtime), almacenamiento S3 para imágenes y rutas dinámicas multi-tenant por [slug] con panel /dashboard y /superadmin.',
+        highlights: [
+          'Arquitectura multi-tenant con subrutas dinámicas por comercio, panel de autogestión y consola superadmin.',
+          'Persistencia tipada en PostgreSQL (Drizzle ORM + Zod), autenticación integrada y actualizaciones en tiempo real.',
+          'Generación de códigos QR, subida de assets a almacenamiento S3 y flujo de pedidos sin comisiones directo a WhatsApp.',
+        ],
+      },
+      en: {
+        problem:
+          'Local food businesses rely on high-commission delivery aggregators or static PDFs that are hard to maintain, losing ownership of their catalog and direct customer channel.',
+        architecture:
+          'Next.js 16 (App Router) and React 19 platform backed by Neon Postgres via Drizzle ORM, Neon Auth, real-time sync (@neon/realtime), S3 object storage, and dynamic multi-tenant [slug] storefronts with /dashboard and /superadmin consoles.',
+        highlights: [
+          'Multi-tenant architecture with per-store dynamic routes, client self-service dashboard, and superadmin panel.',
+          'Type-safe PostgreSQL persistence (Drizzle ORM + Zod), integrated authentication, and real-time updates.',
+          'QR code generation, S3 media uploads, and commission-free WhatsApp order routing.',
+        ],
+      },
+    },
+    tech: ['TypeScript', 'Next.js 16', 'Neon Postgres', 'Drizzle ORM', 'Neon Auth', 'S3 Storage'],
+    image: '/assets/projects/cartaclub.webp',
+    imageWidth: 1280,
+    imageHeight: 800,
+    demoUrl: 'https://cartaclub.vercel.app/',
+    demoLabel: { es: 'Live Demo', en: 'Live Demo' },
+    repoUrl: '',
+  },
+  {
+    id: 'turnear',
+    name: 'TurneAR',
+    year: '2026',
+    domain: 'web',
+    featured: true,
+    type: {
+      es: 'SaaS de Reservas · SvelteKit & Neon',
+      en: 'Booking SaaS · SvelteKit & Neon',
+    },
+    description: {
+      es: 'Agenda online multi-rubro para oficios, canchas y consultorios: reservas en 30 segundos por link sin cuenta para el cliente, bloqueo atómico en PostgreSQL contra superposiciones, recordatorios por WhatsApp y cartel QR imprimible.',
+      en: 'Multi-industry online booking SaaS for barbershops, courts, and clinics: 30-second link booking with no client signup, atomic PostgreSQL locking against double-bookings, WhatsApp reminders, and printable QR posters.',
+    },
+    breakdown: {
+      es: {
+        problem:
+          'Profesionales y comercios pierden tiempo coordinando turnos manualmente por WhatsApp y sufren superposiciones por horarios cortados, pausas o feriados.',
+        architecture:
+          'Aplicación SvelteKit 3 + Svelte 5 desplegada en Vercel con PostgreSQL serverless en Neon (@neondatabase/serverless) vía Drizzle ORM, bloqueo atómico transaccional de slots, generación de QR y suite de tests en Vitest.',
+        highlights: [
+          'Cero turnos superpuestos mediante bloqueo atómico en PostgreSQL con soporte de horarios cortados y pausas.',
+          'Reserva directa en 30 segundos sin obligar al cliente a registrarse ni descargar apps.',
+          'Recordatorios a WhatsApp en un toque, historial de inasistencias, carga manual y cartel QR listo para imprimir.',
+        ],
+      },
+      en: {
+        problem:
+          'Service professionals and venues waste hours coordinating appointments over WhatsApp and risk double-bookings across split shifts, breaks, and holidays.',
+        architecture:
+          'SvelteKit 3 + Svelte 5 app deployed on Vercel backed by serverless Neon Postgres (@neondatabase/serverless) via Drizzle ORM, atomic transactional slot locking, QR generation, and Vitest test coverage.',
+        highlights: [
+          'Zero double-bookings via atomic PostgreSQL locking supporting split shifts, breaks, and holidays.',
+          '30-second client booking flow via public link without requiring account creation or app downloads.',
+          'One-tap WhatsApp reminders, no-show tracking, manual walk-in entries, and printable QR signage.',
+        ],
+      },
+    },
+    tech: ['SvelteKit', 'Svelte 5', 'TypeScript', 'Neon Postgres', 'Drizzle ORM', 'Vitest'],
+    image: '/assets/projects/turnear.webp',
+    imageWidth: 1280,
+    imageHeight: 800,
+    repoUrl: 'https://github.com/EmaBilibili/turnero',
+    demoUrl: 'https://turnero-delta.vercel.app/',
+    demoLabel: { es: 'Live Demo', en: 'Live Demo' },
+  },
+  {
     id: 'snapstream',
     name: 'SnapStream',
     year: '2026',
@@ -103,97 +195,6 @@ export const projects = [
     repoUrl: 'https://github.com/EmaBilibili/quick-compress',
     demoUrl: 'https://github.com/EmaBilibili/quick-compress/releases/latest',
     demoLabel: { es: 'Descargar Binario', en: 'Download Binary' },
-  },
-  {
-    id: 'cartaclub',
-    name: 'CartaClub',
-    year: '2026',
-    domain: 'web',
-    featured: true,
-    type: {
-      es: 'SaaS Multi-Tenant · Next.js 16 & Neon',
-      en: 'Multi-Tenant SaaS · Next.js 16 & Neon',
-    },
-    description: {
-      es: 'Plataforma SaaS multi-tenant para rotiserías y bares: cartas digitales por slug propio, carrito con envío/retiro, pedidos formateados directo a WhatsApp sin comisiones, panel de administración con auth, almacenamiento S3 y actualizaciones en tiempo real.',
-      en: 'Multi-tenant SaaS platform for rotisseries and bars: custom-slug digital menus, delivery/pickup cart, commission-free WhatsApp order formatting, authenticated client dashboard, S3 object storage, and real-time updates.',
-    },
-    breakdown: {
-      es: {
-        problem:
-          'Los locales gastronómicos dependen de apps de delivery con altas comisiones o PDFs estáticos difíciles de actualizar, perdiendo control sobre su catálogo y canal directo con el cliente.',
-        architecture:
-          'Aplicación Next.js 16 (App Router) y React 19 con PostgreSQL en Neon vía Drizzle ORM, autenticación con Neon Auth, sincronización en tiempo real (@neon/realtime), almacenamiento S3 para imágenes y rutas dinámicas multi-tenant por [slug] con panel /dashboard y /superadmin.',
-        highlights: [
-          'Arquitectura multi-tenant con subrutas dinámicas por comercio, panel de autogestión y consola superadmin.',
-          'Persistencia tipada en PostgreSQL (Drizzle ORM + Zod), autenticación integrada y actualizaciones en tiempo real.',
-          'Generación de códigos QR, subida de assets a almacenamiento S3 y flujo de pedidos sin comisiones directo a WhatsApp.',
-        ],
-      },
-      en: {
-        problem:
-          'Local food businesses rely on high-commission delivery aggregators or static PDFs that are hard to maintain, losing ownership of their catalog and direct customer channel.',
-        architecture:
-          'Next.js 16 (App Router) and React 19 platform backed by Neon Postgres via Drizzle ORM, Neon Auth, real-time sync (@neon/realtime), S3 object storage, and dynamic multi-tenant [slug] storefronts with /dashboard and /superadmin consoles.',
-        highlights: [
-          'Multi-tenant architecture with per-store dynamic routes, client self-service dashboard, and superadmin panel.',
-          'Type-safe PostgreSQL persistence (Drizzle ORM + Zod), integrated authentication, and real-time updates.',
-          'QR code generation, S3 media uploads, and commission-free WhatsApp order routing.',
-        ],
-      },
-    },
-    tech: ['TypeScript', 'Next.js 16', 'Neon Postgres', 'Drizzle ORM', 'Neon Auth', 'S3 Storage'],
-    image: '/assets/projects/cartaclub.webp',
-    imageWidth: 1280,
-    imageHeight: 800,
-    demoUrl: '',
-    repoUrl: '',
-  },
-  {
-    id: 'turnear',
-    name: 'TurneAR',
-    year: '2026',
-    domain: 'web',
-    featured: true,
-    type: {
-      es: 'SaaS de Reservas · SvelteKit & Neon',
-      en: 'Booking SaaS · SvelteKit & Neon',
-    },
-    description: {
-      es: 'Agenda online multi-rubro para oficios, canchas y consultorios: reservas en 30 segundos por link sin cuenta para el cliente, bloqueo atómico en PostgreSQL contra superposiciones, recordatorios por WhatsApp y cartel QR imprimible.',
-      en: 'Multi-industry online booking SaaS for barbershops, courts, and clinics: 30-second link booking with no client signup, atomic PostgreSQL locking against double-bookings, WhatsApp reminders, and printable QR posters.',
-    },
-    breakdown: {
-      es: {
-        problem:
-          'Profesionales y comercios pierden tiempo coordinando turnos manualmente por WhatsApp y sufren superposiciones por horarios cortados, pausas o feriados.',
-        architecture:
-          'Aplicación SvelteKit 3 + Svelte 5 desplegada en Vercel con PostgreSQL serverless en Neon (@neondatabase/serverless) vía Drizzle ORM, bloqueo atómico transaccional de slots, generación de QR y suite de tests en Vitest.',
-        highlights: [
-          'Cero turnos superpuestos mediante bloqueo atómico en PostgreSQL con soporte de horarios cortados y pausas.',
-          'Reserva directa en 30 segundos sin obligar al cliente a registrarse ni descargar apps.',
-          'Recordatorios a WhatsApp en un toque, historial de inasistencias, carga manual y cartel QR listo para imprimir.',
-        ],
-      },
-      en: {
-        problem:
-          'Service professionals and venues waste hours coordinating appointments over WhatsApp and risk double-bookings across split shifts, breaks, and holidays.',
-        architecture:
-          'SvelteKit 3 + Svelte 5 app deployed on Vercel backed by serverless Neon Postgres (@neondatabase/serverless) via Drizzle ORM, atomic transactional slot locking, QR generation, and Vitest test coverage.',
-        highlights: [
-          'Zero double-bookings via atomic PostgreSQL locking supporting split shifts, breaks, and holidays.',
-          '30-second client booking flow via public link without requiring account creation or app downloads.',
-          'One-tap WhatsApp reminders, no-show tracking, manual walk-in entries, and printable QR signage.',
-        ],
-      },
-    },
-    tech: ['SvelteKit', 'Svelte 5', 'TypeScript', 'Neon Postgres', 'Drizzle ORM', 'Vitest'],
-    image: '/assets/projects/turnear.webp',
-    imageWidth: 1280,
-    imageHeight: 800,
-    repoUrl: 'https://github.com/EmaBilibili/turnero',
-    demoUrl: 'https://turnero-delta.vercel.app/',
-    demoLabel: { es: 'Live Demo', en: 'Live Demo' },
   },
   {
     id: 'omarchy-terra',
